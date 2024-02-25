@@ -19,6 +19,7 @@ namespace Player
 
     public class CharacterMethods
     {
+        // Idk how any of this works but it does
         Random rand = new Random();
 
         Character player;
@@ -30,6 +31,7 @@ namespace Player
             this.form = form;
         }
 
+        // Eat
         public void EatFood()
         {
             Food food = player.inventory.FirstOrDefault(item => item is Food) as Food;
@@ -45,6 +47,7 @@ namespace Player
             }
         }
 
+        // Drink
         public void DrinkWater()
         {
             Drink drink = player.inventory.FirstOrDefault(item => item is Drink) as Drink;
@@ -60,6 +63,15 @@ namespace Player
             }
         }
 
+        // Rest/Heal
+        public void Rest()
+        {
+            player.healthValue = Math.Min(player.healthValue += rand.Next(31, 51), 100);
+            player.thirstValue = Math.Max(0, player.thirstValue - rand.Next(31, 51));
+            player.hungerValue = Math.Max(0, player.hungerValue - rand.Next(31, 51));
+        }
+
+        // Decrease hunger and thirst
         public void Fatigue()
         {
             player.thirstValue = Math.Max(0, player.thirstValue - rand.Next(1, 10));
@@ -70,6 +82,7 @@ namespace Player
                 FatigueDamge();
             }
         }
+        // Apply damage if hunger and thirst are 0
         public void FatigueDamge()
         {
             player.healthValue = Math.Max(0, player.healthValue - rand.Next(6, 10));
@@ -80,11 +93,13 @@ namespace Player
             }
         }
 
+        // Can we add a item, true if we have space, false if not
         public bool CanAddItem(Item item)
         {
             return player.currentWeightValue + item.Weight <= player.maxWeightValue;
         }
 
+        // Add a item
         public void AddItem(Item item)
         {
             if (CanAddItem(item))

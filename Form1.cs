@@ -5,6 +5,7 @@ namespace Survival
 {
     public partial class Form1 : Form
     {
+        // Idk how any of this works but it does
         Character player = new Character();
         Game game;
         CharacterMethods playerMethods;
@@ -67,6 +68,9 @@ namespace Survival
                             break;
                         case "Forest":
                             game.ForestCommands(command);
+                            break;
+                        case "Plains":
+                            game.PlainsCommands(command);
                             break;
                         default:
                             Output("Error");
