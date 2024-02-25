@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             inputBox = new TextBox();
-            panel1 = new Panel();
+            statsPanel = new Panel();
             currentWeight = new Label();
             maxWeight = new Label();
             locationL = new Label();
@@ -42,39 +42,43 @@
             loadToolStripMenuItem = new ToolStripMenuItem();
             quitToolStripMenuItem = new ToolStripMenuItem();
             consoleBox = new TextBox();
-            panel1.SuspendLayout();
+            inventoryGrid = new DataGridView();
+            statsPanel.SuspendLayout();
             menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)inventoryGrid).BeginInit();
             SuspendLayout();
             // 
             // inputBox
             // 
             inputBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            inputBox.Location = new Point(12, 271);
+            inputBox.Location = new Point(12, 378);
             inputBox.MaxLength = 1000;
             inputBox.Name = "inputBox";
             inputBox.PlaceholderText = "Enter 'help' for help..";
-            inputBox.Size = new Size(492, 23);
+            inputBox.Size = new Size(497, 23);
             inputBox.TabIndex = 0;
             inputBox.KeyDown += InputBox_KeyDown;
             // 
-            // panel1
+            // statsPanel
             // 
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(currentWeight);
-            panel1.Controls.Add(maxWeight);
-            panel1.Controls.Add(locationL);
-            panel1.Controls.Add(thirst);
-            panel1.Controls.Add(hunger);
-            panel1.Controls.Add(health);
-            panel1.Location = new Point(12, 40);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(196, 131);
-            panel1.TabIndex = 1;
+            statsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            statsPanel.BorderStyle = BorderStyle.FixedSingle;
+            statsPanel.Controls.Add(currentWeight);
+            statsPanel.Controls.Add(maxWeight);
+            statsPanel.Controls.Add(locationL);
+            statsPanel.Controls.Add(thirst);
+            statsPanel.Controls.Add(hunger);
+            statsPanel.Controls.Add(health);
+            statsPanel.Location = new Point(12, 40);
+            statsPanel.Name = "statsPanel";
+            statsPanel.Size = new Size(196, 238);
+            statsPanel.TabIndex = 1;
             // 
             // currentWeight
             // 
+            currentWeight.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             currentWeight.AutoSize = true;
-            currentWeight.Location = new Point(-1, 84);
+            currentWeight.Location = new Point(-1, 191);
             currentWeight.Name = "currentWeight";
             currentWeight.Size = new Size(94, 15);
             currentWeight.TabIndex = 5;
@@ -82,8 +86,9 @@
             // 
             // maxWeight
             // 
+            maxWeight.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             maxWeight.AutoSize = true;
-            maxWeight.Location = new Point(-1, 99);
+            maxWeight.Location = new Point(-1, 206);
             maxWeight.Name = "maxWeight";
             maxWeight.Size = new Size(74, 15);
             maxWeight.TabIndex = 4;
@@ -91,8 +96,9 @@
             // 
             // locationL
             // 
+            locationL.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             locationL.AutoSize = true;
-            locationL.Location = new Point(-1, 114);
+            locationL.Location = new Point(-1, 221);
             locationL.Name = "locationL";
             locationL.Size = new Size(56, 15);
             locationL.TabIndex = 3;
@@ -100,6 +106,7 @@
             // 
             // thirst
             // 
+            thirst.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             thirst.AutoSize = true;
             thirst.Location = new Point(-1, 30);
             thirst.Name = "thirst";
@@ -109,6 +116,7 @@
             // 
             // hunger
             // 
+            hunger.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             hunger.AutoSize = true;
             hunger.Location = new Point(-1, 15);
             hunger.Name = "hunger";
@@ -118,6 +126,7 @@
             // 
             // health
             // 
+            health.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             health.AutoSize = true;
             health.Location = new Point(-1, 0);
             health.Name = "health";
@@ -130,7 +139,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { gameToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(516, 24);
+            menuStrip1.Size = new Size(521, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -166,32 +175,47 @@
             // consoleBox
             // 
             consoleBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            consoleBox.Location = new Point(12, 177);
+            consoleBox.Location = new Point(12, 284);
             consoleBox.MaxLength = 1000;
             consoleBox.Multiline = true;
             consoleBox.Name = "consoleBox";
             consoleBox.ReadOnly = true;
             consoleBox.ScrollBars = ScrollBars.Vertical;
-            consoleBox.Size = new Size(492, 88);
+            consoleBox.Size = new Size(497, 88);
             consoleBox.TabIndex = 3;
+            // 
+            // inventoryGrid
+            // 
+            inventoryGrid.AllowUserToAddRows = false;
+            inventoryGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            inventoryGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            inventoryGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            inventoryGrid.Location = new Point(214, 40);
+            inventoryGrid.Name = "inventoryGrid";
+            inventoryGrid.ReadOnly = true;
+            inventoryGrid.RowHeadersVisible = false;
+            inventoryGrid.Size = new Size(295, 238);
+            inventoryGrid.TabIndex = 4;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(516, 306);
+            ClientSize = new Size(521, 413);
+            Controls.Add(inventoryGrid);
             Controls.Add(consoleBox);
-            Controls.Add(panel1);
+            Controls.Add(statsPanel);
             Controls.Add(inputBox);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Survival";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            statsPanel.ResumeLayout(false);
+            statsPanel.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)inventoryGrid).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -199,7 +223,7 @@
         #endregion
 
         private TextBox inputBox;
-        private Panel panel1;
+        private Panel statsPanel;
         private Label thirst;
         private Label hunger;
         private Label health;
@@ -208,9 +232,10 @@
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem loadToolStripMenuItem;
         private ToolStripMenuItem quitToolStripMenuItem;
-        private TextBox consoleBox;
         private Label locationL;
         private Label maxWeight;
         private Label currentWeight;
+        private TextBox consoleBox;
+        public DataGridView inventoryGrid;
     }
 }

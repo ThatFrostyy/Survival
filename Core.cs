@@ -1,7 +1,22 @@
-﻿using Items;
+﻿/*  <A text based survival game.>
+    Copyright (C) <2024> <ThatFrostyy>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
+using Items;
 using Player;
 using Survival;
-
 namespace Core
 {
     public class Game
@@ -44,7 +59,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item rock = new("Rock", 1, 1);
+                            Item rock = new("Rock", 1, 1, "Assets/Images/Rock.png");
                             PlayerMethods.AddItem(rock);
                             break;
                         default:
@@ -89,15 +104,15 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item rock = new("Rock", 1, 1);
+                            Item rock = new("Rock", 1, 1, "Assets/Images/Rock.png");
                             PlayerMethods.AddItem(rock);
                             break;
                         case "4":
-                            Item branch = new("Branch", 1, 1);
+                            Item branch = new("Branch", 1, 1, "Assets/Images/Branch.png");
                             PlayerMethods.AddItem(branch);
                             break;
                         case "6":
-                            Food apple = new("Apple", 1, 1, 15);
+                            Food apple = new("Apple", 1, 1, "Assets/Images/Apple.png", 15);
                             PlayerMethods.AddItem(apple);
                             break;
                         default:
@@ -146,7 +161,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item item = new("Rock", 1, 1);
+                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -191,7 +206,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item item = new("Rock", 1, 1);
+                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -236,7 +251,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item item = new("Rock", 1, 1);
+                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:

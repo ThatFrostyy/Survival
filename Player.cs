@@ -1,6 +1,21 @@
-﻿using Survival;
-using Items;
+﻿/*  <A text based survival game.>
+    Copyright (C) <2024> <ThatFrostyy>
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
+using Survival;
+using Items;
 namespace Player
 {
     public class Character
@@ -13,7 +28,7 @@ namespace Player
         public int hungerValue = 100;
         public int thirstValue = 100;
         public int currentWeightValue = 0;
-        public int maxWeightValue = 50;
+        public int maxWeightValue = 30;
         public string location = "Beach";
     }
 
@@ -22,7 +37,7 @@ namespace Player
         // I don't know how any of this works, but it does
         readonly Random rand = new();
 
-        public Character Player { get; } 
+        public Character Player { get; }
         public Form1 Form { get; }
 
         public CharacterMethods(Character player, Form1 form)
@@ -91,24 +106,85 @@ namespace Player
             }
         }
 
-        // Can we add a item, true if we have space, false if not
+        // Can we add an item, true if we have space, false if not
         public bool CanAddItem(Item item)
         {
             return Player.currentWeightValue + item.Weight <= Player.maxWeightValue;
         }
 
-        // Add a item
+        // Add an item
         public void AddItem(Item item)
         {
-            if (CanAddItem(item))
+            if (!CanAddItem(item))
             {
-                Player.inventory.Add(item);
-                Player.currentWeightValue += item.Weight;
-                Form.Output($"You find and pick up a {item.Name}!");
+                Form.Output("You can't carry any more items!");
+                return;
+            }
+
+            var existingItem = Player.inventory.FirstOrDefault(i => i.Name == item.Name);
+
+            if (existingItem != null)
+            {
+                existingItem.Quantity++;
+                Form.Output($"You find and pick up another {item.Name}! You now have: {existingItem.Quantity}");
             }
             else
             {
-                Form.Output("You can't carry any more items!");
+                Player.inventory.Add(item);
+                Form.Output($"You find and pick up a {item.Name}!");
+            }
+
+            Player.currentWeightValue += item.Weight;
+            UpdateInventory();
+        }
+
+        // Update the inventory UI
+        public void UpdateInventory()
+        {
+            // Add columns 
+            // They are always added trough code because they are not set in the designer
+            if (Form.inventoryGrid.Columns.Count == 0)
+            {
+                var iconColumn = new DataGridViewImageColumn
+                {
+                    Name = "Icon",
+                    ImageLayout = DataGridViewImageCellLayout.Zoom
+                };
+
+                Form.inventoryGrid.Columns.Add(iconColumn);
+                Form.inventoryGrid.Columns.Add("Name", "Name");
+                Form.inventoryGrid.Columns.Add("Weight", "Weight");
+                Form.inventoryGrid.Columns.Add("Quantity", "Quantity");
+            }
+
+            Form.inventoryGrid.Rows.Clear();
+
+            foreach (var item in Player.inventory)
+            {
+                if (item == null)
+                {
+                    continue;
+                }
+
+                // Check if there's already a row for this item
+                var existingRow = Form.inventoryGrid.Rows
+                    .OfType<DataGridViewRow>()
+                    .FirstOrDefault(r => r.Cells["Name"].Value.ToString() == item.Name);
+
+                if (existingRow != null)
+                {
+                    existingRow.Cells["Quantity"].Value = item.Quantity;
+                }
+                else
+                {
+                    var index = Form.inventoryGrid.Rows.Add();
+                    var row = Form.inventoryGrid.Rows[index];
+
+                    row.Cells["Icon"].Value = new Bitmap(item.Icon);
+                    row.Cells["Name"].Value = item.Name;
+                    row.Cells["Weight"].Value = item.Weight;
+                    row.Cells["Quantity"].Value = item.Quantity;
+                }
             }
         }
     }
