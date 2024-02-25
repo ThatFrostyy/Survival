@@ -3,7 +3,7 @@ namespace Survival
     internal static class Entry
     {
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());

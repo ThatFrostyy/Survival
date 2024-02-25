@@ -55,7 +55,7 @@
             inputBox.PlaceholderText = "Enter 'help' for help..";
             inputBox.Size = new Size(492, 23);
             inputBox.TabIndex = 0;
-            inputBox.KeyDown += inputBox_KeyDown;
+            inputBox.KeyDown += InputBox_KeyDown;
             // 
             // panel1
             // 
@@ -161,7 +161,7 @@
             quitToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
             quitToolStripMenuItem.Size = new Size(140, 22);
             quitToolStripMenuItem.Text = "Quit";
-            quitToolStripMenuItem.Click += quitToolStripMenuItem_Click;
+            quitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
             // 
             // consoleBox
             // 

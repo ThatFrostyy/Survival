@@ -6,18 +6,18 @@ namespace Core
 {
     public class Game
     {
-        // Idk how any of this works but it does
-        Random rand = new Random();
+        // I don't know how any of this works, but it does
+        readonly Random rand = new();
 
-        Character player;
-        public CharacterMethods playerMethods;
-        Form1 form;
+        public Character Player { get; }
+        public CharacterMethods PlayerMethods { get; }
+        public Form1 Form { get; }
 
         public Game(Character player, Form1 form)
         {
-            this.player = player;
-            this.form = form;
-            playerMethods = new CharacterMethods(player, form);
+            Player = player;
+            Form = form;
+            PlayerMethods = new CharacterMethods(player, form);
         }
 
         // Welcome to hell
@@ -26,41 +26,44 @@ namespace Core
             switch (command)
             {
                 case "eat":
-                    playerMethods.EatFood();
+                    PlayerMethods.EatFood();
                     break;
                 case "drink":
-                    playerMethods.DrinkWater();
+                    PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    int num = rand.Next(0, 101);
+                    PlayerMethods.Fatigue();
+                    var num = rand.Next(0, 101);
+
                     Explore(num);
-                    playerMethods.Fatigue();
                     break;
-                case "scavange":
-                    int scavange = rand.Next(0, 7);
-                    if (scavange == 2)
+                case "scavenge":
+                    PlayerMethods.Fatigue();
+                    var scavenge = rand.Next(0, 7).ToString();
+
+                    switch (scavenge)
                     {
-                        Item rock = new Item("Rock", 1, 1);
-                        playerMethods.AddItem(rock);
+                        case "2":
+                            Item rock = new("Rock", 1, 1);
+                            PlayerMethods.AddItem(rock);
+                            break;
+                        default:
+                            Form.Output("You fail to find any rocks.");
+                            break;
                     }
-                    else
-                    {
-                        form.Output("You fail to find any rocks.");
-                    }
-                    playerMethods.Fatigue();
                     break;
                 case "help":
                     BeachHelp();
                     break;
                 default:
-                    form.Output("Unknown command: " + command);
+                    Form.Output("Unknown command: " + command);
                     break;
             }
-            form.UpdateStats();
+            Form.UpdateStats();
         }
         public void BeachHelp()
         {
-            form.Output("Commands: eat, drink, explore, scavange, help");
+            Form.Output("Commands: eat, drink, explore, scavenge, help");
         }
 
         public void ForestCommands(string command)
@@ -68,54 +71,56 @@ namespace Core
             switch (command)
             {
                 case "eat":
-                    playerMethods.EatFood();
+                    PlayerMethods.EatFood();
                     break;
                 case "drink":
-                    playerMethods.DrinkWater();
+                    PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    int num = rand.Next(0, 101);
+                    PlayerMethods.Fatigue();
+                    var num = rand.Next(0, 101);
+
                     Explore(num);
-                    playerMethods.Fatigue();
                     break;
-                case "scavange":
-                    int scavange = rand.Next(0, 17);
-                    if (scavange == 2)
+                case "scavenge":
+                    PlayerMethods.Fatigue();
+                    var scavenge = rand.Next(0, 17).ToString();
+
+                    switch (scavenge)
                     {
-                        Item item = new Item("Rock", 1, 1);
-                        playerMethods.AddItem(item);
+                        case "2":
+                            Item rock = new("Rock", 1, 1);
+                            PlayerMethods.AddItem(rock);
+                            break;
+                        case "4":
+                            Item branch = new("Branch", 1, 1);
+                            PlayerMethods.AddItem(branch);
+                            break;
+                        case "6":
+                            Food apple = new("Apple", 1, 1, 15);
+                            PlayerMethods.AddItem(apple);
+                            break;
+                        default:
+                            Form.Output("You fail to find any items.");
+                            break;
                     }
-                    else if (scavange == 4)
-                    {
-                        Item item = new Item("Branch", 1, 1);
-                        playerMethods.AddItem(item);
-                    }
-                    else if (scavange == 6)
-                    {
-                        Food item = new Food("Apple", 1, 1, 15);
-                        playerMethods.AddItem(item);
-                    }
-                    else
-                    {
-                        form.Output("You fail to find any items.");
-                    }
-                    playerMethods.Fatigue();
                     break;
                 case "rest":
-                    playerMethods.Rest();
+                    PlayerMethods.Rest();
                     break;
                 case "help":
                     ForestHelp();
                     break;
                 default:
-                    form.Output("Unknown command: " + command);
+                    Form.Output("Unknown command: " + command);
                     break;
+
             }
-            form.UpdateStats();
+            Form.UpdateStats();
         }
         public void ForestHelp()
         {
-            form.Output("Commands: eat, drink, explore, scavange, rest, help");
+            Form.Output("Commands: eat, drink, explore, scavenge, rest, help");
         }
 
         public void PlainsCommands(string command)
@@ -123,41 +128,44 @@ namespace Core
             switch (command)
             {
                 case "eat":
-                    playerMethods.EatFood();
+                    PlayerMethods.EatFood();
                     break;
                 case "drink":
-                    playerMethods.DrinkWater();
+                    PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    int num = rand.Next(0, 101);
+                    PlayerMethods.Fatigue();
+                    var num = rand.Next(0, 101);
+
                     Explore(num);
-                    playerMethods.Fatigue();
                     break;
-                case "scavange":
-                    int scavange = rand.Next(0, 7);
-                    if (scavange == 2)
+                case "scavenge":
+                    PlayerMethods.Fatigue();
+                    var scavenge = rand.Next(0, 7).ToString();
+
+                    switch (scavenge)
                     {
-                        Item item = new Item("Rock", 1, 1);
-                        playerMethods.AddItem(item);
+                        case "2":
+                            Item item = new("Rock", 1, 1);
+                            PlayerMethods.AddItem(item);
+                            break;
+                        default:
+                            Form.Output("You fail to find any rocks.");
+                            break;
                     }
-                    else
-                    {
-                        form.Output("You fail to find any rocks.");
-                    }
-                    playerMethods.Fatigue();
                     break;
                 case "help":
                     PlainsHelp();
                     break;
                 default:
-                    form.Output("Unknown command: " + command);
+                    Form.Output("Unknown command: " + command);
                     break;
             }
-            form.UpdateStats();
+            Form.UpdateStats();
         }
         public void PlainsHelp()
         {
-            form.Output("Commands: eat, drink, explore, scavange, help");
+            Form.Output("Commands: eat, drink, explore, scavenge, help");
         }
 
         public void HillsCommands(string command)
@@ -165,41 +173,44 @@ namespace Core
             switch (command)
             {
                 case "eat":
-                    playerMethods.EatFood();
+                    PlayerMethods.EatFood();
                     break;
                 case "drink":
-                    playerMethods.DrinkWater();
+                    PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    int num = rand.Next(0, 101);
+                    PlayerMethods.Fatigue();
+                    var num = rand.Next(0, 101);
+
                     Explore(num);
-                    playerMethods.Fatigue();
                     break;
-                case "scavange":
-                    int scavange = rand.Next(0, 5);
-                    if (scavange == 2)
+                case "scavenge":
+                    PlayerMethods.Fatigue();
+                    var scavenge = rand.Next(0, 7).ToString();
+
+                    switch (scavenge)
                     {
-                        Item item = new Item("Rock", 1, 1);
-                        playerMethods.AddItem(item);
+                        case "2":
+                            Item item = new("Rock", 1, 1);
+                            PlayerMethods.AddItem(item);
+                            break;
+                        default:
+                            Form.Output("You fail to find any rocks.");
+                            break;
                     }
-                    else
-                    {
-                        form.Output("You fail to find any rocks.");
-                    }
-                    playerMethods.Fatigue();
                     break;
                 case "help":
                     HillsHelp();
                     break;
                 default:
-                    form.Output("Unknown command: " + command);
+                    Form.Output("Unknown command: " + command);
                     break;
             }
-            form.UpdateStats();
+            Form.UpdateStats();
         }
         public void HillsHelp()
         {
-            form.Output("Commands: eat, drink, explore, scavange, help");
+            Form.Output("Commands: eat, drink, explore, scavenge, help");
         }
 
         public void MountainsCommands(string command)
@@ -207,41 +218,44 @@ namespace Core
             switch (command)
             {
                 case "eat":
-                    playerMethods.EatFood();
+                    PlayerMethods.EatFood();
                     break;
                 case "drink":
-                    playerMethods.DrinkWater();
+                    PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    int num = rand.Next(0, 101);
+                    PlayerMethods.Fatigue();
+                    var num = rand.Next(0, 101);
+
                     Explore(num);
-                    playerMethods.Fatigue();
                     break;
-                case "scavange":
-                    int scavange = rand.Next(0, 3);
-                    if (scavange == 2)
+                case "scavenge":
+                    PlayerMethods.Fatigue();
+                    var scavenge = rand.Next(0, 3).ToString();
+
+                    switch (scavenge)
                     {
-                        Item item = new Item("Rock", 1, 1);
-                        playerMethods.AddItem(item);
+                        case "2":
+                            Item item = new("Rock", 1, 1);
+                            PlayerMethods.AddItem(item);
+                            break;
+                        default:
+                            Form.Output("You fail to find any rocks.");
+                            break;
                     }
-                    else
-                    {
-                        form.Output("You fail to find any rocks.");
-                    }
-                    playerMethods.Fatigue();
                     break;
                 case "help":
                     MountainsHelp();
                     break;
                 default:
-                    form.Output("Unknown command: " + command);
+                    Form.Output("Unknown command: " + command);
                     break;
             }
-            form.UpdateStats();
+            Form.UpdateStats();
         }
         public void MountainsHelp()
         {
-            form.Output("Commands: eat, drink, explore, scavange, help");
+            Form.Output("Commands: eat, drink, explore, scavenge, help");
         }
 
         public void VillageCommands(string command)
@@ -249,107 +263,101 @@ namespace Core
             switch (command)
             {
                 case "eat":
-                    playerMethods.EatFood();
+                    PlayerMethods.EatFood();
                     break;
                 case "drink":
-                    playerMethods.DrinkWater();
+                    PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    int num = rand.Next(0, 101);
+                    PlayerMethods.Fatigue();
+                    var num = rand.Next(0, 101);
+
                     Explore(num);
-                    playerMethods.Fatigue();
                     break;
                 case "shop":
                     // TO DO
                     // ADD LOGIC
                     break;
-                case "scavange":
+                case "scavenge":
+                    var scavenge = rand.Next(0, 17).ToString();
+                    PlayerMethods.Fatigue();
+
                     // TO DO
                     // ADD ITEMS TO SCAVANGE
-
-                    int scavange = rand.Next(0, 17);
-                    playerMethods.Fatigue();
                     break;
                 case "help":
                     VillageHelp();
                     break;
                 default:
-                    form.Output("Unknown command: " + command);
+                    Form.Output("Unknown command: " + command);
                     break;
             }
-            form.UpdateStats();
+            Form.UpdateStats();
         }
         public void VillageHelp()
         {
-            form.Output("Commands: eat, drink, explore, scavange, shop, help");
+            Form.Output("Commands: eat, drink, explore, scavenge, shop, help");
         }
 
         public void Explore(int num)
         {
-            if (num <= 5)
+            switch (num)
             {
-                if (player.location == "Village")
-                {
-                    form.Output("You decide to explore the village more.");
-                }
-                else
-                {
-                    form.Output("You stumble upon a village and encounter a few shops.");
-                    player.location = "Village";
-                }
-                // village
-            }
-            else if (num > 10 && num <= 45)
-            {
-                if (player.location == "Forest")
-                {
-                    form.Output("You continue moving trough the forest.");
-                }
-                else
-                {
-                    form.Output("You enter a forest.");
-                    player.location = "Forest";
-                }
-                // forest
-            }
-            else if (num > 45 && num <= 80)
-            {
-                if (player.location == "Plains")
-                {
-                    form.Output("You continue moving trough the plains.");
-                }
-                else
-                {
-                    form.Output("You enter a plains.");
-                    player.location = "Plains";
-                }
-                // plains
-            }
-            else if (num > 80 && num <= 90)
-            {
-                if (player.location == "Hills")
-                {
-                    form.Output("You continue moving over the hills.");
-                }
-                else
-                {
-                    form.Output("You find yourself on a hill.");
-                    player.location = "Hills";
-                }
-                // hills
-            }
-            else if (num > 90 && num <= 100)
-            {
-                if (player.location == "Mountains")
-                {
-                    form.Output("You continue navigating trough the harsh mountains.");
-                }
-                else
-                {
-                    form.Output("You enter a mountainous area.");
-                    player.location = "Mountains";
-                }
-                // mountains
+                case <= 5:
+                    if (Player.location == "Village")
+                    {
+                        Form.Output("You decide to explore the village more.");
+                    }
+                    else
+                    {
+                        Form.Output("You stumble upon a village and encounter a few shops.");
+                        Player.location = "Village";
+                    }
+                    break;
+                case > 10 and <= 45:
+                    if (Player.location == "Forest")
+                    {
+                        Form.Output("You continue moving through the forest.");
+                    }
+                    else
+                    {
+                        Form.Output("You enter a forest.");
+                        Player.location = "Forest";
+                    }
+                    break;
+                case > 45 and <= 80:
+                    if (Player.location == "Plains")
+                    {
+                        Form.Output("You continue moving through the plains.");
+                    }
+                    else
+                    {
+                        Form.Output("You enter a plains.");
+                        Player.location = "Plains";
+                    }
+                    break;
+                case > 80 and <= 90:
+                    if (Player.location == "Hills")
+                    {
+                        Form.Output("You continue moving over the hills.");
+                    }
+                    else
+                    {
+                        Form.Output("You find yourself on a hill.");
+                        Player.location = "Hills";
+                    }
+                    break;
+                case > 90 and <= 100:
+                    if (Player.location == "Mountains")
+                    {
+                        Form.Output("You continue navigating through the harsh mountains.");
+                    }
+                    else
+                    {
+                        Form.Output("You enter a mountainous area.");
+                        Player.location = "Mountains";
+                    }
+                    break;
             }
         }
     }

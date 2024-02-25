@@ -6,7 +6,7 @@ namespace Player
     public class Character
     {
         // Inventory
-        public List<Item> inventory = new List<Item>();
+        public List<Item> inventory = [];
 
         // Stats
         public int healthValue = 100;
@@ -19,84 +19,82 @@ namespace Player
 
     public class CharacterMethods
     {
-        // Idk how any of this works but it does
-        Random rand = new Random();
+        // I don't know how any of this works, but it does
+        readonly Random rand = new();
 
-        Character player;
-        Form1 form;
+        public Character Player { get; } 
+        public Form1 Form { get; }
 
         public CharacterMethods(Character player, Form1 form)
         {
-            this.player = player;
-            this.form = form;
+            Player = player;
+            Form = form;
         }
 
         // Eat
         public void EatFood()
         {
-            Food food = player.inventory.FirstOrDefault(item => item is Food) as Food;
-            if (food != null)
+            if (Player.inventory.FirstOrDefault(item => item is Food) is Food food)
             {
-                player.hungerValue = Math.Min(player.hungerValue + food.HungerRestore, 100);
-                form.Output($"You ate {food.Name}. Hunger: {player.hungerValue}");
-                player.inventory.Remove(food);
+                Player.hungerValue = Math.Min(Player.hungerValue + food.HungerRestore, 100);
+                Form.Output($"You eat a {food.Name}. Hunger: {Player.hungerValue}");
+                Player.inventory.Remove(food);
             }
             else
             {
-                form.Output("You don't have any food!");
+                Form.Output("You don't have any food!");
             }
         }
 
         // Drink
         public void DrinkWater()
         {
-            Drink drink = player.inventory.FirstOrDefault(item => item is Drink) as Drink;
-            if (drink != null)
+            if (Player.inventory.FirstOrDefault(item => item is Drink) is Drink drink)
             {
-                player.thirstValue = Math.Min(player.thirstValue + drink.ThirstRestore, 100);
-                form.Output($"You drank {drink.Name}. Thirst: {player.thirstValue}");
-                player.inventory.Remove(drink);
+                Player.thirstValue = Math.Min(Player.thirstValue + drink.ThirstRestore, 100);
+                Form.Output($"You drink a {drink.Name}. Thirst: {Player.thirstValue}");
+                Player.inventory.Remove(drink);
             }
             else
             {
-                form.Output("You don't have any drinks!");
+                Form.Output("You don't have any drinks!");
             }
         }
 
         // Rest/Heal
         public void Rest()
         {
-            player.healthValue = Math.Min(player.healthValue += rand.Next(31, 51), 100);
-            player.thirstValue = Math.Max(0, player.thirstValue - rand.Next(31, 51));
-            player.hungerValue = Math.Max(0, player.hungerValue - rand.Next(31, 51));
+            Player.healthValue = Math.Min(Player.healthValue += rand.Next(31, 51), 100);
+            Player.thirstValue = Math.Max(0, Player.thirstValue - rand.Next(31, 51));
+            Player.hungerValue = Math.Max(0, Player.hungerValue - rand.Next(31, 51));
         }
 
         // Decrease hunger and thirst
         public void Fatigue()
         {
-            player.thirstValue = Math.Max(0, player.thirstValue - rand.Next(1, 10));
-            player.hungerValue = Math.Max(0, player.hungerValue - rand.Next(1, 10));
+            Player.thirstValue = Math.Max(0, Player.thirstValue - rand.Next(1, 10));
+            Player.hungerValue = Math.Max(0, Player.hungerValue - rand.Next(1, 10));
 
-            if (player.hungerValue <= 0 || player.thirstValue <= 0)
+            if (Player.hungerValue <= 0 || Player.thirstValue <= 0)
             {
-                FatigueDamge();
+                FatigueDamage();
             }
         }
         // Apply damage if hunger and thirst are 0
-        public void FatigueDamge()
+        public void FatigueDamage()
         {
-            player.healthValue = Math.Max(0, player.healthValue - rand.Next(6, 10));
+            Player.healthValue = Math.Max(0, Player.healthValue - rand.Next(6, 10));
 
-            if (player.healthValue <= 0)
+            if (Player.healthValue <= 0)
             {
-                form.GameOver();
+                Form.GameOver();
             }
         }
 
         // Can we add a item, true if we have space, false if not
         public bool CanAddItem(Item item)
         {
-            return player.currentWeightValue + item.Weight <= player.maxWeightValue;
+            return Player.currentWeightValue + item.Weight <= Player.maxWeightValue;
         }
 
         // Add a item
@@ -104,13 +102,13 @@ namespace Player
         {
             if (CanAddItem(item))
             {
-                player.inventory.Add(item);
-                player.currentWeightValue += item.Weight;
-                form.Output($"You find and pick up a {item.Name}!");
+                Player.inventory.Add(item);
+                Player.currentWeightValue += item.Weight;
+                Form.Output($"You find and pick up a {item.Name}!");
             }
             else
             {
-                form.Output("You can't carry any more items!");
+                Form.Output("You can't carry any more items!");
             }
         }
     }
