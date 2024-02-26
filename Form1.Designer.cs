@@ -196,6 +196,7 @@
             inventoryGrid.RowHeadersVisible = false;
             inventoryGrid.Size = new Size(295, 238);
             inventoryGrid.TabIndex = 4;
+
             // 
             // Form1
             // 

@@ -14,16 +14,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
+
+// Ignore Spelling: Melee
+
 namespace Items
 {
     public class Item
     {
         public string Name { get; set; }
-        public int Weight { get; set; }
+        public double Weight { get; set; }
         public int Quantity { get; set; }
         public Image Icon { get; set; }
 
-        public Item(string name, int weight, int quantity, string iconPath)
+        public Item(string name, double weight, int quantity, string iconPath)
         {
             Name = name;
             Weight = weight;
@@ -32,11 +35,25 @@ namespace Items
         }
     }
 
+    public class Weapon : Item
+    {
+        public int Damage { get; set; }
+        public int Durability { get; set; }
+        public bool Melee { get; set; }
+
+        public Weapon(string name, double weight, int quantity, string iconPath, int damage, int durability, bool melee) : base(name, weight, quantity, iconPath)
+        {
+            Damage = damage;
+            Durability = durability;
+            Melee = melee;
+        }
+    }
+
     public class Food : Item
     {
         public int HungerRestore { get; set; }
 
-        public Food(string name, int weight, int quantity, string iconPath, int hungerRestore) : base(name, weight, quantity, iconPath)
+        public Food(string name, double weight, int quantity, string iconPath, int hungerRestore) : base(name, weight, quantity, iconPath)
         {
             HungerRestore = hungerRestore;
         }
@@ -46,7 +63,7 @@ namespace Items
     {
         public int ThirstRestore { get; set; }
 
-        public Drink(string name, int weight, int quantity, string iconPath, int thirstRestore) : base(name, weight, quantity, iconPath)
+        public Drink(string name, double weight, int quantity, string iconPath, int thirstRestore) : base(name, weight, quantity, iconPath)
         {
             ThirstRestore = thirstRestore;
         }

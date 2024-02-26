@@ -47,13 +47,12 @@ namespace Core
                     PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    PlayerMethods.Fatigue();
                     var num = rand.Next(0, 101);
 
                     Explore(num);
+                    PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    PlayerMethods.Fatigue();
                     var scavenge = rand.Next(0, 7).ToString();
 
                     switch (scavenge)
@@ -66,6 +65,7 @@ namespace Core
                             Form.Output("You fail to find any rocks.");
                             break;
                     }
+                    PlayerMethods.Fatigue();
                     break;
                 case "help":
                     BeachHelp();
@@ -92,13 +92,12 @@ namespace Core
                     PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    PlayerMethods.Fatigue();
                     var num = rand.Next(0, 101);
 
                     Explore(num);
+                    PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    PlayerMethods.Fatigue();
                     var scavenge = rand.Next(0, 17).ToString();
 
                     switch (scavenge)
@@ -119,6 +118,7 @@ namespace Core
                             Form.Output("You fail to find any items.");
                             break;
                     }
+                    PlayerMethods.Fatigue();
                     break;
                 case "rest":
                     PlayerMethods.Rest();
@@ -149,13 +149,12 @@ namespace Core
                     PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    PlayerMethods.Fatigue();
                     var num = rand.Next(0, 101);
 
                     Explore(num);
+                    PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    PlayerMethods.Fatigue();
                     var scavenge = rand.Next(0, 7).ToString();
 
                     switch (scavenge)
@@ -168,6 +167,7 @@ namespace Core
                             Form.Output("You fail to find any rocks.");
                             break;
                     }
+                    PlayerMethods.Fatigue();
                     break;
                 case "help":
                     PlainsHelp();
@@ -194,13 +194,12 @@ namespace Core
                     PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    PlayerMethods.Fatigue();
                     var num = rand.Next(0, 101);
 
                     Explore(num);
+                    PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    PlayerMethods.Fatigue();
                     var scavenge = rand.Next(0, 7).ToString();
 
                     switch (scavenge)
@@ -213,6 +212,7 @@ namespace Core
                             Form.Output("You fail to find any rocks.");
                             break;
                     }
+                    PlayerMethods.Fatigue();
                     break;
                 case "help":
                     HillsHelp();
@@ -239,13 +239,12 @@ namespace Core
                     PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    PlayerMethods.Fatigue();
                     var num = rand.Next(0, 101);
 
                     Explore(num);
+                    PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    PlayerMethods.Fatigue();
                     var scavenge = rand.Next(0, 3).ToString();
 
                     switch (scavenge)
@@ -258,6 +257,7 @@ namespace Core
                             Form.Output("You fail to find any rocks.");
                             break;
                     }
+                    PlayerMethods.Fatigue();
                     break;
                 case "help":
                     MountainsHelp();
@@ -284,21 +284,29 @@ namespace Core
                     PlayerMethods.DrinkWater();
                     break;
                 case "explore":
-                    PlayerMethods.Fatigue();
                     var num = rand.Next(0, 101);
 
                     Explore(num);
+                    PlayerMethods.Fatigue();
                     break;
                 case "shop":
                     // TO DO
                     // ADD LOGIC
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 17).ToString();
-                    PlayerMethods.Fatigue();
+                    var scavenge = rand.Next(0, 51).ToString();
 
-                    // TO DO
-                    // ADD ITEMS TO SCAVANGE
+                    switch (scavenge)
+                    {
+                        case "25":
+                            Item item = new("Tender", 0.1, rand.Next(0, 11), "Assets/Images/Money.png");
+                            PlayerMethods.AddItem(item);
+                            break;
+                        default:
+                            Form.Output("You fail to find any items.");
+                            break;
+                    }
+                    PlayerMethods.Fatigue();
                     break;
                 case "help":
                     VillageHelp();

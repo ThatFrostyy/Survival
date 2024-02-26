@@ -27,7 +27,7 @@ namespace Player
         public int healthValue = 100;
         public int hungerValue = 100;
         public int thirstValue = 100;
-        public int currentWeightValue = 0;
+        public double currentWeightValue = 0;
         public int maxWeightValue = 30;
         public string location = "Beach";
     }
@@ -131,10 +131,10 @@ namespace Player
             else
             {
                 Player.inventory.Add(item);
-                Form.Output($"You find and pick up a {item.Name}!");
+                Form.Output($"You find and pick up a {item.Name}! There was: {item.Quantity}");
             }
 
-            Player.currentWeightValue += item.Weight;
+            Player.currentWeightValue += item.Weight * item.Quantity;
             UpdateInventory();
         }
 
@@ -186,6 +186,30 @@ namespace Player
                     row.Cells["Quantity"].Value = item.Quantity;
                 }
             }
+            Form.inventoryGrid.CellMouseEnter += InventoryGrid_CellMouseEnter;
+        }
+
+        public void InventoryGrid_CellMouseEnter(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            var row = Form.inventoryGrid.Rows[e.RowIndex];
+            var item = Player.inventory.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
+
+            if (item is not Weapon weapon)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    cell.ToolTipText = string.Empty;
+                }
+                return;
+            }
+
+            var tooltip = $"Damage: {weapon.Damage}\nDurability: {weapon.Durability}\nMelee: {weapon.Melee}";
+            row.Cells[0].ToolTipText = tooltip;
         }
     }
 }
