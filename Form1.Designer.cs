@@ -30,6 +30,7 @@
         {
             inputBox = new TextBox();
             statsPanel = new Panel();
+            shopGrid = new DataGridView();
             currentWeight = new Label();
             maxWeight = new Label();
             locationL = new Label();
@@ -44,6 +45,7 @@
             consoleBox = new TextBox();
             inventoryGrid = new DataGridView();
             statsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)shopGrid).BeginInit();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)inventoryGrid).BeginInit();
             SuspendLayout();
@@ -63,6 +65,7 @@
             // 
             statsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             statsPanel.BorderStyle = BorderStyle.FixedSingle;
+            statsPanel.Controls.Add(shopGrid);
             statsPanel.Controls.Add(currentWeight);
             statsPanel.Controls.Add(maxWeight);
             statsPanel.Controls.Add(locationL);
@@ -73,6 +76,20 @@
             statsPanel.Name = "statsPanel";
             statsPanel.Size = new Size(196, 238);
             statsPanel.TabIndex = 1;
+            // 
+            // shopGrid
+            // 
+            shopGrid.AllowUserToAddRows = false;
+            shopGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            shopGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            shopGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            shopGrid.Location = new Point(-1, -1);
+            shopGrid.Name = "shopGrid";
+            shopGrid.ReadOnly = true;
+            shopGrid.RowHeadersVisible = false;
+            shopGrid.Size = new Size(196, 238);
+            shopGrid.TabIndex = 5;
+            shopGrid.Visible = false;
             // 
             // currentWeight
             // 
@@ -196,7 +213,6 @@
             inventoryGrid.RowHeadersVisible = false;
             inventoryGrid.Size = new Size(295, 238);
             inventoryGrid.TabIndex = 4;
-
             // 
             // Form1
             // 
@@ -214,6 +230,7 @@
             Text = "Survival";
             statsPanel.ResumeLayout(false);
             statsPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)shopGrid).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)inventoryGrid).EndInit();
@@ -238,5 +255,6 @@
         private Label currentWeight;
         private TextBox consoleBox;
         public DataGridView inventoryGrid;
+        public DataGridView shopGrid;
     }
 }

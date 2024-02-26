@@ -32,10 +32,14 @@ namespace Survival
 
             Game = new Game(Player, this);
             PlayerMethods = Game.PlayerMethods;
+
+            PlayerMethods.OnCreate();
         }
 
 
-        // GUI
+        /// <summary>
+        /// Update the stats GUI
+        /// </summary>
         public void UpdateStats()
         {
             health.Text = "Health: " + Player.healthValue.ToString();
@@ -45,6 +49,9 @@ namespace Survival
             maxWeight.Text = "Max Weight: " + Player.maxWeightValue.ToString();
             locationL.Text = "Location: " + Player.location;
         }
+        /// <summary>
+        /// Resets the game
+        /// </summary>
         public void GameOver()
         {
             consoleBox.Clear();
@@ -63,7 +70,9 @@ namespace Survival
         }
 
 
-        // Console
+        /// <summary>
+        /// Output something to the console
+        /// </summary>
         public void Output(string output)
         {
             consoleBox.AppendText(output + Environment.NewLine);

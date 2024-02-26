@@ -46,14 +46,24 @@ namespace Player
             Form = form;
         }
 
-        // Eat
+        /// <summary>
+        /// Called on the game start, useful for adding items to the inventory, testing, etc
+        /// </summary>
+        public void OnCreate()
+        {
+
+        }
+
+        /// <summary>
+        /// Eat an eatable item
+        /// </summary>
         public void EatFood()
         {
             if (Player.inventory.FirstOrDefault(item => item is Food) is Food food)
             {
                 Player.hungerValue = Math.Min(Player.hungerValue + food.HungerRestore, 100);
                 Form.Output($"You eat a {food.Name}. Hunger: {Player.hungerValue}");
-                Player.inventory.Remove(food);
+                RemoveItem(food);
             }
             else
             {
@@ -61,14 +71,16 @@ namespace Player
             }
         }
 
-        // Drink
+        /// <summary>
+        /// Drink a drink
+        /// </summary>
         public void DrinkWater()
         {
             if (Player.inventory.FirstOrDefault(item => item is Drink) is Drink drink)
             {
                 Player.thirstValue = Math.Min(Player.thirstValue + drink.ThirstRestore, 100);
                 Form.Output($"You drink a {drink.Name}. Thirst: {Player.thirstValue}");
-                Player.inventory.Remove(drink);
+                RemoveItem(drink);
             }
             else
             {
@@ -76,7 +88,9 @@ namespace Player
             }
         }
 
-        // Rest/Heal
+        /// <summary>
+        /// Rest (used to gain slight health)
+        /// </summary>
         public void Rest()
         {
             Player.healthValue = Math.Min(Player.healthValue += rand.Next(31, 51), 100);
@@ -84,7 +98,9 @@ namespace Player
             Player.hungerValue = Math.Max(0, Player.hungerValue - rand.Next(31, 51));
         }
 
-        // Decrease hunger and thirst
+        /// <summary>
+        /// Decrease hunger and thirst
+        /// </summary>
         public void Fatigue()
         {
             Player.thirstValue = Math.Max(0, Player.thirstValue - rand.Next(1, 10));
@@ -95,7 +111,9 @@ namespace Player
                 FatigueDamage();
             }
         }
-        // Apply damage if hunger and thirst are 0
+        /// <summary>
+        /// Applies damage if hunger and or thirst are 0
+        /// </summary>
         public void FatigueDamage()
         {
             Player.healthValue = Math.Max(0, Player.healthValue - rand.Next(6, 10));
@@ -106,13 +124,17 @@ namespace Player
             }
         }
 
-        // Can we add an item, true if we have space, false if not
+        /// <summary>
+        /// Can we add an item, true if we have space, false if not
+        /// </summary>
         public bool CanAddItem(Item item)
         {
             return Player.currentWeightValue + item.Weight <= Player.maxWeightValue;
         }
 
-        // Add an item
+        /// <summary>
+        /// Add a single item to the players inventory
+        /// </summary>
         public void AddItem(Item item)
         {
             if (!CanAddItem(item))
@@ -138,7 +160,20 @@ namespace Player
             UpdateInventory();
         }
 
-        // Update the inventory UI
+        /// <summary>
+        /// A method overload to add a list of items to the players inventory instead of a single one
+        /// </summary>
+        public void AddItem(List<Item> items)
+        {
+            foreach (var item in items)
+            {
+                AddItem(item);
+            }
+        }
+
+        /// <summary>
+        /// Refresh the inventory GUI
+        /// </summary>
         public void UpdateInventory()
         {
             // Add columns 
@@ -189,6 +224,7 @@ namespace Player
             Form.inventoryGrid.CellMouseEnter += InventoryGrid_CellMouseEnter;
         }
 
+        // Weapon tooltip
         public void InventoryGrid_CellMouseEnter(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -210,6 +246,30 @@ namespace Player
 
             var tooltip = $"Damage: {weapon.Damage}\nDurability: {weapon.Durability}\nMelee: {weapon.Melee}";
             row.Cells[0].ToolTipText = tooltip;
+        }
+
+        /// <summary>
+        /// Remove an item when its consumed.
+        /// </summary>
+        public void RemoveItem(Item item)
+        {
+            var existingItem = Player.inventory.FirstOrDefault(i => i.Name == item.Name);
+
+            if (existingItem == null)
+            {
+                return;
+            }
+
+            if (existingItem.Quantity > 1)
+            {
+                existingItem.Quantity--;
+            }
+            else
+            {
+                Player.inventory.Remove(existingItem);
+            }
+
+            UpdateInventory();
         }
     }
 }
