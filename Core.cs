@@ -303,6 +303,7 @@ namespace Core
                     // CURRENT PROBLEM
                     // THE COMMAND WON'T SUBMIT/NOTHING HAPPENS
                     // TRY HIDING THE STATS PANEL/LABELS
+                    // MAYBE A PROBLEM WITH SHOP CLASS INSTACEING? 
 
                     Form.shopGrid.Visible = true;
                     ShopMethods.UpdateShop();
