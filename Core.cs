@@ -17,6 +17,7 @@
 using Items;
 using Player;
 using Survival;
+using Shop;
 namespace Core
 {
     public class Game
@@ -26,13 +27,19 @@ namespace Core
 
         public Character Player { get; }
         public CharacterMethods PlayerMethods { get; }
+        public ShopCore Shop { get; }
+
+        public ShopMethods ShopMethods { get; }
+
         public Form1 Form { get; }
 
-        public Game(Character player, Form1 form)
+        public Game(ShopCore shop, Character player, Form1 form)
         {
+            Shop = shop;
+            ShopMethods = new ShopMethods(shop, form);
             Player = player;
-            Form = form;
             PlayerMethods = new CharacterMethods(player, form);
+            Form = form;
         }
 
         // Welcome to hell
@@ -292,6 +299,13 @@ namespace Core
                 case "shop":
                     // TO DO
                     // ADD LOGIC
+
+                    // CURRENT PROBLEM
+                    // THE COMMAND WON'T SUBMIT/NOTHING HAPPENS
+                    // TRY HIDING THE STATS PANEL/LABELS
+
+                    Form.shopGrid.Visible = true;
+                    ShopMethods.UpdateShop();
                     break;
                 case "scavenge":
                     var scavenge = rand.Next(0, 51).ToString();

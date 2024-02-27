@@ -16,24 +16,32 @@
 
 using Core;
 using Player;
+using Shop;
 namespace Survival
 {
     public partial class Form1 : Form
     {
         // I don't know how any of this works, but it does
         public Character Player { get; } = new();
-        public Game Game { get; }
         public CharacterMethods PlayerMethods { get; }
+
+        public ShopCore Shop { get; } = new();
+        public ShopMethods ShopMethods { get; }
+
+
+        public Game Game { get; }
 
         public Form1()
         {
             InitializeComponent();
             UpdateStats();
 
-            Game = new Game(Player, this);
+            Game = new Game(Shop, Player, this);
             PlayerMethods = Game.PlayerMethods;
+            ShopMethods = Game.ShopMethods;
 
-            PlayerMethods.OnCreate();
+            PlayerMethods.OnPlayerCreate();
+            ShopMethods.OnShopCreate();
         }
 
 
@@ -48,6 +56,7 @@ namespace Survival
             currentWeight.Text = "Current Weight: " + Player.currentWeightValue.ToString();
             maxWeight.Text = "Max Weight: " + Player.maxWeightValue.ToString();
             locationL.Text = "Location: " + Player.location;
+            shopGrid.Visible = false;
         }
         /// <summary>
         /// Resets the game

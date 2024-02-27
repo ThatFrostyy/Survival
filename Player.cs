@@ -49,7 +49,7 @@ namespace Player
         /// <summary>
         /// Called on the game start, useful for adding items to the inventory, testing, etc
         /// </summary>
-        public void OnCreate()
+        public void OnPlayerCreate()
         {
 
         }
