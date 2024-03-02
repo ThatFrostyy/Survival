@@ -20,6 +20,7 @@ namespace Player
 {
     public class Character
     {
+        // Keeps track of all the picked up items and their gui's 
         public Dictionary<DataGridViewRow, Item> itemDic = new Dictionary<DataGridViewRow, Item>();
 
         // Inventory
@@ -296,6 +297,9 @@ namespace Player
             UpdateInventory();
         }
 
+        /// <summary>
+        /// Equip a Weapon type item
+        /// </summary>
         public void EquipItem(string itemName)
         {
             var itemNameUpper = char.ToUpper(itemName[0]) + itemName.Substring(1);

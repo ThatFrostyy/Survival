@@ -68,8 +68,19 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 15:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            Fight();
+                            break;
+                        case > 15 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
@@ -88,7 +99,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Beach Commands: heal, eat, drink, explore, scavenge, help");
+                    Form.Output("Beach Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -99,7 +110,7 @@ namespace Core
 
         public void ForestCommands(Command command)
         {
-            switch (command.Argument)
+            switch (command.Action)
             {
                 case "equip":
                     if (command.Argument != null)
@@ -153,7 +164,7 @@ namespace Core
                     PlayerMethods.Rest();
                     break;
                 case "help":
-                    Form.Output("Forest Commands: heal, eat, drink, explore, scavenge, rest, help");
+                    Form.Output("Forest Commands: equip, heal, eat, drink, explore, scavenge, rest, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -165,7 +176,7 @@ namespace Core
 
         public void PlainsCommands(Command command)
         {
-            switch (command.Argument)
+            switch (command.Action)
             {
                 case "equip":
                     if (command.Argument != null)
@@ -208,7 +219,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Plains Commands: heal, eat, drink, explore, scavenge, help");
+                    Form.Output("Plains Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -219,7 +230,7 @@ namespace Core
 
         public void HillsCommands(Command command)
         {
-            switch (command.Argument)
+            switch (command.Action)
             {
                 case "equip":
                     if (command.Argument != null)
@@ -262,7 +273,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Hills Commands: heal, eat, drink, explore, scavenge, help");
+                    Form.Output("Hills Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -273,7 +284,7 @@ namespace Core
 
         public void MountainsCommands(Command command)
         {
-            switch (command.Argument)
+            switch (command.Action)
             {
                 case "equip":
                     if (command.Argument != null)
@@ -316,7 +327,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Mountains Commands: heal, eat, drink, explore, scavenge, help");
+                    Form.Output("Mountains Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -327,7 +338,7 @@ namespace Core
 
         public void VillageCommands(Command command)
         {
-            switch (command.Argument)
+            switch (command.Action)
             {
                 case "equip":
                     if (command.Argument != null)
@@ -378,7 +389,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Village Commands: heal, eat, drink, explore, scavenge, shop, help");
+                    Form.Output("Village Commands: equip, heal, eat, drink, explore, scavenge, shop, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -389,7 +400,7 @@ namespace Core
 
         public void CombatCommands(Command command)
         {
-            switch (command.Argument)
+            switch (command.Action)
             {
                 case "heal":
                     PlayerMethods.Heal();
