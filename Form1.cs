@@ -19,12 +19,6 @@ using Player;
 using Shop;
 namespace Survival
 {
-    public class Command
-    {
-        public string? Action { get; set; }
-        public string? Argument { get; set; }
-    }
-
     public partial class Form1 : Form
     {
         // I don't know how any of this works, but it does
@@ -58,6 +52,7 @@ namespace Survival
             health.Text = "Health: " + Player.healthValue.ToString();
             hunger.Text = "Hunger: " + Player.hungerValue.ToString();
             thirst.Text = "Thirst: " + Player.thirstValue.ToString();
+            armor.Text = "Armor: " + Player.armorValue.ToString();
             currentWeight.Text = "Current Weight: " + Player.currentWeightValue.ToString();
             maxWeight.Text = "Max Weight: " + Player.maxWeightValue.ToString();
             locationL.Text = "Location: " + Player.location;
@@ -71,12 +66,16 @@ namespace Survival
             consoleBox.Clear();
             Output("Your journey comes to an end with a sudden death.");
 
+            Player.strengthValue = 15;
             Player.healthValue = 100;
             Player.hungerValue = 100;
             Player.thirstValue = 100;
+            Player.armorValue = 0;
             Player.currentWeightValue = 0;
             Player.maxWeightValue = 30;
             Player.location = "Beach";
+            Player.inCombat = false;
+            Player.equippedItem = Guid.Empty;
             Player.inventory.Clear();
 
             inventoryGrid.Rows.Clear();
@@ -164,5 +163,11 @@ namespace Survival
         {
             Application.Exit();
         }
+    }
+
+    public class Command
+    {
+        public string? Action { get; set; }
+        public string? Argument { get; set; }
     }
 }

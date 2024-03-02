@@ -44,6 +44,7 @@
             quitToolStripMenuItem = new ToolStripMenuItem();
             consoleBox = new TextBox();
             inventoryGrid = new DataGridView();
+            armor = new Label();
             statsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)shopGrid).BeginInit();
             menuStrip1.SuspendLayout();
@@ -66,6 +67,7 @@
             statsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             statsPanel.BorderStyle = BorderStyle.FixedSingle;
             statsPanel.Controls.Add(shopGrid);
+            statsPanel.Controls.Add(armor);
             statsPanel.Controls.Add(currentWeight);
             statsPanel.Controls.Add(maxWeight);
             statsPanel.Controls.Add(locationL);
@@ -83,17 +85,17 @@
             shopGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             shopGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             shopGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            shopGrid.Location = new Point(-1, -1);
+            shopGrid.Location = new Point(-1, -2);
             shopGrid.Name = "shopGrid";
             shopGrid.ReadOnly = true;
             shopGrid.RowHeadersVisible = false;
-            shopGrid.Size = new Size(196, 238);
+            shopGrid.Size = new Size(196, 239);
             shopGrid.TabIndex = 5;
             shopGrid.Visible = false;
             // 
             // currentWeight
             // 
-            currentWeight.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            currentWeight.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             currentWeight.AutoSize = true;
             currentWeight.Location = new Point(-1, 191);
             currentWeight.Name = "currentWeight";
@@ -103,7 +105,7 @@
             // 
             // maxWeight
             // 
-            maxWeight.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            maxWeight.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             maxWeight.AutoSize = true;
             maxWeight.Location = new Point(-1, 206);
             maxWeight.Name = "maxWeight";
@@ -113,7 +115,7 @@
             // 
             // locationL
             // 
-            locationL.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            locationL.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             locationL.AutoSize = true;
             locationL.Location = new Point(-1, 221);
             locationL.Name = "locationL";
@@ -214,6 +216,16 @@
             inventoryGrid.Size = new Size(295, 238);
             inventoryGrid.TabIndex = 4;
             // 
+            // armor
+            // 
+            armor.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            armor.AutoSize = true;
+            armor.Location = new Point(-1, 176);
+            armor.Name = "armor";
+            armor.Size = new Size(75, 15);
+            armor.TabIndex = 6;
+            armor.Text = "Armor Value:";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -256,5 +268,6 @@
         private TextBox consoleBox;
         public DataGridView inventoryGrid;
         public DataGridView shopGrid;
+        private Label armor;
     }
 }

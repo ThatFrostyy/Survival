@@ -27,9 +27,11 @@ namespace Player
         public List<Item> inventory = [];
 
         // Stats
+        public int strengthValue = 15;
         public int healthValue = 100;
         public int hungerValue = 100;
         public int thirstValue = 100;
+        public int armorValue = 0;
         public double currentWeightValue = 0;
         public int maxWeightValue = 30;
         public string location = "Beach";

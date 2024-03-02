@@ -15,6 +15,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
 using Items;
+using Enemies;
 using Player;
 using Survival;
 using Shop;
@@ -72,23 +73,22 @@ namespace Core
 
                     switch (encounter)
                     {
-                        case <= 15:
+                        case <= 12:
                             Form.Output("You suddenly get attacked by an enemy! You enter combat.");
                             Player.inCombat = true;
-                            Fight();
                             break;
-                        case > 15 and <= 100:
+                        case > 12 and <= 100:
                             Explore(num);
                             break;
                     }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 7).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
+                        case <= 30:
                             Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(rock);
                             break;
@@ -133,24 +133,34 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 15:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 15 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 17).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
+                        case <= 30:
                             Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(rock);
                             break;
-                        case "4":
+                        case > 30 and <= 60:
                             Item branch = new("Branch", 1, 1, "Assets/Images/Icons/Branch.png");
                             PlayerMethods.AddItem(branch);
                             break;
-                        case "6":
+                        case > 60 and <= 75:
                             Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15);
                             PlayerMethods.AddItem(apple);
                             break;
@@ -199,16 +209,26 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 12:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 12 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 7).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
+                        case <= 30:
                             Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
@@ -253,16 +273,26 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 12:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 12 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 7).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
+                        case <= 50:
                             Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
@@ -307,16 +337,26 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 15:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 15 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 3).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
+                        case <= 75:
                             Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
@@ -361,8 +401,18 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 15:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 15 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "shop":
@@ -374,11 +424,11 @@ namespace Core
                     ShopMethods.UpdateShop();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 51).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "25":
+                        case <= 10:
                             Item item = new("Tender", 0.1, rand.Next(0, 11), "Assets/Images/Icons/Money.png");
                             PlayerMethods.AddItem(item);
                             break;
@@ -409,11 +459,11 @@ namespace Core
                     Fight();
                     break;
                 case "retreat":
-                    var chance = rand.Next(0, 11).ToString();
+                    var chance = rand.Next(0, 101);
 
                     switch (chance)
                     {
-                        case "5":
+                        case <= 35:
                             Player.inCombat = false;
                             Form.Output("You successfully retreat out of combat.");
                             break;
@@ -495,9 +545,96 @@ namespace Core
             }
         }
 
-        public void Fight()
+        // TO DO
+        // Let the player heal in bettween the fight
+        public async void Fight()
         {
-            throw new NotImplementedException();
+            var enemies = new List<Enemy>
+            {
+                new("Peasant", 100, 0, rand.Next(0, 11), false),
+                new("Bandit", 100, 0, rand.Next(9, 21), false),
+                new("Forest Bandit", 100, rand.Next(9, 31), rand.Next(9, 21), false),
+                new("Wounded Raider", rand.Next(79, 101), rand.Next(11, 21), rand.Next(9, 21), false),
+                new("Raider", 100, rand.Next(31, 51), rand.Next(21, 31), false),
+            };
+            List<int> weights = [30, 40, 20, 5, 5];
+
+            var enemy = ChooseWeightedRandom(enemies, weights);
+
+            while (Player.healthValue > 0 && enemy.Health > 0)
+            {
+                Weapon equippedWeapon = null;
+                if (Player.inventory.Find(item => item.Id == Player.equippedItem) is Weapon weapon)
+                {
+                    equippedWeapon = weapon;
+                }
+
+                var playerDamage = equippedWeapon != null ? equippedWeapon.Damage : Player.strengthValue;
+                var playerAttack = playerDamage - enemy.Armor;
+                enemy.Health -= playerAttack;
+
+                Form.Output("");
+                Form.Output($"You attacked the {enemy.Name} for {playerAttack} damage, he has {enemy.Health} health and {enemy.Armor} armor points left");
+
+                if (equippedWeapon != null && rand.Next(100) < 50)
+                {
+                    equippedWeapon.Durability -= 1;
+                }
+
+                if (rand.Next(100) < 30) 
+                {
+                    enemy.Armor -= playerAttack;
+                    Form.Output($"You damage the {enemy.Name}'s armor for {playerAttack} points!");
+                }
+
+                await Task.Delay(1000);
+
+                if (enemy.Health <= 0)
+                {
+                    continue;
+                }
+
+                var enemyAttack = enemy.Damage - Player.armorValue;
+                Player.healthValue -= enemyAttack;
+                Form.Output($"The {enemy.Name} attacked you for {enemyAttack} points!");
+            }
+
+            // Check who won the fight
+            if (Player.healthValue > 0)
+            {
+                Form.Output($"You defeat the {enemy.Name}!");
+                Player.inCombat = false;
+            }
+            else
+            {
+                Form.Output($"You were defeated by the {enemy.Name}...");
+                Form.GameOver();
+            }
+
+            Form.UpdateStats();
+        }
+
+        // TO DO
+        // Add to Utilities.cs and init the class correctly 
+        private T ChooseWeightedRandom<T>(List<T> list, List<int> weights)
+        {
+            if (list.Count != weights.Count)
+            {
+                throw new ArgumentException("The list and weights must be the same size.");
+            }
+
+            var totalWeight = weights.Sum();
+            var choice = rand.Next(totalWeight);
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (choice < weights[i])
+                {
+                    return list[i];
+                }
+                choice -= weights[i];
+            }
+
+            throw new InvalidOperationException("The weights must sum to a value greater than zero.");
         }
     }
 }
