@@ -56,7 +56,6 @@ namespace Survival
             currentWeight.Text = "Current Weight: " + Player.currentWeightValue.ToString();
             maxWeight.Text = "Max Weight: " + Player.maxWeightValue.ToString();
             locationL.Text = "Location: " + Player.location;
-            shopGrid.Visible = false;
         }
         /// <summary>
         /// Resets the game
@@ -162,6 +161,11 @@ namespace Survival
         private void QuitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

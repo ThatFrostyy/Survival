@@ -54,11 +54,12 @@
             // inputBox
             // 
             inputBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            inputBox.Location = new Point(12, 378);
+            inputBox.Location = new Point(17, 630);
+            inputBox.Margin = new Padding(4, 5, 4, 5);
             inputBox.MaxLength = 1000;
             inputBox.Name = "inputBox";
             inputBox.PlaceholderText = "Enter 'help' for help..";
-            inputBox.Size = new Size(497, 23);
+            inputBox.Size = new Size(708, 31);
             inputBox.TabIndex = 0;
             inputBox.KeyDown += InputBox_KeyDown;
             // 
@@ -74,9 +75,10 @@
             statsPanel.Controls.Add(thirst);
             statsPanel.Controls.Add(hunger);
             statsPanel.Controls.Add(health);
-            statsPanel.Location = new Point(12, 40);
+            statsPanel.Location = new Point(17, 67);
+            statsPanel.Margin = new Padding(4, 5, 4, 5);
             statsPanel.Name = "statsPanel";
-            statsPanel.Size = new Size(196, 238);
+            statsPanel.Size = new Size(279, 395);
             statsPanel.TabIndex = 1;
             // 
             // shopGrid
@@ -97,9 +99,10 @@
             // 
             currentWeight.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             currentWeight.AutoSize = true;
-            currentWeight.Location = new Point(-1, 191);
+            currentWeight.Location = new Point(-1, 318);
+            currentWeight.Margin = new Padding(4, 0, 4, 0);
             currentWeight.Name = "currentWeight";
-            currentWeight.Size = new Size(94, 15);
+            currentWeight.Size = new Size(140, 25);
             currentWeight.TabIndex = 5;
             currentWeight.Text = "Current Weight: ";
             // 
@@ -107,9 +110,10 @@
             // 
             maxWeight.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             maxWeight.AutoSize = true;
-            maxWeight.Location = new Point(-1, 206);
+            maxWeight.Location = new Point(-1, 343);
+            maxWeight.Margin = new Padding(4, 0, 4, 0);
             maxWeight.Name = "maxWeight";
-            maxWeight.Size = new Size(74, 15);
+            maxWeight.Size = new Size(110, 25);
             maxWeight.TabIndex = 4;
             maxWeight.Text = "Max Weight:";
             // 
@@ -117,9 +121,10 @@
             // 
             locationL.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             locationL.AutoSize = true;
-            locationL.Location = new Point(-1, 221);
+            locationL.Location = new Point(-1, 368);
+            locationL.Margin = new Padding(4, 0, 4, 0);
             locationL.Name = "locationL";
-            locationL.Size = new Size(56, 15);
+            locationL.Size = new Size(83, 25);
             locationL.TabIndex = 3;
             locationL.Text = "Location:";
             // 
@@ -127,9 +132,10 @@
             // 
             thirst.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             thirst.AutoSize = true;
-            thirst.Location = new Point(-1, 30);
+            thirst.Location = new Point(-1, 50);
+            thirst.Margin = new Padding(4, 0, 4, 0);
             thirst.Name = "thirst";
-            thirst.Size = new Size(39, 15);
+            thirst.Size = new Size(59, 25);
             thirst.TabIndex = 2;
             thirst.Text = "Thirst:";
             // 
@@ -137,9 +143,10 @@
             // 
             hunger.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             hunger.AutoSize = true;
-            hunger.Location = new Point(-1, 15);
+            hunger.Location = new Point(-1, 25);
+            hunger.Margin = new Padding(4, 0, 4, 0);
             hunger.Name = "hunger";
-            hunger.Size = new Size(50, 15);
+            hunger.Size = new Size(75, 25);
             hunger.TabIndex = 1;
             hunger.Text = "Hunger:";
             // 
@@ -148,17 +155,20 @@
             health.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             health.AutoSize = true;
             health.Location = new Point(-1, 0);
+            health.Margin = new Padding(4, 0, 4, 0);
             health.Name = "health";
-            health.Size = new Size(48, 15);
+            health.Size = new Size(72, 25);
             health.TabIndex = 0;
             health.Text = "Health: ";
             // 
             // menuStrip1
             // 
+            menuStrip1.ImageScalingSize = new Size(24, 24);
             menuStrip1.Items.AddRange(new ToolStripItem[] { gameToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(521, 24);
+            menuStrip1.Padding = new Padding(9, 3, 0, 3);
+            menuStrip1.Size = new Size(744, 35);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -166,41 +176,42 @@
             // 
             gameToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saveToolStripMenuItem, loadToolStripMenuItem, quitToolStripMenuItem });
             gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            gameToolStripMenuItem.Size = new Size(50, 20);
+            gameToolStripMenuItem.Size = new Size(74, 29);
             gameToolStripMenuItem.Text = "Game";
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(140, 22);
+            saveToolStripMenuItem.Size = new Size(213, 34);
             saveToolStripMenuItem.Text = "Save";
             // 
             // loadToolStripMenuItem
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             loadToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
-            loadToolStripMenuItem.Size = new Size(140, 22);
+            loadToolStripMenuItem.Size = new Size(213, 34);
             loadToolStripMenuItem.Text = "Load";
             // 
             // quitToolStripMenuItem
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             quitToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
-            quitToolStripMenuItem.Size = new Size(140, 22);
+            quitToolStripMenuItem.Size = new Size(213, 34);
             quitToolStripMenuItem.Text = "Quit";
             quitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
             // 
             // consoleBox
             // 
             consoleBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            consoleBox.Location = new Point(12, 284);
+            consoleBox.Location = new Point(17, 473);
+            consoleBox.Margin = new Padding(4, 5, 4, 5);
             consoleBox.MaxLength = 1000;
             consoleBox.Multiline = true;
             consoleBox.Name = "consoleBox";
             consoleBox.ReadOnly = true;
             consoleBox.ScrollBars = ScrollBars.Vertical;
-            consoleBox.Size = new Size(497, 88);
+            consoleBox.Size = new Size(708, 144);
             consoleBox.TabIndex = 3;
             // 
             // inventoryGrid
@@ -209,11 +220,13 @@
             inventoryGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             inventoryGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             inventoryGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            inventoryGrid.Location = new Point(214, 40);
+            inventoryGrid.Location = new Point(306, 67);
+            inventoryGrid.Margin = new Padding(4, 5, 4, 5);
             inventoryGrid.Name = "inventoryGrid";
             inventoryGrid.ReadOnly = true;
             inventoryGrid.RowHeadersVisible = false;
-            inventoryGrid.Size = new Size(295, 238);
+            inventoryGrid.RowHeadersWidth = 62;
+            inventoryGrid.Size = new Size(421, 397);
             inventoryGrid.TabIndex = 4;
             // 
             // armor
@@ -228,18 +241,20 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(521, 413);
+            ClientSize = new Size(744, 688);
             Controls.Add(inventoryGrid);
             Controls.Add(consoleBox);
             Controls.Add(statsPanel);
             Controls.Add(inputBox);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
+            Margin = new Padding(4, 5, 4, 5);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Survival";
+            Load += Form1_Load;
             statsPanel.ResumeLayout(false);
             statsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)shopGrid).EndInit();

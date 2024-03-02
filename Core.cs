@@ -419,7 +419,7 @@ namespace Core
                     // TO DO
                     // ADD LOGIC
 
-                    // Issue Here 
+                    // Fixed issue, shop is now usable
                     Form.shopGrid.Visible = true;
                     ShopMethods.UpdateShop();
                     break;
@@ -486,7 +486,7 @@ namespace Core
         public void Explore(int num)
         {
             switch (num)
-            {
+            {  
                 case <= 5:
                     if (Player.location == "Village")
                     {

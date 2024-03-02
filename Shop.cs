@@ -93,6 +93,7 @@ namespace Shop
                     row.Cells["Stock"].Value = item.Stock;
                 }
             }
+            Form.Output("You have entered the village's shop.");
             Form.shopGrid.CellMouseEnter += ShopGrid_CellMouseEnter;
         }
 
