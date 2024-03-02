@@ -35,17 +35,21 @@ namespace Shop
             Form = form;
         }
 
+        /// <summary>
+        /// Called on the game start, useful for adding items to the shop, testing, etc
+        /// </summary>
         public void OnShopCreate()
         {
             var numberOfApples = rand.Next(1, 11);
 
-            Food apple = new("Apple", 1, 1, "Assets/Images/Apple.png", 15, stock: numberOfApples, price: 10);
+            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: numberOfApples, price: 10);
             Shop.items.Add(apple);
         }
 
         public void UpdateShop()
         {
             // Add columns 
+            // They are always added trough code because they are not set in the designer
             if (Form.shopGrid.Columns.Count == 0)
             {
                 var iconColumn = new DataGridViewImageColumn
@@ -102,22 +106,23 @@ namespace Shop
 
             var row = Form.shopGrid.Rows[e.RowIndex];
             var item = Shop.items.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
-
             var tooltip = string.Empty;
 
-            // TO DO
-            // Convert to switch statement
-            if (item is Weapon weapon)
+            // Can be changed into a switch expression 
+            switch (item)
             {
-                tooltip = $"Damage: {weapon.Damage}\nDurability: {weapon.Durability}\nMelee: {weapon.Melee}";
-            }
-            else if (item is Food food)
-            {
-                tooltip = $"Hunger Restore: {food.HungerRestore}\nWeight: {food.Weight}";
-            }
-            else if (item is Drink drink)
-            {
-                tooltip = $"Thirst Restore: {drink.ThirstRestore}\nWeight: {drink.Weight}";
+                case Weapon weapon:
+                    tooltip = $"Damage: {weapon.Damage}\nDurability: {weapon.Durability}\nMelee: {weapon.Melee}";
+                    break;
+                case Food food:
+                    tooltip = $"Hunger Restore: {food.HungerRestore}\nWeight: {food.Weight}";
+                    break;
+                case Drink drink:
+                    tooltip = $"Thirst Restore: {drink.ThirstRestore}\nWeight: {drink.Weight}";
+                    break;
+                default:
+                    tooltip = "Unknown item type";
+                    break;
             }
 
             foreach (DataGridViewCell cell in row.Cells)

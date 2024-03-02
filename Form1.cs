@@ -28,7 +28,6 @@ namespace Survival
         public ShopCore Shop { get; } = new();
         public ShopMethods ShopMethods { get; }
 
-
         public Game Game { get; }
 
         public Form1()
@@ -53,6 +52,7 @@ namespace Survival
             health.Text = "Health: " + Player.healthValue.ToString();
             hunger.Text = "Hunger: " + Player.hungerValue.ToString();
             thirst.Text = "Thirst: " + Player.thirstValue.ToString();
+            armor.Text = "Armor: " + Player.armorValue.ToString();
             currentWeight.Text = "Current Weight: " + Player.currentWeightValue.ToString();
             maxWeight.Text = "Max Weight: " + Player.maxWeightValue.ToString();
             locationL.Text = "Location: " + Player.location;
@@ -65,12 +65,16 @@ namespace Survival
             consoleBox.Clear();
             Output("Your journey comes to an end with a sudden death.");
 
+            Player.strengthValue = 15;
             Player.healthValue = 100;
             Player.hungerValue = 100;
             Player.thirstValue = 100;
+            Player.armorValue = 0;
             Player.currentWeightValue = 0;
             Player.maxWeightValue = 30;
             Player.location = "Beach";
+            Player.inCombat = false;
+            Player.equippedItem = Guid.Empty;
             Player.inventory.Clear();
 
             inventoryGrid.Rows.Clear();
@@ -97,41 +101,61 @@ namespace Survival
             }
 
             e.SuppressKeyPress = true;
-            var command = inputBox.Text.ToLower();
+
+            var input = inputBox.Text.ToLower();
+            var command = ParseCommand(input);
 
             try
             {
-                switch (Player.location)
+                if (!Player.inCombat)
                 {
-                    case "Beach":
-                        Game.BeachCommands(command);
-                        break;
-                    case "Forest":
-                        Game.ForestCommands(command);
-                        break;
-                    case "Plains":
-                        Game.PlainsCommands(command);
-                        break;
-                    case "Hills":
-                        Game.HillsCommands(command);
-                        break;
-                    case "Mountains":
-                        Game.MountainsCommands(command);
-                        break;
-                    case "Village":
-                        Game.VillageCommands(command);
-                        break;
-                    default:
-                        Output("Error");
-                        break;
+                    switch (Player.location)
+                    {
+                        case "Beach":
+                            Game.BeachCommands(command);
+                            break;
+                        case "Forest":
+                            Game.ForestCommands(command);
+                            break;
+                        case "Plains":
+                            Game.PlainsCommands(command);
+                            break;
+                        case "Hills":
+                            Game.HillsCommands(command);
+                            break;
+                        case "Mountains":
+                            Game.MountainsCommands(command);
+                            break;
+                        case "Village":
+                            Game.VillageCommands(command);
+                            break;
+                        default:
+                            Output("Error");
+                            break;
+                    }
+                }
+                else
+                {
+                    Game.CombatCommands(command);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// Parse the input
+        /// </summary>
+        public Command ParseCommand(string input)
+        {
+            var commandParts = input.Split(' ');
+            return new Command
+            {
+                Action = commandParts[0],
+                Argument = commandParts.Length > 1 ? commandParts[1] : null
+            };
+        }
 
         // Buttons
         private void QuitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,5 +167,11 @@ namespace Survival
         {
 
         }
+    }
+
+    public class Command
+    {
+        public string? Action { get; set; }
+        public string? Argument { get; set; }
     }
 }

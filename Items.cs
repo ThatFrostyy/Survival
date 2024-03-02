@@ -20,6 +20,7 @@ namespace Items
 {
     public class Item
     {
+        public Guid Id { get; private set; }
         public string Name { get; set; }
         public double Weight { get; set; }
         public int Quantity { get; set; }
@@ -29,6 +30,7 @@ namespace Items
 
         public Item(string name, double weight, int quantity, string iconPath, int stock = 0, double price = 0)
         {
+            Id = Guid.NewGuid();
             Name = name;
             Weight = weight;
             Quantity = quantity;
@@ -72,6 +74,17 @@ namespace Items
             : base(name, weight, quantity, iconPath, stock, price)
         {
             ThirstRestore = thirstRestore;
+        }
+    }
+
+    public class Medicine : Item
+    {
+        public int HealthRestore { get; set; }
+
+        public Medicine(string name, double weight, int quantity, string iconPath, int healthRestore, int stock = 0, double price = 0)
+            : base(name, weight, quantity, iconPath, stock, price)
+        {
+            HealthRestore = healthRestore;
         }
     }
 }

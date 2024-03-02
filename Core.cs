@@ -15,6 +15,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
 using Items;
+using Enemies;
 using Player;
 using Survival;
 using Shop;
@@ -42,11 +43,24 @@ namespace Core
             Form = form;
         }
 
-        // Welcome to hell
-        public void BeachCommands(string command)
+        // Commands
+        public void BeachCommands(Command command)
         {
-            switch (command)
+            switch (command.Action)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -55,17 +69,27 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 12:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 12 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 7).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
-                            Item rock = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                        case <= 30:
+                            Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(rock);
                             break;
                         default:
@@ -75,7 +99,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    BeachHelp();
+                    Form.Output("Beach Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -83,15 +107,24 @@ namespace Core
             }
             Form.UpdateStats();
         }
-        public void BeachHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, help");
-        }
 
-        public void ForestCommands(string command)
+        public void ForestCommands(Command command)
         {
-            switch (command)
+            switch (command.Action)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -100,25 +133,35 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 15:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 15 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 17).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
-                            Item rock = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                        case <= 30:
+                            Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(rock);
                             break;
-                        case "4":
-                            Item branch = new("Branch", 1, 1, "Assets/Images/Branch.png");
+                        case > 30 and <= 60:
+                            Item branch = new("Branch", 1, 1, "Assets/Images/Icons/Branch.png");
                             PlayerMethods.AddItem(branch);
                             break;
-                        case "6":
-                            Food apple = new("Apple", 1, 1, "Assets/Images/Apple.png", 15);
+                        case > 60 and <= 75:
+                            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15);
                             PlayerMethods.AddItem(apple);
                             break;
                         default:
@@ -131,7 +174,7 @@ namespace Core
                     PlayerMethods.Rest();
                     break;
                 case "help":
-                    ForestHelp();
+                    Form.Output("Forest Commands: equip, heal, eat, drink, explore, scavenge, rest, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -140,15 +183,24 @@ namespace Core
             }
             Form.UpdateStats();
         }
-        public void ForestHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, rest, help");
-        }
 
-        public void PlainsCommands(string command)
+        public void PlainsCommands(Command command)
         {
-            switch (command)
+            switch (command.Action)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -157,17 +209,27 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 12:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 12 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 7).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
-                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                        case <= 30:
+                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -177,7 +239,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    PlainsHelp();
+                    Form.Output("Plains Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -185,15 +247,24 @@ namespace Core
             }
             Form.UpdateStats();
         }
-        public void PlainsHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, help");
-        }
 
-        public void HillsCommands(string command)
+        public void HillsCommands(Command command)
         {
-            switch (command)
+            switch (command.Action)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -202,17 +273,27 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 12:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 12 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 7).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
-                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                        case <= 50:
+                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -222,7 +303,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    HillsHelp();
+                    Form.Output("Hills Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -230,15 +311,24 @@ namespace Core
             }
             Form.UpdateStats();
         }
-        public void HillsHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, help");
-        }
 
-        public void MountainsCommands(string command)
+        public void MountainsCommands(Command command)
         {
-            switch (command)
+            switch (command.Action)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -247,17 +337,27 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 15:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 15 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 3).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "2":
-                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                        case <= 75:
+                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -267,7 +367,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    MountainsHelp();
+                    Form.Output("Mountains Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -275,15 +375,24 @@ namespace Core
             }
             Form.UpdateStats();
         }
-        public void MountainsHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, help");
-        }
 
-        public void VillageCommands(string command)
+        public void VillageCommands(Command command)
         {
-            switch (command)
+            switch (command.Action)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -292,8 +401,18 @@ namespace Core
                     break;
                 case "explore":
                     var num = rand.Next(0, 101);
+                    var encounter = rand.Next(0, 101);
 
-                    Explore(num);
+                    switch (encounter)
+                    {
+                        case <= 15:
+                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            Player.inCombat = true;
+                            break;
+                        case > 15 and <= 100:
+                            Explore(num);
+                            break;
+                    }
                     PlayerMethods.Fatigue();
                     break;
                 case "shop":
@@ -305,12 +424,12 @@ namespace Core
                     ShopMethods.UpdateShop();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 51).ToString();
+                    var scavenge = rand.Next(0, 101);
 
                     switch (scavenge)
                     {
-                        case "25":
-                            Item item = new("Tender", 0.1, rand.Next(0, 11), "Assets/Images/Money.png");
+                        case <= 10:
+                            Item item = new("Tender", 0.1, rand.Next(0, 11), "Assets/Images/Icons/Money.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -320,7 +439,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    VillageHelp();
+                    Form.Output("Village Commands: equip, heal, eat, drink, explore, scavenge, shop, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -328,9 +447,40 @@ namespace Core
             }
             Form.UpdateStats();
         }
-        public void VillageHelp()
+
+        public void CombatCommands(Command command)
         {
-            Form.Output("Commands: eat, drink, explore, scavenge, shop, help");
+            switch (command.Action)
+            {
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
+                case "fight":
+                    Fight();
+                    break;
+                case "retreat":
+                    var chance = rand.Next(0, 101);
+
+                    switch (chance)
+                    {
+                        case <= 35:
+                            Player.inCombat = false;
+                            Form.Output("You successfully retreat out of combat.");
+                            break;
+                        default:
+                            Form.Output("You fail to retreat and receive some damage.");
+                            break;
+                    }
+                    PlayerMethods.Fatigue();
+                    break;
+                case "help":
+                    Form.Output("Combat Commands: fight, heal, retreat, help");
+                    break;
+                default:
+                    Form.Output("Unknown command: " + command);
+                    break;
+            }
+            Form.UpdateStats();
         }
 
         public void Explore(int num)
@@ -393,6 +543,98 @@ namespace Core
                     }
                     break;
             }
+        }
+
+        // TO DO
+        // Let the player heal in bettween the fight
+        public async void Fight()
+        {
+            var enemies = new List<Enemy>
+            {
+                new("Peasant", 100, 0, rand.Next(0, 11), false),
+                new("Bandit", 100, 0, rand.Next(9, 21), false),
+                new("Forest Bandit", 100, rand.Next(9, 31), rand.Next(9, 21), false),
+                new("Wounded Raider", rand.Next(79, 101), rand.Next(11, 21), rand.Next(9, 21), false),
+                new("Raider", 100, rand.Next(31, 51), rand.Next(21, 31), false),
+            };
+            List<int> weights = [30, 40, 20, 5, 5];
+
+            var enemy = ChooseWeightedRandom(enemies, weights);
+
+            while (Player.healthValue > 0 && enemy.Health > 0)
+            {
+                Weapon equippedWeapon = null;
+                if (Player.inventory.Find(item => item.Id == Player.equippedItem) is Weapon weapon)
+                {
+                    equippedWeapon = weapon;
+                }
+
+                var playerDamage = equippedWeapon != null ? equippedWeapon.Damage : Player.strengthValue;
+                var playerAttack = playerDamage - enemy.Armor;
+                enemy.Health -= playerAttack;
+
+                Form.Output("");
+                Form.Output($"You attacked the {enemy.Name} for {playerAttack} damage, he has {enemy.Health} health and {enemy.Armor} armor points left");
+
+                if (equippedWeapon != null && rand.Next(100) < 50)
+                {
+                    equippedWeapon.Durability -= 1;
+                }
+
+                if (rand.Next(100) < 30) 
+                {
+                    enemy.Armor -= playerAttack;
+                    Form.Output($"You damage the {enemy.Name}'s armor for {playerAttack} points!");
+                }
+
+                await Task.Delay(1000);
+
+                if (enemy.Health <= 0)
+                {
+                    continue;
+                }
+
+                var enemyAttack = enemy.Damage - Player.armorValue;
+                Player.healthValue -= enemyAttack;
+                Form.Output($"The {enemy.Name} attacked you for {enemyAttack} points!");
+            }
+
+            // Check who won the fight
+            if (Player.healthValue > 0)
+            {
+                Form.Output($"You defeat the {enemy.Name}!");
+                Player.inCombat = false;
+            }
+            else
+            {
+                Form.Output($"You were defeated by the {enemy.Name}...");
+                Form.GameOver();
+            }
+
+            Form.UpdateStats();
+        }
+
+        // TO DO
+        // Add to Utilities.cs and init the class correctly 
+        private T ChooseWeightedRandom<T>(List<T> list, List<int> weights)
+        {
+            if (list.Count != weights.Count)
+            {
+                throw new ArgumentException("The list and weights must be the same size.");
+            }
+
+            var totalWeight = weights.Sum();
+            var choice = rand.Next(totalWeight);
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (choice < weights[i])
+                {
+                    return list[i];
+                }
+                choice -= weights[i];
+            }
+
+            throw new InvalidOperationException("The weights must sum to a value greater than zero.");
         }
     }
 }
