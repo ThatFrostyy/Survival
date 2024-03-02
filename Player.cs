@@ -59,8 +59,8 @@ namespace Player
         /// </summary>
         public void OnPlayerCreate()
         {
-            Weapon test = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
-            AddItem(test);
+            //Weapon test = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
+            //AddItem(test);
         }
 
         /// <summary>

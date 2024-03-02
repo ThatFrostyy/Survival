@@ -417,9 +417,8 @@ namespace Core
                     break;
                 case "shop":
                     // TO DO
-                    // ADD LOGIC
+                    // FINISH LOGIC
 
-                    // Fixed issue, shop is now usable
                     Form.shopGrid.Visible = true;
                     ShopMethods.UpdateShop();
                     break;

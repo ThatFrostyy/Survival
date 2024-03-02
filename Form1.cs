@@ -162,11 +162,6 @@ namespace Survival
         {
             Application.Exit();
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 
     public class Command
