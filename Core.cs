@@ -42,7 +42,7 @@ namespace Core
             Form = form;
         }
 
-        // Welcome to hell
+        // Commands
         public void BeachCommands(string command)
         {
             switch (command)
@@ -75,17 +75,13 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    BeachHelp();
+                    Form.Output("Beach Commands: eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
                     break;
             }
             Form.UpdateStats();
-        }
-        public void BeachHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, help");
         }
 
         public void ForestCommands(string command)
@@ -131,7 +127,7 @@ namespace Core
                     PlayerMethods.Rest();
                     break;
                 case "help":
-                    ForestHelp();
+                    Form.Output("Forest Commands: eat, drink, explore, scavenge, rest, help")
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -139,10 +135,6 @@ namespace Core
 
             }
             Form.UpdateStats();
-        }
-        public void ForestHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, rest, help");
         }
 
         public void PlainsCommands(string command)
@@ -177,17 +169,13 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    PlainsHelp();
+                    Form.Output("Plains Commands: eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
                     break;
             }
             Form.UpdateStats();
-        }
-        public void PlainsHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, help");
         }
 
         public void HillsCommands(string command)
@@ -222,17 +210,13 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    HillsHelp();
+                    Form.Output("Hills Commands: eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
                     break;
             }
             Form.UpdateStats();
-        }
-        public void HillsHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, help");
         }
 
         public void MountainsCommands(string command)
@@ -267,17 +251,13 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    MountainsHelp();
+                    Form.Output("Mountains Commands: eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
                     break;
             }
             Form.UpdateStats();
-        }
-        public void MountainsHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, help");
         }
 
         public void VillageCommands(string command)
@@ -320,17 +300,13 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    VillageHelp();
+                    Form.Output("Village Commands: eat, drink, explore, scavenge, shop, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
                     break;
             }
             Form.UpdateStats();
-        }
-        public void VillageHelp()
-        {
-            Form.Output("Commands: eat, drink, explore, scavenge, shop, help");
         }
 
         public void Explore(int num)

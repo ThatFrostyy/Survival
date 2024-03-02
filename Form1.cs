@@ -28,7 +28,6 @@ namespace Survival
         public ShopCore Shop { get; } = new();
         public ShopMethods ShopMethods { get; }
 
-
         public Game Game { get; }
 
         public Form1()
@@ -129,7 +128,7 @@ namespace Survival
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
