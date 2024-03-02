@@ -20,6 +20,8 @@ namespace Player
 {
     public class Character
     {
+        public Dictionary<DataGridViewRow, Item> itemDic = new Dictionary<DataGridViewRow, Item>();
+
         // Inventory
         public List<Item> inventory = [];
 
@@ -30,6 +32,9 @@ namespace Player
         public double currentWeightValue = 0;
         public int maxWeightValue = 30;
         public string location = "Beach";
+
+        public bool inCombat = false;
+        public Guid equippedItem;
     }
 
     public class CharacterMethods
@@ -51,7 +56,8 @@ namespace Player
         /// </summary>
         public void OnPlayerCreate()
         {
-
+            Weapon test = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
+            AddItem(test);
         }
 
         /// <summary>
@@ -85,6 +91,23 @@ namespace Player
             else
             {
                 Form.Output("You don't have any drinks!");
+            }
+        }
+
+        /// <summary>
+        /// Consume a medicine item
+        /// </summary>
+        public void Heal()
+        {
+            if (Player.inventory.FirstOrDefault(item => item is Medicine) is Medicine medicine)
+            {
+                Player.healthValue = Math.Min(Player.healthValue + medicine.HealthRestore, 100);
+                Form.Output($"You use a {medicine.Name}. Hunger: {Player.healthValue}");
+                RemoveItem(medicine);
+            }
+            else
+            {
+                Form.Output("You don't have any medicine!");
             }
         }
 
@@ -145,7 +168,7 @@ namespace Player
 
             var existingItem = Player.inventory.FirstOrDefault(i => i.Name == item.Name);
 
-            if (existingItem != null)
+            if (existingItem != null && (item is not Weapon || (item is Weapon && existingItem.Id == item.Id)))
             {
                 existingItem.Quantity++;
                 Form.Output($"You find and pick up another {item.Name}! You now have: {existingItem.Quantity}");
@@ -204,7 +227,7 @@ namespace Player
                 // Check if there's already a row for this item
                 var existingRow = Form.inventoryGrid.Rows
                     .OfType<DataGridViewRow>()
-                    .FirstOrDefault(r => r.Cells["Name"].Value.ToString() == item.Name);
+                    .FirstOrDefault(r => r.Cells["Name"].Value.ToString() == item.Name && (item is not Weapon));
 
                 if (existingRow != null)
                 {
@@ -219,6 +242,7 @@ namespace Player
                     row.Cells["Name"].Value = item.Name;
                     row.Cells["Weight"].Value = item.Weight;
                     row.Cells["Quantity"].Value = item.Quantity;
+                    Player.itemDic[row] = item;
                 }
             }
             Form.inventoryGrid.CellMouseEnter += InventoryGrid_CellMouseEnter;
@@ -233,7 +257,7 @@ namespace Player
             }
 
             var row = Form.inventoryGrid.Rows[e.RowIndex];
-            var item = Player.inventory.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
+            var item = Player.itemDic[row];
 
             if (item is not Weapon weapon)
             {
@@ -244,7 +268,7 @@ namespace Player
                 return;
             }
 
-            var tooltip = $"Damage: {weapon.Damage}\nDurability: {weapon.Durability}\nMelee: {weapon.Melee}";
+            var tooltip = $"Damage: {weapon.Damage}\nDurability: {weapon.Durability}\nMelee: {weapon.Melee}\nID: {weapon.Id}";
             row.Cells[0].ToolTipText = tooltip;
         }
 
@@ -269,6 +293,43 @@ namespace Player
                 Player.inventory.Remove(existingItem);
             }
 
+            UpdateInventory();
+        }
+
+        public void EquipItem(string itemName)
+        {
+            var itemNameUpper = char.ToUpper(itemName[0]) + itemName.Substring(1);
+            var item = Player.inventory
+                .OfType<Weapon>()
+                .Where(w => w.Name == itemNameUpper)
+                .OrderByDescending(w => w.Durability)
+                .FirstOrDefault();
+
+            if (Player.equippedItem != Guid.Empty)
+            {
+                var currentlyEquippedWeapon = Player.inventory
+                    .OfType<Weapon>()
+                    .FirstOrDefault(w => w.Id == Player.equippedItem);
+                if (currentlyEquippedWeapon != null)
+                {
+                    currentlyEquippedWeapon.Icon = Image.FromFile($"Assets/Images/Icons/{currentlyEquippedWeapon.Name}.png");
+                }
+            }
+
+            if (item != null && item.Id == Player.equippedItem)
+            {
+                Form.Output("You already have this item equipped.");
+            }
+            else if (item != null)
+            {
+                Player.equippedItem = item.Id;
+                item.Icon = Image.FromFile($"Assets/Images/Icons/Equipped/{item.Name}Equipped.png");
+                Form.Output($"You have equipped a {item.Name}.");
+            }
+            else
+            {
+                Form.Output($"You do not have a {itemName} in your inventory.");
+            }
             UpdateInventory();
         }
     }

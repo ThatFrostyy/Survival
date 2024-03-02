@@ -43,10 +43,23 @@ namespace Core
         }
 
         // Commands
-        public void BeachCommands(string command)
+        public void BeachCommands(Command command)
         {
-            switch (command)
+            switch (command.Action)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -65,7 +78,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item rock = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                            Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(rock);
                             break;
                         default:
@@ -75,7 +88,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Beach Commands: eat, drink, explore, scavenge, help");
+                    Form.Output("Beach Commands: heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -84,10 +97,23 @@ namespace Core
             Form.UpdateStats();
         }
 
-        public void ForestCommands(string command)
+        public void ForestCommands(Command command)
         {
-            switch (command)
+            switch (command.Argument)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -106,15 +132,15 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item rock = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                            Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(rock);
                             break;
                         case "4":
-                            Item branch = new("Branch", 1, 1, "Assets/Images/Branch.png");
+                            Item branch = new("Branch", 1, 1, "Assets/Images/Icons/Branch.png");
                             PlayerMethods.AddItem(branch);
                             break;
                         case "6":
-                            Food apple = new("Apple", 1, 1, "Assets/Images/Apple.png", 15);
+                            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15);
                             PlayerMethods.AddItem(apple);
                             break;
                         default:
@@ -127,7 +153,7 @@ namespace Core
                     PlayerMethods.Rest();
                     break;
                 case "help":
-                    Form.Output("Forest Commands: eat, drink, explore, scavenge, rest, help")
+                    Form.Output("Forest Commands: heal, eat, drink, explore, scavenge, rest, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -137,10 +163,23 @@ namespace Core
             Form.UpdateStats();
         }
 
-        public void PlainsCommands(string command)
+        public void PlainsCommands(Command command)
         {
-            switch (command)
+            switch (command.Argument)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -159,7 +198,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -169,7 +208,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Plains Commands: eat, drink, explore, scavenge, help");
+                    Form.Output("Plains Commands: heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -178,10 +217,23 @@ namespace Core
             Form.UpdateStats();
         }
 
-        public void HillsCommands(string command)
+        public void HillsCommands(Command command)
         {
-            switch (command)
+            switch (command.Argument)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -200,7 +252,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -210,7 +262,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Hills Commands: eat, drink, explore, scavenge, help");
+                    Form.Output("Hills Commands: heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -219,10 +271,23 @@ namespace Core
             Form.UpdateStats();
         }
 
-        public void MountainsCommands(string command)
+        public void MountainsCommands(Command command)
         {
-            switch (command)
+            switch (command.Argument)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -241,7 +306,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "2":
-                            Item item = new("Rock", 1, 1, "Assets/Images/Rock.png");
+                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -251,7 +316,7 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Mountains Commands: eat, drink, explore, scavenge, help");
+                    Form.Output("Mountains Commands: heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -260,10 +325,23 @@ namespace Core
             Form.UpdateStats();
         }
 
-        public void VillageCommands(string command)
+        public void VillageCommands(Command command)
         {
-            switch (command)
+            switch (command.Argument)
             {
+                case "equip":
+                    if (command.Argument != null)
+                    {
+                        PlayerMethods.EquipItem(command.Argument);
+                    }
+                    else
+                    {
+                        Form.Output("Please specify an item to equip.");
+                    }
+                    break;
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
                 case "eat":
                     PlayerMethods.EatFood();
                     break;
@@ -290,7 +368,7 @@ namespace Core
                     switch (scavenge)
                     {
                         case "25":
-                            Item item = new("Tender", 0.1, rand.Next(0, 11), "Assets/Images/Money.png");
+                            Item item = new("Tender", 0.1, rand.Next(0, 11), "Assets/Images/Icons/Money.png");
                             PlayerMethods.AddItem(item);
                             break;
                         default:
@@ -300,7 +378,42 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Village Commands: eat, drink, explore, scavenge, shop, help");
+                    Form.Output("Village Commands: heal, eat, drink, explore, scavenge, shop, help");
+                    break;
+                default:
+                    Form.Output("Unknown command: " + command);
+                    break;
+            }
+            Form.UpdateStats();
+        }
+
+        public void CombatCommands(Command command)
+        {
+            switch (command.Argument)
+            {
+                case "heal":
+                    PlayerMethods.Heal();
+                    break;
+                case "fight":
+                    Fight();
+                    break;
+                case "retreat":
+                    var chance = rand.Next(0, 11).ToString();
+
+                    switch (chance)
+                    {
+                        case "5":
+                            Player.inCombat = false;
+                            Form.Output("You successfully retreat out of combat.");
+                            break;
+                        default:
+                            Form.Output("You fail to retreat and receive some damage.");
+                            break;
+                    }
+                    PlayerMethods.Fatigue();
+                    break;
+                case "help":
+                    Form.Output("Combat Commands: fight, heal, retreat, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -369,6 +482,11 @@ namespace Core
                     }
                     break;
             }
+        }
+
+        public void Fight()
+        {
+            throw new NotImplementedException();
         }
     }
 }

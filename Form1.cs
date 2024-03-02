@@ -19,6 +19,12 @@ using Player;
 using Shop;
 namespace Survival
 {
+    public class Command
+    {
+        public string? Action { get; set; }
+        public string? Argument { get; set; }
+    }
+
     public partial class Form1 : Form
     {
         // I don't know how any of this works, but it does
@@ -97,33 +103,42 @@ namespace Survival
             }
 
             e.SuppressKeyPress = true;
-            var command = inputBox.Text.ToLower();
+
+            var input = inputBox.Text.ToLower();
+            var command = ParseCommand(input);
 
             try
             {
-                switch (Player.location)
+                if (!Player.inCombat)
                 {
-                    case "Beach":
-                        Game.BeachCommands(command);
-                        break;
-                    case "Forest":
-                        Game.ForestCommands(command);
-                        break;
-                    case "Plains":
-                        Game.PlainsCommands(command);
-                        break;
-                    case "Hills":
-                        Game.HillsCommands(command);
-                        break;
-                    case "Mountains":
-                        Game.MountainsCommands(command);
-                        break;
-                    case "Village":
-                        Game.VillageCommands(command);
-                        break;
-                    default:
-                        Output("Error");
-                        break;
+                    switch (Player.location)
+                    {
+                        case "Beach":
+                            Game.BeachCommands(command);
+                            break;
+                        case "Forest":
+                            Game.ForestCommands(command);
+                            break;
+                        case "Plains":
+                            Game.PlainsCommands(command);
+                            break;
+                        case "Hills":
+                            Game.HillsCommands(command);
+                            break;
+                        case "Mountains":
+                            Game.MountainsCommands(command);
+                            break;
+                        case "Village":
+                            Game.VillageCommands(command);
+                            break;
+                        default:
+                            Output("Error");
+                            break;
+                    }
+                }
+                else
+                {
+                    Game.CombatCommands(command);
                 }
             }
             catch (Exception ex)
@@ -131,7 +146,18 @@ namespace Survival
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// Parse the input
+        /// </summary>
+        public Command ParseCommand(string input)
+        {
+            var commandParts = input.Split(' ');
+            return new Command
+            {
+                Action = commandParts[0],
+                Argument = commandParts.Length > 1 ? commandParts[1] : null
+            };
+        }
 
         // Buttons
         private void QuitToolStripMenuItem_Click(object sender, EventArgs e)

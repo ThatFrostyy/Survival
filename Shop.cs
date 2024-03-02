@@ -42,7 +42,7 @@ namespace Shop
         {
             var numberOfApples = rand.Next(1, 11);
 
-            Food apple = new("Apple", 1, 1, "Assets/Images/Apple.png", 15, stock: numberOfApples, price: 10);
+            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: numberOfApples, price: 10);
             Shop.items.Add(apple);
         }
 
