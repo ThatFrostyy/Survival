@@ -1,5 +1,12 @@
 # Survival
-# About
+## About
+Welcome to **Survival**, a unique series of survival texts that bring together many of gaming's favorites into one unique experience.
+
+In this game you will find yourself in a world where survival is the ultimate goal. You need to collect resources, face formidable enemies and deal with unpredictable situations. But what makes **Survival** unique is its community-focused nature.
+
+This game isn't just about survival, it's also about cooperation and learning. We created this game with the community in mind. This means that every player is not just a player, but also has the ability to contribute. Have ideas for new features? Do you want to replace the existing one? Or maybe you see an error? We welcome all contributions and suggestions.
+
+But that's not all. Surviving in society is also a learning process. The game was developed in C#, one of the world's most popular programming languages. Whether you're an experienced developer or someone just starting to learn, contributing to the community is a great way to improve your coding skills.
 ## Screenshots
 | | |
 |:-------------------------:|:-------------------------:|
