@@ -124,11 +124,14 @@ namespace Shop
             if (itemToBuy == null)
             {
                 Form.Output($"Item {itemName} not found in the shop.");
+                return;
+
             }
 
             if (itemToBuy.Stock < 1)
             {
                 Form.Output($"Item {itemName} is out of stock.");
+                return;
             }
 
             var playerMoney = Player.inventory.FirstOrDefault(item => item.Name == "Tender");
@@ -136,6 +139,7 @@ namespace Shop
             if (playerMoney == null || playerMoney.Quantity < itemToBuy.Price)
             {
                 Form.Output("You don't have enough money to buy this item.");
+                return;
             }
 
             playerMoney.Quantity -= itemToBuy.Price;

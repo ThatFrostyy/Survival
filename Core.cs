@@ -591,7 +591,7 @@ namespace Core
                 }
 
                 var playerDamage = equippedWeapon != null ? equippedWeapon.Damage : Player.strengthValue;
-                var playerAttack = playerDamage - enemy.Armor;
+                var playerAttack = playerDamage - Math.Max(0, enemy.Armor); 
                 enemy.Health -= playerAttack;
 
                 Form.Output("");
@@ -602,7 +602,7 @@ namespace Core
                     equippedWeapon.Durability -= 1;
                 }
 
-                if (rand.Next(100) < 30) 
+                if (rand.Next(100) < 30 && enemy.Armor > 0) 
                 {
                     enemy.Armor -= playerAttack;
                     Form.Output($"You damage the {enemy.Name}'s armor for {playerAttack} points!");
@@ -620,7 +620,6 @@ namespace Core
                 Form.Output($"The {enemy.Name} attacked you for {enemyAttack} points!");
             }
 
-            // Check who won the fight
             if (Player.healthValue > 0)
             {
                 Form.Output($"You defeat the {enemy.Name}!");

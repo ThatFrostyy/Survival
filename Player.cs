@@ -127,6 +127,7 @@ namespace Player
             Player.healthValue = Math.Min(Player.healthValue += rand.Next(31, 51), 100);
             Player.thirstValue = Math.Max(0, Player.thirstValue - rand.Next(31, 51));
             Player.hungerValue = Math.Max(0, Player.hungerValue - rand.Next(31, 51));
+            Form.Output("You decide to rest for a few minutes.");
         }
 
         /// <summary>
