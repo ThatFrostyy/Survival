@@ -15,3 +15,15 @@ But that's not all. Surviving in society is also a learning process. The game wa
 # Assets
 ## Images
 **Icons**: I don't own any of the item icons, they are all from [Project Zomboid](https://store.steampowered.com/app/108600/Project_Zomboid)
+# Contribution
+## Pull Request
+Before submitting a pull request, please ensure the following:
+
+1. **Test Code**: Any test code within the project should be commented out. This includes, but is not limited to:
+    - Code for adding items
+    - Code for changing locations
+    - Code within the `OnPlayerCreate`, `OnShopCreate`, and similar functions
+
+2. **Notices**: Please leave a comment above any test code that you've commented out. This helps other contributors understand why the code is commented and when it might be useful to uncomment it.
+
+By adhering to these guidelines, we can maintain a clean and efficient codebase for everyone. Thank you for your cooperation!
