@@ -25,19 +25,16 @@ namespace Core
     {
         // I don't know how any of this works, but it does
         readonly Random rand = new();
-
         public Character Player { get; }
         public CharacterMethods PlayerMethods { get; }
         public ShopCore Shop { get; }
-
         public ShopMethods ShopMethods { get; }
-
         public Form1 Form { get; }
 
         public Game(ShopCore shop, Character player, Form1 form)
         {
             Shop = shop;
-            ShopMethods = new ShopMethods(shop, form);
+            ShopMethods = new ShopMethods(shop, form, player, PlayerMethods);
             Player = player;
             PlayerMethods = new CharacterMethods(player, form);
             Form = form;
@@ -416,11 +413,9 @@ namespace Core
                     PlayerMethods.Fatigue();
                     break;
                 case "shop":
-                    // TO DO
-                    // FINISH LOGIC
-
                     Form.shopGrid.Visible = true;
                     ShopMethods.UpdateShop();
+                    Player.inShop = true;
                     break;
                 case "scavenge":
                     var scavenge = rand.Next(0, 101);
@@ -474,6 +469,33 @@ namespace Core
                     break;
                 case "help":
                     Form.Output("Combat Commands: fight, heal, retreat, help");
+                    break;
+                default:
+                    Form.Output("Unknown command: " + command);
+                    break;
+            }
+            Form.UpdateStats();
+        }
+
+        public void ShopCommands(Command command)
+        {
+            switch (command.Action)
+            {
+                case "buy":
+                    ShopMethods.Buy(command);
+                    ShopMethods.UpdateShop();
+                    PlayerMethods.UpdateInventory();
+                    break;
+                case "sell":
+                    break;
+                case "leave":
+                    Form.Output("You decide to leave the shop.");
+                    ShopMethods.UpdateShop();
+                    Form.shopGrid.Visible = false;
+                    Player.inShop = false;
+                    break;
+                case "help":
+                    Form.Output("Shop Commands: buy, sell, leave, help");
                     break;
                 default:
                     Form.Output("Unknown command: " + command);
@@ -545,7 +567,7 @@ namespace Core
         }
 
         // TO DO
-        // Let the player heal in bettween the fight
+        // Let the player heal in between the fight
         public async void Fight()
         {
             var enemies = new List<Enemy>
@@ -562,7 +584,7 @@ namespace Core
 
             while (Player.healthValue > 0 && enemy.Health > 0)
             {
-                Weapon equippedWeapon = null;
+                Weapon? equippedWeapon = null;
                 if (Player.inventory.Find(item => item.Id == Player.equippedItem) is Weapon weapon)
                 {
                     equippedWeapon = weapon;

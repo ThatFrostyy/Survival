@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 using Items;
+using Player;
 using Survival;
 namespace Shop
 {
@@ -24,15 +25,19 @@ namespace Shop
 
     public class ShopMethods
     {
+        // I don't know how any of this works, but it does
         Random rand = new();
-
         public ShopCore Shop { get; }
         public Form1 Form { get; }
+        public Character Player { get; }
+        public CharacterMethods PlayerMethods { get; }
 
-        public ShopMethods(ShopCore shop, Form1 form)
+        public ShopMethods(ShopCore shop, Form1 form, Character player, CharacterMethods playerMethods) // Modify this
         {
             Shop = shop;
             Form = form;
+            Player = player; 
+            PlayerMethods = playerMethods; 
         }
 
         /// <summary>
@@ -41,11 +46,17 @@ namespace Shop
         public void OnShopCreate()
         {
             var numberOfApples = rand.Next(1, 11);
+            var numberOfBottles = rand.Next(1, 6);
 
-            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: numberOfApples, price: 10);
+            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: numberOfApples, price: 12);
+            Drink waterbottle = new("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: numberOfBottles, price: 20);
             Shop.items.Add(apple);
+            Shop.items.Add(waterbottle);
         }
 
+        /// <summary>
+        /// Called when the player buys an item, etc
+        /// </summary>
         public void UpdateShop()
         {
             // Add columns 
@@ -93,10 +104,58 @@ namespace Shop
                     row.Cells["Stock"].Value = item.Stock;
                 }
             }
-            Form.Output("You enter the village shop.");
+
+            if (Player.inShop == false)
+            {
+                Form.Output("You enter the village shop.");
+            }
+
             Form.shopGrid.CellMouseEnter += ShopGrid_CellMouseEnter;
         }
 
+        /// <summary>
+        /// Used to buy an item from the shop, find the item using the argument from the command class (command.Argument)
+        /// </summary>
+        public void Buy(Command command)
+        {
+            var itemName = command.Argument;
+            var itemToBuy = Shop.items.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
+
+            if (itemToBuy == null)
+            {
+                Form.Output($"Item {itemName} not found in the shop.");
+            }
+
+            if (itemToBuy.Stock < 1)
+            {
+                Form.Output($"Item {itemName} is out of stock.");
+            }
+
+            var playerMoney = Player.inventory.FirstOrDefault(item => item.Name == "Tender");
+
+            if (playerMoney == null || playerMoney.Quantity < itemToBuy.Price)
+            {
+                Form.Output("You don't have enough money to buy this item.");
+            }
+
+            playerMoney.Quantity -= itemToBuy.Price;
+            itemToBuy.Stock--;
+
+            var playerItem = Player.inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
+            if (playerItem != null)
+            {
+                playerItem.Quantity++;
+            }
+            else
+            {
+                Player.inventory.Add(itemToBuy);
+            }
+
+            Form.Output($"You bought a {itemName}.");
+
+        }
+
+        // Shop item tooltip
         public void ShopGrid_CellMouseEnter(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)

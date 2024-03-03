@@ -26,9 +26,9 @@ namespace Items
         public int Quantity { get; set; }
         public Image Icon { get; set; }
         public int Stock { get; set; } // Optional parameter for stock
-        public double Price { get; set; } // Optional parameter for price
+        public int Price { get; set; } // Optional parameter for price
 
-        public Item(string name, double weight, int quantity, string iconPath, int stock = 0, double price = 0)
+        public Item(string name, double weight, int quantity, string iconPath, int stock = 0, int price = 0)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -46,7 +46,7 @@ namespace Items
         public int Durability { get; set; }
         public bool Melee { get; set; }
 
-        public Weapon(string name, double weight, int quantity, string iconPath, int damage, int durability, bool melee, int stock = 0, double price = 0)
+        public Weapon(string name, double weight, int quantity, string iconPath, int damage, int durability, bool melee, int stock = 0, int price = 0)
             : base(name, weight, quantity, iconPath, stock, price)
         {
             Damage = damage;
@@ -59,7 +59,7 @@ namespace Items
     {
         public int HungerRestore { get; set; }
 
-        public Food(string name, double weight, int quantity, string iconPath, int hungerRestore, int stock = 0, double price = 0)
+        public Food(string name, double weight, int quantity, string iconPath, int hungerRestore, int stock = 0, int price = 0)
             : base(name, weight, quantity, iconPath, stock, price)
         {
             HungerRestore = hungerRestore;
@@ -70,7 +70,7 @@ namespace Items
     {
         public int ThirstRestore { get; set; }
 
-        public Drink(string name, double weight, int quantity, string iconPath, int thirstRestore, int stock = 0, double price = 0)
+        public Drink(string name, double weight, int quantity, string iconPath, int thirstRestore, int stock = 0, int price = 0)
             : base(name, weight, quantity, iconPath, stock, price)
         {
             ThirstRestore = thirstRestore;
@@ -81,7 +81,7 @@ namespace Items
     {
         public int HealthRestore { get; set; }
 
-        public Medicine(string name, double weight, int quantity, string iconPath, int healthRestore, int stock = 0, double price = 0)
+        public Medicine(string name, double weight, int quantity, string iconPath, int healthRestore, int stock = 0, int price = 0)
             : base(name, weight, quantity, iconPath, stock, price)
         {
             HealthRestore = healthRestore;

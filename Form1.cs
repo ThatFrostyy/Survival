@@ -24,10 +24,8 @@ namespace Survival
         // I don't know how any of this works, but it does
         public Character Player { get; } = new();
         public CharacterMethods PlayerMethods { get; }
-
         public ShopCore Shop { get; } = new();
         public ShopMethods ShopMethods { get; }
-
         public Game Game { get; }
 
         public Form1()
@@ -107,7 +105,11 @@ namespace Survival
 
             try
             {
-                if (!Player.inCombat)
+                if (Player.inShop)
+                {
+                    Game.ShopCommands(command);
+                }
+                else if (!Player.inCombat)
                 {
                     switch (Player.location)
                     {
@@ -150,10 +152,13 @@ namespace Survival
         public Command ParseCommand(string input)
         {
             var commandParts = input.Split(' ');
+            var action = commandParts[0];
+            var argument = commandParts.Length > 1 ? string.Join(" ", commandParts.Skip(1)) : null;
+
             return new Command
             {
-                Action = commandParts[0],
-                Argument = commandParts.Length > 1 ? commandParts[1] : null
+                Action = action,
+                Argument = argument
             };
         }
 

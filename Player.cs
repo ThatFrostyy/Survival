@@ -37,6 +37,7 @@ namespace Player
         public string location = "Beach";
 
         public bool inCombat = false;
+        public bool inShop = false;
         public Guid equippedItem;
     }
 
@@ -44,7 +45,6 @@ namespace Player
     {
         // I don't know how any of this works, but it does
         readonly Random rand = new();
-
         public Character Player { get; }
         public Form1 Form { get; }
 
@@ -59,8 +59,13 @@ namespace Player
         /// </summary>
         public void OnPlayerCreate()
         {
-            //Weapon test = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
-            //AddItem(test);
+            /*
+            Weapon test = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
+            AddItem(test);
+            Player.location = "Village";
+            Item item = new("Tender", 0.1, 200, "Assets/Images/Icons/Money.png");
+            AddItem(item);
+            */
         }
 
         /// <summary>
@@ -302,6 +307,7 @@ namespace Player
         /// <summary>
         /// Equip a Weapon type item
         /// </summary>
+        // Should be modified to accept clothing too in the future
         public void EquipItem(string itemName)
         {
             var itemNameUpper = char.ToUpper(itemName[0]) + itemName.Substring(1);
