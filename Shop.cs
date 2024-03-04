@@ -36,8 +36,8 @@ namespace Shop
         {
             Shop = shop;
             Form = form;
-            Player = player; 
-            PlayerMethods = playerMethods; 
+            Player = player;
+            PlayerMethods = playerMethods;
         }
 
         /// <summary>
@@ -45,13 +45,12 @@ namespace Shop
         /// </summary>
         public void OnShopCreate()
         {
-            var numberOfApples = rand.Next(1, 11);
-            var numberOfBottles = rand.Next(1, 6);
-
-            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: numberOfApples, price: 12);
-            Drink waterbottle = new("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: numberOfBottles, price: 20);
+            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: rand.Next(1, 11), price: 12);
+            Drink waterbottle = new("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: rand.Next(1,6), price: 20);
+            Medicine bandage = new("Bandage", 0.2, 1, "Assets/Images/Icons/Bandage.png", 30, stock: rand.Next(1, 6), price: 30);
             Shop.items.Add(apple);
             Shop.items.Add(waterbottle);
+            Shop.items.Add(bandage);
         }
 
         /// <summary>
@@ -171,7 +170,6 @@ namespace Shop
             var item = Shop.items.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
             var tooltip = string.Empty;
 
-            // Can be changed into a switch expression 
             switch (item)
             {
                 case Weapon weapon:
@@ -193,6 +191,5 @@ namespace Shop
                 cell.ToolTipText = tooltip;
             }
         }
-
     }
 }

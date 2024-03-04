@@ -566,8 +566,6 @@ namespace Core
             }
         }
 
-        // TO DO
-        // Let the player heal in between the fight
         public async void Fight()
         {
             var enemies = new List<Enemy>
@@ -594,7 +592,6 @@ namespace Core
                 var playerAttack = playerDamage - Math.Max(0, enemy.Armor); 
                 enemy.Health -= playerAttack;
 
-                //Form.Output("");
                 Form.Output($"You attacked the {enemy.Name} for {playerAttack} damage, he has {enemy.Health} health and {enemy.Armor} armor points left.");
 
                 if (equippedWeapon != null && rand.Next(100) < 50)
@@ -608,7 +605,7 @@ namespace Core
                     Form.Output($"You damage the {enemy.Name}'s armor for {playerAttack} points!");
                 }
 
-                await Task.Delay(1000);
+                await Task.Delay(2000);
 
                 if (enemy.Health <= 0)
                 {
