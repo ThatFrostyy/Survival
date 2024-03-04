@@ -44,7 +44,8 @@
             saveToolStripMenuItem = new ToolStripMenuItem();
             loadToolStripMenuItem = new ToolStripMenuItem();
             quitToolStripMenuItem = new ToolStripMenuItem();
-            craftToolStripMenuItem = new ToolStripMenuItem();
+            menusToolStripMenuItem = new ToolStripMenuItem();
+            craftToolStripMenuItem1 = new ToolStripMenuItem();
             consoleBox = new TextBox();
             inventoryGrid = new DataGridView();
             statsPanel.SuspendLayout();
@@ -56,12 +57,11 @@
             // inputBox
             // 
             inputBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            inputBox.Location = new Point(17, 630);
-            inputBox.Margin = new Padding(4, 5, 4, 5);
+            inputBox.Location = new Point(12, 378);
             inputBox.MaxLength = 1000;
             inputBox.Name = "inputBox";
             inputBox.PlaceholderText = "Enter 'help' for help..";
-            inputBox.Size = new Size(708, 31);
+            inputBox.Size = new Size(497, 23);
             inputBox.TabIndex = 0;
             inputBox.KeyDown += InputBox_KeyDown;
             // 
@@ -78,17 +78,17 @@
             statsPanel.Controls.Add(thirst);
             statsPanel.Controls.Add(hunger);
             statsPanel.Controls.Add(health);
-            statsPanel.Location = new Point(17, 67);
-            statsPanel.Margin = new Padding(4, 5, 4, 5);
+            statsPanel.Location = new Point(12, 40);
             statsPanel.Name = "statsPanel";
-            statsPanel.Size = new Size(279, 395);
+            statsPanel.Size = new Size(196, 238);
             statsPanel.TabIndex = 1;
             // 
             // craftButton
             // 
-            craftButton.Location = new Point(166, 360);
+            craftButton.Location = new Point(116, 216);
+            craftButton.Margin = new Padding(2);
             craftButton.Name = "craftButton";
-            craftButton.Size = new Size(112, 34);
+            craftButton.Size = new Size(78, 20);
             craftButton.TabIndex = 5;
             craftButton.Text = "Craft";
             craftButton.UseVisualStyleBackColor = true;
@@ -100,12 +100,13 @@
             shopGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             shopGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             shopGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            shopGrid.Location = new Point(-1, -2);
+            shopGrid.Location = new Point(-1, -1);
+            shopGrid.Margin = new Padding(2);
             shopGrid.Name = "shopGrid";
             shopGrid.ReadOnly = true;
             shopGrid.RowHeadersVisible = false;
             shopGrid.RowHeadersWidth = 62;
-            shopGrid.Size = new Size(283, 238);
+            shopGrid.Size = new Size(198, 143);
             shopGrid.TabIndex = 5;
             shopGrid.Visible = false;
             // 
@@ -113,9 +114,10 @@
             // 
             armor.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             armor.AutoSize = true;
-            armor.Location = new Point(-1, 75);
+            armor.Location = new Point(-1, 45);
+            armor.Margin = new Padding(2, 0, 2, 0);
             armor.Name = "armor";
-            armor.Size = new Size(114, 25);
+            armor.Size = new Size(75, 15);
             armor.TabIndex = 6;
             armor.Text = "Armor Value:";
             // 
@@ -123,10 +125,9 @@
             // 
             currentWeight.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             currentWeight.AutoSize = true;
-            currentWeight.Location = new Point(-1, 318);
-            currentWeight.Margin = new Padding(4, 0, 4, 0);
+            currentWeight.Location = new Point(-1, 191);
             currentWeight.Name = "currentWeight";
-            currentWeight.Size = new Size(140, 25);
+            currentWeight.Size = new Size(94, 15);
             currentWeight.TabIndex = 5;
             currentWeight.Text = "Current Weight: ";
             // 
@@ -134,10 +135,9 @@
             // 
             maxWeight.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             maxWeight.AutoSize = true;
-            maxWeight.Location = new Point(-1, 343);
-            maxWeight.Margin = new Padding(4, 0, 4, 0);
+            maxWeight.Location = new Point(-1, 206);
             maxWeight.Name = "maxWeight";
-            maxWeight.Size = new Size(110, 25);
+            maxWeight.Size = new Size(74, 15);
             maxWeight.TabIndex = 4;
             maxWeight.Text = "Max Weight:";
             // 
@@ -145,10 +145,9 @@
             // 
             locationL.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             locationL.AutoSize = true;
-            locationL.Location = new Point(-1, 368);
-            locationL.Margin = new Padding(4, 0, 4, 0);
+            locationL.Location = new Point(-1, 221);
             locationL.Name = "locationL";
-            locationL.Size = new Size(83, 25);
+            locationL.Size = new Size(56, 15);
             locationL.TabIndex = 3;
             locationL.Text = "Location:";
             // 
@@ -156,10 +155,9 @@
             // 
             thirst.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             thirst.AutoSize = true;
-            thirst.Location = new Point(-1, 50);
-            thirst.Margin = new Padding(4, 0, 4, 0);
+            thirst.Location = new Point(-1, 30);
             thirst.Name = "thirst";
-            thirst.Size = new Size(59, 25);
+            thirst.Size = new Size(39, 15);
             thirst.TabIndex = 2;
             thirst.Text = "Thirst:";
             // 
@@ -167,10 +165,9 @@
             // 
             hunger.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             hunger.AutoSize = true;
-            hunger.Location = new Point(-1, 25);
-            hunger.Margin = new Padding(4, 0, 4, 0);
+            hunger.Location = new Point(-1, 15);
             hunger.Name = "hunger";
-            hunger.Size = new Size(75, 25);
+            hunger.Size = new Size(50, 15);
             hunger.TabIndex = 1;
             hunger.Text = "Hunger:";
             // 
@@ -179,20 +176,18 @@
             health.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             health.AutoSize = true;
             health.Location = new Point(-1, 0);
-            health.Margin = new Padding(4, 0, 4, 0);
             health.Name = "health";
-            health.Size = new Size(72, 25);
+            health.Size = new Size(48, 15);
             health.TabIndex = 0;
             health.Text = "Health: ";
             // 
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { gameToolStripMenuItem, craftToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { gameToolStripMenuItem, menusToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(9, 3, 0, 3);
-            menuStrip1.Size = new Size(744, 35);
+            menuStrip1.Size = new Size(521, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -200,47 +195,56 @@
             // 
             gameToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saveToolStripMenuItem, loadToolStripMenuItem, quitToolStripMenuItem });
             gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            gameToolStripMenuItem.Size = new Size(74, 29);
+            gameToolStripMenuItem.Size = new Size(50, 20);
             gameToolStripMenuItem.Text = "Game";
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(213, 34);
+            saveToolStripMenuItem.Size = new Size(140, 22);
             saveToolStripMenuItem.Text = "Save";
             // 
             // loadToolStripMenuItem
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             loadToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
-            loadToolStripMenuItem.Size = new Size(213, 34);
+            loadToolStripMenuItem.Size = new Size(140, 22);
             loadToolStripMenuItem.Text = "Load";
             // 
             // quitToolStripMenuItem
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             quitToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
-            quitToolStripMenuItem.Size = new Size(213, 34);
+            quitToolStripMenuItem.Size = new Size(140, 22);
             quitToolStripMenuItem.Text = "Quit";
             quitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
             // 
-            // craftToolStripMenuItem
+            // menusToolStripMenuItem
             // 
-            craftToolStripMenuItem.Name = "craftToolStripMenuItem";
-            craftToolStripMenuItem.Size = new Size(16, 29);
+            menusToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { craftToolStripMenuItem1 });
+            menusToolStripMenuItem.Name = "menusToolStripMenuItem";
+            menusToolStripMenuItem.Size = new Size(63, 20);
+            menusToolStripMenuItem.Text = "Window";
+            // 
+            // craftToolStripMenuItem1
+            // 
+            craftToolStripMenuItem1.Name = "craftToolStripMenuItem1";
+            craftToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.C;
+            craftToolStripMenuItem1.Size = new Size(180, 22);
+            craftToolStripMenuItem1.Text = "Craft";
+            craftToolStripMenuItem1.Click += craftToolStripMenuItem1_Click;
             // 
             // consoleBox
             // 
             consoleBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            consoleBox.Location = new Point(17, 473);
-            consoleBox.Margin = new Padding(4, 5, 4, 5);
+            consoleBox.Location = new Point(12, 284);
             consoleBox.MaxLength = 1000;
             consoleBox.Multiline = true;
             consoleBox.Name = "consoleBox";
             consoleBox.ReadOnly = true;
             consoleBox.ScrollBars = ScrollBars.Vertical;
-            consoleBox.Size = new Size(708, 144);
+            consoleBox.Size = new Size(497, 88);
             consoleBox.TabIndex = 3;
             // 
             // inventoryGrid
@@ -249,27 +253,25 @@
             inventoryGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             inventoryGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             inventoryGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            inventoryGrid.Location = new Point(306, 67);
-            inventoryGrid.Margin = new Padding(4, 5, 4, 5);
+            inventoryGrid.Location = new Point(214, 40);
             inventoryGrid.Name = "inventoryGrid";
             inventoryGrid.ReadOnly = true;
             inventoryGrid.RowHeadersVisible = false;
             inventoryGrid.RowHeadersWidth = 62;
-            inventoryGrid.Size = new Size(421, 397);
+            inventoryGrid.Size = new Size(295, 238);
             inventoryGrid.TabIndex = 4;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(744, 688);
+            ClientSize = new Size(521, 413);
             Controls.Add(inventoryGrid);
             Controls.Add(consoleBox);
             Controls.Add(statsPanel);
             Controls.Add(inputBox);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            Margin = new Padding(4, 5, 4, 5);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Survival";
@@ -303,6 +305,7 @@
         public DataGridView shopGrid;
         private Label armor;
         private Button craftButton;
-        private ToolStripMenuItem craftToolStripMenuItem;
+        private ToolStripMenuItem menusToolStripMenuItem;
+        private ToolStripMenuItem craftToolStripMenuItem1;
     }
 }
