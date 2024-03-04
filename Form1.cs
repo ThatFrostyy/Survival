@@ -17,6 +17,8 @@
 using Core;
 using Player;
 using Shop;
+using Utilities;
+
 namespace Survival
 {
     public partial class Form1 : Form
@@ -27,6 +29,7 @@ namespace Survival
         public ShopCore Shop { get; } = new();
         public ShopMethods ShopMethods { get; }
         public Game Game { get; }
+        public Save save = new Save();
 
         public Form1()
         {
@@ -178,6 +181,14 @@ namespace Survival
         {
             var form2 = new Form2();
             form2.Show();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
         }
     }
 

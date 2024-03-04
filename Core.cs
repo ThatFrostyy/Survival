@@ -463,6 +463,7 @@ namespace Core
                             break;
                         default:
                             Form.Output("You fail to retreat and receive some damage.");
+                            PlayerMethods.FatigueDamage();
                             break;
                     }
                     PlayerMethods.Fatigue();
