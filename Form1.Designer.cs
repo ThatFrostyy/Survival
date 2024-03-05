@@ -202,7 +202,7 @@
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(180, 22);
+            saveToolStripMenuItem.Size = new Size(140, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
@@ -210,7 +210,7 @@
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             loadToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
-            loadToolStripMenuItem.Size = new Size(180, 22);
+            loadToolStripMenuItem.Size = new Size(140, 22);
             loadToolStripMenuItem.Text = "Load";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
             // 
@@ -218,7 +218,7 @@
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             quitToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
-            quitToolStripMenuItem.Size = new Size(180, 22);
+            quitToolStripMenuItem.Size = new Size(140, 22);
             quitToolStripMenuItem.Text = "Quit";
             quitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
             // 
@@ -232,8 +232,8 @@
             // craftToolStripMenuItem1
             // 
             craftToolStripMenuItem1.Name = "craftToolStripMenuItem1";
-            craftToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.C;
-            craftToolStripMenuItem1.Size = new Size(142, 22);
+            craftToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.M;
+            craftToolStripMenuItem1.Size = new Size(180, 22);
             craftToolStripMenuItem1.Text = "Craft";
             craftToolStripMenuItem1.Click += craftToolStripMenuItem1_Click;
             // 

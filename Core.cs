@@ -593,7 +593,7 @@ namespace Core
                 var playerAttack = playerDamage - Math.Max(0, enemy.Armor); 
                 enemy.Health -= playerAttack;
 
-                Form.Output($"You attacked the {enemy.Name} for {playerAttack} damage, he has {enemy.Health} health and {enemy.Armor} armor points left.");
+                Form.Output($"You attacked the {enemy.Name} for {playerAttack} points, he has {enemy.Health} health and {enemy.Armor} armor points left.");
 
                 if (equippedWeapon != null && rand.Next(100) < 50)
                 {
@@ -615,7 +615,7 @@ namespace Core
 
                 var enemyAttack = enemy.Damage - Player.armorValue;
                 Player.healthValue -= enemyAttack;
-                Form.Output($"The {enemy.Name} attacked you for {enemyAttack} points!");
+                Form.Output($"The {enemy.Name} attacked you for {enemyAttack} points, you have {Player.healthValue} health and {Player.armorValue} armor points left.");
             }
 
             if (Player.healthValue > 0)

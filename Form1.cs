@@ -17,19 +17,16 @@
 using Core;
 using Player;
 using Shop;
-using Utilities;
-
 namespace Survival
 {
     public partial class Form1 : Form
     {
         // I don't know how any of this works, but it does
-        public Character Player { get; } = new();
+        public Character Player { get; set; } = new();
         public CharacterMethods PlayerMethods { get; }
         public ShopCore Shop { get; } = new();
         public ShopMethods ShopMethods { get; }
         public Game Game { get; }
-        public Save save = new Save();
 
         public Form1()
         {

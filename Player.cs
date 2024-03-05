@@ -18,46 +18,28 @@ using Survival;
 using Items;
 namespace Player
 {
-
-    [Serializable]
     public class Character
     {
         // Keeps track of all the picked up items and their gui's 
-        public Dictionary<DataGridViewRow, Item> itemDic { get; set; }
+        public Dictionary<DataGridViewRow, Item> itemDic = [];
 
         // Inventory
-        public List<Item> inventory { get; set; }
+        public List<Item> inventory = [];
 
         // Stats
-        public int strengthValue { get; set; }
-        public int healthValue { get; set; }
-        public int hungerValue { get; set; }
-        public int thirstValue { get; set; }
-        public int armorValue { get; set; }
-        public double currentWeightValue { get; set; }
-        public int maxWeightValue { get; set; }
-        public string location { get; set; }
+        public int strengthValue = 15;
+        public int healthValue = 100;
+        public int hungerValue = 100;
+        public int thirstValue = 100;
+        public int armorValue = 0;
+        public double currentWeightValue = 0;
+        public int maxWeightValue = 30;
+        public string location = "Beach";
 
-        public bool inCombat { get; set; }
-        public bool inShop { get; set; }
-        public Guid equippedItem { get; set; }
-
-        public Character()
-        {
-            itemDic = new Dictionary<DataGridViewRow, Item>();
-            inventory = new List<Item>();
-            strengthValue = 15;
-            healthValue = 100;
-            hungerValue = 100;
-            thirstValue = 100;
-            armorValue = 0;
-            currentWeightValue = 0;
-            maxWeightValue = 30;
-            location = "Beach";
-            inCombat = false;
-            inShop = false;
-            equippedItem = Guid.Empty;
-        }
+        // Other
+        public bool inCombat = false;
+        public bool inShop = false;
+        public Guid equippedItem = Guid.Empty;
     }
 
     public class CharacterMethods
