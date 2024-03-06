@@ -19,6 +19,8 @@ using Enemies;
 using Player;
 using Survival;
 using Shop;
+using Utilities;
+
 namespace Core
 {
     public class Game
@@ -31,9 +33,9 @@ namespace Core
         public ShopMethods ShopMethods { get; }
         public Form1 Form { get; }
         public Options Settings { get; }
+        public Tools Utilities { get; }
 
-
-        public Game(ShopCore shop, Character player, Form1 form, Options settings)
+        public Game(ShopCore shop, Character player, Form1 form, Options settings, Tools utilities)
         {
             Shop = shop;
             ShopMethods = new ShopMethods(shop, form, player, PlayerMethods);
@@ -41,6 +43,7 @@ namespace Core
             PlayerMethods = new CharacterMethods(player, form);
             Form = form;
             Settings = settings;
+            Utilities = utilities;
         }
 
         // Commands
@@ -481,6 +484,7 @@ namespace Core
             Form.UpdateStats();
         }
 
+        // Add selling
         public void ShopCommands(Command command)
         {
             switch (command.Action)
@@ -582,7 +586,7 @@ namespace Core
             };
             List<int> weights = [30, 40, 20, 5, 5];
 
-            var enemy = ChooseWeightedRandom(enemies, weights);
+            var enemy = Utilities.ChooseWeightedRandom(enemies, weights);
 
             while (Player.healthValue > 0 && enemy.Health > 0)
             {
@@ -654,29 +658,6 @@ namespace Core
             }
 
             Form.UpdateStats();
-        }
-
-        // TO DO
-        // Add to Utilities.cs and init the class correctly 
-        private T ChooseWeightedRandom<T>(List<T> list, List<int> weights)
-        {
-            if (list.Count != weights.Count)
-            {
-                throw new ArgumentException("The list and weights must be the same size.");
-            }
-
-            var totalWeight = weights.Sum();
-            var choice = rand.Next(totalWeight);
-            for (var i = 0; i < list.Count; i++)
-            {
-                if (choice < weights[i])
-                {
-                    return list[i];
-                }
-                choice -= weights[i];
-            }
-
-            throw new InvalidOperationException("The weights must sum to a value greater than zero.");
         }
     }
 }

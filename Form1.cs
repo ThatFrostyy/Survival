@@ -17,6 +17,7 @@
 using Core;
 using Player;
 using Shop;
+using Utilities;
 namespace Survival
 {
     public partial class Form1 : Form
@@ -28,13 +29,14 @@ namespace Survival
         public ShopMethods ShopMethods { get; }
         public Game Game { get; }
         public Options Settings = new();
+        public Tools Utilities = new();
 
         public Form1()
         {
             InitializeComponent();
             UpdateStats();
 
-            Game = new Game(Shop, Player, this, Settings);
+            Game = new Game(Shop, Player, this, Settings, Utilities);
             PlayerMethods = Game.PlayerMethods;
             ShopMethods = Game.ShopMethods;
 
@@ -152,6 +154,7 @@ namespace Survival
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
+
         /// <summary>
         /// Parse the input
         /// </summary>
