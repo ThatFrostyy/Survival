@@ -176,13 +176,13 @@ namespace Survival
 
         private void craftButton_Click(object sender, EventArgs e)
         {
-            var form2 = new Form2();
+            var form2 = new CraftForm();
             form2.Show();
         }
 
         private void craftToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var form2 = new Form2();
+            var form2 = new CraftForm();
             form2.Show();
         }
 

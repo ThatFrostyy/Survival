@@ -1,8 +1,8 @@
 ﻿namespace Survival
 {
-    public partial class Form2 : Form
+    public partial class CraftForm : Form
     {
-        public Form2()
+        public CraftForm()
         {
             InitializeComponent();
         }
