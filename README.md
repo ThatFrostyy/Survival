@@ -1,5 +1,8 @@
 # Survival
 ## About
+**If you want to help contribute immediately please read the bottom of the read me!**
+
+
 Welcome to **Survival**, a unique series of survival texts that bring together many of gaming's favorites into one unique experience.
 
 In this game you will find yourself in a world where survival is the ultimate goal. You need to collect resources, face formidable enemies and deal with unpredictable situations. But what makes **Survival** unique is its community-focused nature.
@@ -16,6 +19,8 @@ But that's not all. Surviving in society is also a learning process. The game wa
 ## Images
 **Icons**: I don't own any of the item icons, they are all from [Project Zomboid](https://store.steampowered.com/app/108600/Project_Zomboid)
 # Contribution
+## Project
+Before starting your contribution, please check the project's **backlog** and **issues**. This will give you an idea of what needs to be worked on or what needs help. Your contribution will be more effective if it aligns with the project's current needs.
 ## Pull Request
 Before submitting a pull request, please ensure the following:
 
@@ -27,3 +32,5 @@ Before submitting a pull request, please ensure the following:
 2. **Notices**: Please leave a comment above any test code that you've commented out. This helps other contributors understand why the code is commented and when it might be useful to uncomment it.
 
 By adhering to these guidelines, we can maintain a clean and efficient codebase for everyone. Thank you for your cooperation!
+
+3. **Recognition**: If you make a pull request for one of the needed changes, work in progress, or an issue, you will be added to the contributors list and given permission to edit the backlog. This is way the project can stay more organized.
