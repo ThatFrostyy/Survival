@@ -30,14 +30,17 @@ namespace Core
         public ShopCore Shop { get; }
         public ShopMethods ShopMethods { get; }
         public Form1 Form { get; }
+        public Options Settings { get; }
 
-        public Game(ShopCore shop, Character player, Form1 form)
+
+        public Game(ShopCore shop, Character player, Form1 form, Options settings)
         {
             Shop = shop;
             ShopMethods = new ShopMethods(shop, form, player, PlayerMethods);
             Player = player;
             PlayerMethods = new CharacterMethods(player, form);
             Form = form;
+            Settings = settings;
         }
 
         // Commands
@@ -590,19 +593,29 @@ namespace Core
                 }
 
                 var playerDamage = equippedWeapon != null ? equippedWeapon.Damage : Player.strengthValue;
-                var playerAttack = playerDamage - Math.Max(0, enemy.Armor); 
-                enemy.Health -= playerAttack;
-
-                Form.Output($"You attacked the {enemy.Name} for {playerAttack} points, he has {enemy.Health} health and {enemy.Armor} armor points left.");
 
                 if (equippedWeapon != null && rand.Next(100) < 50)
                 {
                     equippedWeapon.Durability -= 1;
+                    if (equippedWeapon.Durability <= 0)
+                    {
+                        Form.Output($"Your {equippedWeapon.Name} has broken!");
+                        equippedWeapon = null;
+                    }
                 }
 
-                if (rand.Next(100) < 30 && enemy.Armor > 0) 
+                var playerAttack = playerDamage - Math.Max(0, enemy.Armor);
+                enemy.Health -= playerAttack;
+
+                Form.Output($"You attacked the {enemy.Name} for {playerAttack} points, he has {enemy.Health} health and {enemy.Armor} armor points left.");
+
+                if (rand.Next(100) < 30 && enemy.Armor > 0)
                 {
                     enemy.Armor -= playerAttack;
+                    if (enemy.Armor < 0)
+                    {
+                        enemy.Armor = 0;
+                    }
                     Form.Output($"You damage the {enemy.Name}'s armor for {playerAttack} points!");
                 }
 
@@ -616,11 +629,22 @@ namespace Core
                 var enemyAttack = enemy.Damage - Player.armorValue;
                 Player.healthValue -= enemyAttack;
                 Form.Output($"The {enemy.Name} attacked you for {enemyAttack} points, you have {Player.healthValue} health and {Player.armorValue} armor points left.");
+
+
+                var str = Settings.healPoint.Text;
+                var num = int.Parse(str);
+                if (Player.healthValue < num && Settings.autoHeal.Checked)
+                {
+                    PlayerMethods.Heal();
+                }
+
+                Form.UpdateStats();
             }
 
             if (Player.healthValue > 0)
             {
                 Form.Output($"You defeat the {enemy.Name}!");
+                PlayerMethods.AddXp();
                 Player.inCombat = false;
             }
             else

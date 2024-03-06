@@ -27,13 +27,14 @@ namespace Survival
         public ShopCore Shop { get; } = new();
         public ShopMethods ShopMethods { get; }
         public Game Game { get; }
+        public Options Settings = new();
 
         public Form1()
         {
             InitializeComponent();
             UpdateStats();
 
-            Game = new Game(Shop, Player, this);
+            Game = new Game(Shop, Player, this, Settings);
             PlayerMethods = Game.PlayerMethods;
             ShopMethods = Game.ShopMethods;
 
@@ -41,16 +42,19 @@ namespace Survival
             ShopMethods.OnShopCreate();
         }
 
-
         /// <summary>
         /// Update the stats GUI
         /// </summary>
         public void UpdateStats()
         {
+            level.Text = "Level: " + Player.levelValue.ToString();
+            xp.Text = "XP: " + Player.xpValue.ToString();
+
             health.Text = "Health: " + Player.healthValue.ToString();
             hunger.Text = "Hunger: " + Player.hungerValue.ToString();
             thirst.Text = "Thirst: " + Player.thirstValue.ToString();
             armor.Text = "Armor: " + Player.armorValue.ToString();
+
             currentWeight.Text = "Current Weight: " + Player.currentWeightValue.ToString();
             maxWeight.Text = "Max Weight: " + Player.maxWeightValue.ToString();
             locationL.Text = "Location: " + Player.location;
@@ -64,21 +68,24 @@ namespace Survival
             Output("Your journey comes to an end with a sudden death.");
 
             Player.strengthValue = 15;
+            Player.levelValue = 1;
+            Player.xpValue = 0;
+
             Player.healthValue = 100;
             Player.hungerValue = 100;
             Player.thirstValue = 100;
             Player.armorValue = 0;
+
             Player.currentWeightValue = 0;
             Player.maxWeightValue = 30;
             Player.location = "Beach";
             Player.inCombat = false;
             Player.equippedItem = Guid.Empty;
-            Player.inventory.Clear();
 
+            Player.inventory.Clear();
             inventoryGrid.Rows.Clear();
             inventoryGrid.Columns.Clear();
         }
-
 
         /// <summary>
         /// Output something to the console
@@ -88,7 +95,6 @@ namespace Survival
             consoleBox.AppendText(output + Environment.NewLine);
             inputBox.Clear();
         }
-
 
         // Input
         public void InputBox_KeyDown(object sender, KeyEventArgs e)
@@ -178,6 +184,11 @@ namespace Survival
         {
             var form2 = new Form2();
             form2.Show();
+        }
+
+        private void optionsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Settings.Show();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

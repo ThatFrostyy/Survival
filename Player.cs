@@ -27,7 +27,11 @@ namespace Player
         public List<Item> inventory = [];
 
         // Stats
+        public int xpValue = 0;
+        public int levelValue = 1;
         public int strengthValue = 15;
+
+        // General
         public int healthValue = 100;
         public int hungerValue = 100;
         public int thirstValue = 100;
@@ -63,10 +67,29 @@ namespace Player
             /*
             Weapon test = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
             AddItem(test);
-            Player.location = "Village";
             Item item = new("Tender", 0.1, 200, "Assets/Images/Icons/Money.png");
             AddItem(item);
+            Medicine a = new("Bandage", 0.1, 200, "Assets/Images/Icons/Bandage.png", 30);
+            AddItem(a);
             */
+        }
+
+        /// <summary>
+        /// Add xp to the player
+        /// </summary>
+        public void AddXp()
+        {
+            var add = rand.Next(1, 11);
+            Player.xpValue += add;
+
+            if (Player.xpValue >= 100)
+            {
+                Player.levelValue++;
+                Player.xpValue = 0;
+                Form.Output($"You have leveled up to level {Player.levelValue}!");
+            }
+
+            Form.Output($"You gained {add} xp!");
         }
 
         /// <summary>
@@ -292,6 +315,11 @@ namespace Player
             if (existingItem == null)
             {
                 return;
+            }
+
+            if (Player.equippedItem != Guid.Empty && Player.equippedItem == item.Id)
+            {
+                Player.equippedItem = Guid.Empty;
             }
 
             if (existingItem.Quantity > 1)
