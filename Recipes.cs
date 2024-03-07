@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Survival
 {
-    internal class Recipes
+    public class Recipes
     {
     }
 }
