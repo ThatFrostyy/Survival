@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Survival
 {
-    internal class Craft
+    public class Craft
     {
     }
 }
