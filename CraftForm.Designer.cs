@@ -32,6 +32,7 @@
             recipeGrid = new DataGridView();
             flowLayoutPanel2 = new FlowLayoutPanel();
             consoleBox = new TextBox();
+            craftButton = new Button();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)recipeGrid).BeginInit();
             flowLayoutPanel2.SuspendLayout();
@@ -77,11 +78,21 @@
             consoleBox.Size = new Size(558, 147);
             consoleBox.TabIndex = 0;
             // 
+            // craftButton
+            // 
+            craftButton.Location = new Point(367, 105);
+            craftButton.Name = "craftButton";
+            craftButton.Size = new Size(154, 34);
+            craftButton.TabIndex = 2;
+            craftButton.Text = "Begin Crafting";
+            craftButton.UseVisualStyleBackColor = true;
+            // 
             // CraftForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(589, 442);
+            Controls.Add(craftButton);
             Controls.Add(flowLayoutPanel2);
             Controls.Add(flowLayoutPanel1);
             Name = "CraftForm";
@@ -99,5 +110,6 @@
         private DataGridView recipeGrid;
         private FlowLayoutPanel flowLayoutPanel2;
         private TextBox consoleBox;
+        private Button craftButton;
     }
 }
