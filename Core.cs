@@ -608,12 +608,12 @@ namespace Core
                     }
                 }
 
-                var playerAttack = playerDamage - Math.Max(0, enemy.Armor);
+                var playerAttack = Math.Max(0, playerDamage - enemy.Armor);
                 enemy.Health -= playerAttack;
 
                 Form.Output($"You attacked the {enemy.Name} for {playerAttack} points, he has {enemy.Health} health and {enemy.Armor} armor points left.");
 
-                if (rand.Next(100) < 30 && enemy.Armor > 0)
+                if (rand.Next(100) < 50 && enemy.Armor > 0)
                 {
                     enemy.Armor -= playerAttack;
                     if (enemy.Armor < 0)

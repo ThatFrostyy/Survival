@@ -185,7 +185,7 @@ namespace Survival
 
         private void craftToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            CraftForm form2 = new CraftForm();
+            var form2 = new CraftForm();
             form2.Show();
         }
 
