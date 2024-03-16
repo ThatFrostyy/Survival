@@ -167,6 +167,10 @@ namespace Core
                             Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15);
                             PlayerMethods.AddItem(apple);
                             break;
+                        case > 75 and <= 82:
+                            Food berry = new("Blue Berry", 0.3, 3, "Assets/Images/Icons/BlueBerry.png", 8);
+                            PlayerMethods.AddItem(berry);
+                            break;
                         default:
                             Form.Output("You fail to find any items.");
                             break;
