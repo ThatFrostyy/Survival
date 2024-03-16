@@ -488,7 +488,7 @@ namespace Core
             Form.UpdateStats();
         }
 
-        // Add selling
+        // Improve the shop selling method
         public void ShopCommands(Command command)
         {
             switch (command.Action)
@@ -496,9 +496,9 @@ namespace Core
                 case "buy":
                     ShopMethods.Buy(command);
                     ShopMethods.UpdateShop();
-                    PlayerMethods.UpdateInventory();
                     break;
                 case "sell":
+                    ShopMethods.Sell(command);
                     break;
                 case "leave":
                     Form.Output("You decide to leave the shop.");

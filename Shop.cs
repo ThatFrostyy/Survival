@@ -154,8 +154,46 @@ namespace Shop
                 Player.inventory.Add(itemToBuy);
             }
 
-            Form.Output($"You bought a {itemName}.");
+            Form.Output($"You bought a {itemName} for the price of {itemToBuy.Price}.");
+            PlayerMethods.UpdateInventory();
+        }
 
+        /// <summary>
+        /// Used to sell an item to the shop, find the item using the argument from the command class (command.Argument)
+        /// </summary>
+        public void Sell(Command command)
+        {
+            var itemName = command.Argument;
+            var itemToSell = Player.inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
+            var moneyGain = rand.Next(11, 31);
+
+            if (itemToSell == null)
+            {
+                Form.Output($"Item {itemName} not found in the inventory.");
+                return;
+            }
+
+            if (itemToSell.Quantity < 1)
+            {
+                Form.Output($"You don't have any {itemName}.");
+                return;
+            }
+
+            var playerMoney = Player.inventory.FirstOrDefault(item => item.Name == "Tender");
+            if (playerMoney != null)
+            {
+                playerMoney.Quantity += moneyGain;
+                PlayerMethods.RemoveItem(itemToSell);
+            }
+            else
+            {
+                Item item = new("Tender", 0.1, moneyGain, "Assets/Images/Icons/Money.png");
+                PlayerMethods.AddItem(item);
+                PlayerMethods.RemoveItem(itemToSell);
+            }
+
+            Form.Output($"You sold a {itemName} for {moneyGain} tender.");
+            PlayerMethods.UpdateInventory();
         }
 
         // Shop item tooltip
