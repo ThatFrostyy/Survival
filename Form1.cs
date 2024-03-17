@@ -20,6 +20,7 @@ namespace Survival
     {
         private readonly Options _options;
         private readonly Tools _tools;
+        private readonly Database _database;
         private readonly Character _character;
         private readonly Shop _shop;
         private readonly Game _game;
@@ -30,7 +31,8 @@ namespace Survival
 
             _options = new Options();
             _tools = new Tools();
-            _character = new Character(this);
+            _database = new Database();
+            _character = new Character(this, _database);
             _shop = new Shop(this, _character);
             _game = new Game(this, _character, _shop, _tools, _options);
 

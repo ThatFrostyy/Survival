@@ -40,12 +40,14 @@ namespace Survival
         /// </summary>
         public void OnShopCreate()
         {
-            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: _rand.Next(1, 11), price: 12);
+            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: _rand.Next(1, 11), price: 15);
             Drink waterbottle = new("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: _rand.Next(1, 6), price: 20);
             Medicine bandage = new("Bandage", 0.2, 1, "Assets/Images/Icons/Bandage.png", 30, stock: _rand.Next(1, 6), price: 30);
+            Weapon shotgun = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false, 1, 600);
             items.Add(apple);
             items.Add(waterbottle);
             items.Add(bandage);
+            items.Add(shotgun);
         }
         #endregion Other
 
@@ -86,10 +88,15 @@ namespace Survival
             }
 
             playerMoney.Quantity -= itemToBuy.Price;
+            if (playerMoney.Quantity <= 0)
+            {
+                _character.RemoveItem(playerMoney);
+            }
+
             itemToBuy.Stock--;
 
             var playerItem = _character.inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
-            if (playerItem != null)
+            if (playerItem != null && (itemToBuy is not Weapon || (itemToBuy is Weapon && playerItem.Id == itemToBuy.Id)))
             {
                 playerItem.Quantity++;
             }
@@ -109,9 +116,8 @@ namespace Survival
         {
             var itemName = command.Argument;
             var itemToSell = _character.inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
-            var moneyGain = _rand.Next(11, 31);
 
-            Item money = new("Tender", 0.1, moneyGain, "Assets/Images/Icons/Money.png");
+            Item money = new("Tender", 0.1, itemToSell.Price / 2, "Assets/Images/Icons/Money.png");
 
             if (itemToSell == null)
             {
@@ -125,7 +131,6 @@ namespace Survival
                 return;
             }
 
-
             if (itemToSell.Quantity < 1)
             {
                 _form.Output($"You don't have any {itemName}.");
@@ -135,7 +140,7 @@ namespace Survival
             var playerMoney = _character.inventory.FirstOrDefault(item => item.Name == "Tender");
             if (playerMoney != null)
             {
-                playerMoney.Quantity += moneyGain;
+                playerMoney.Quantity += itemToSell.Price / 2;
                 _character.RemoveItem(itemToSell);
             }
             else
@@ -144,7 +149,7 @@ namespace Survival
                 _character.RemoveItem(itemToSell);
             }
 
-            _form.Output($"You sold a {itemName} for {moneyGain} tender.");
+            _form.Output($"You sold a {itemName} for {itemToSell.Price / 2} tender.");
             _character.UpdateInventory();
         }
         #endregion Shop Methods
@@ -230,6 +235,9 @@ namespace Survival
                     break;
                 case Drink drink:
                     tooltip = $"Thirst Restore: {drink.ThirstRestore}\nWeight: {drink.Weight}";
+                    break;
+                case Medicine med:
+                    tooltip = $"Health Restore: {med.HealthRestore}\nWeight: {med.Weight}";
                     break;
                 default:
                     tooltip = "Unknown item type";

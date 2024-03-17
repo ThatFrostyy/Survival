@@ -20,6 +20,7 @@ namespace Survival
     {
         private readonly Random _rand = new();
         private readonly Form1 _form;
+        private readonly Database _database;
 
         #region Item Lists and Dictionaries 
         // Keeps track of all the picked up items and their gui's 
@@ -58,10 +59,23 @@ namespace Survival
         #endregion Other
 
         // Constructor
-        public Character(Form1 form)
+        public Character(Form1 form, Database database)
         {
             this._form = form;
+            _database = database;
         }
+
+        #region Other
+        /// <summary>
+        /// Called on the game start, useful for adding items to the inventory, testing, etc
+        /// </summary>
+        public void OnPlayerCreate()
+        {
+            CreateWeapon("Shotgun");
+            CreateWeapon("Shotgun");
+            CreateItem("Tender", newWeight: 0, newQuantity: 600);
+        }
+        #endregion Other
 
         #region Item Methods
         /// <summary>
@@ -369,20 +383,112 @@ namespace Survival
         }
         #endregion Inventory
 
-        #region Other
-        /// <summary>
-        /// Called on the game start, useful for adding items to the inventory, testing, etc
-        /// </summary>
-        public void OnPlayerCreate()
+        #region Item Creation
+        public void CreateItem(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newStock = null, int? newPrice = null)
         {
-            /*
-            location = "Village";
-            Item rock = new("Rock", 0, 3, "Assets/Images/Icons/Rock.png");
-            Item money = new("Tender", 0, 50, "Assets/Images/Icons/Rock.png");
-            AddItem(rock);
-            AddItem(money);
-            */
+            if (_database.items.TryGetValue(itemName, out Item? value))
+            {
+                if (value.GetType() == typeof(Item))
+                {
+                    var item = value.Clone();
+                    item.Id = Guid.NewGuid();
+                    if (newName != null) item.Name = newName;
+                    if (newWeight != null) item.Weight = newWeight.Value;
+                    if (newQuantity != null) item.Quantity = newQuantity.Value;
+                    if (newIconPath != null) item.Icon = Image.FromFile(newIconPath);
+                    if (newStock != null) item.Stock = newStock.Value;
+                    if (newPrice != null) item.Price = newPrice.Value;
+
+                    AddItem(item);
+                }
+            }
         }
-        #endregion Other
+
+        public void CreateWeapon(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newDamage = null, int? newDurability = null, bool? newIsMelee = null, int? newStock = null, int? newPrice = null)
+        {
+            if (_database.weapons.TryGetValue(itemName, out Item? value))
+            {
+                if (value.GetType() == typeof(Weapon))
+                {
+                    var weapon = (Weapon)value.Clone();
+                    weapon.Id = Guid.NewGuid();
+                    if (newName != null) weapon.Name = newName;
+                    if (newWeight != null) weapon.Weight = newWeight.Value;
+                    if (newQuantity != null) weapon.Quantity = newQuantity.Value;
+                    if (newIconPath != null) weapon.Icon = Image.FromFile(newIconPath);
+                    if (newDamage != null) weapon.Damage = newDamage.Value;
+                    if (newDurability != null) weapon.Durability = newDurability.Value;
+                    if (newIsMelee != null) weapon.Melee = newIsMelee.Value;
+                    if (newStock != null) weapon.Stock = newStock.Value;
+                    if (newPrice != null) weapon.Price = newPrice.Value;
+
+                    AddItem(weapon);
+                }
+            }
+        }
+
+        public void CreateFood(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newHungerRestoration = null, int? newStock = null, int? newPrice = null)
+        {
+            if (_database.foods.TryGetValue(itemName, out Item? value))
+            {
+                if (value.GetType() == typeof(Food))
+                {
+                    var food = (Food)value.Clone();
+                    food.Id = Guid.NewGuid();
+                    if (newName != null) food.Name = newName;
+                    if (newWeight != null) food.Weight = newWeight.Value;
+                    if (newQuantity != null) food.Quantity = newQuantity.Value;
+                    if (newIconPath != null) food.Icon = Image.FromFile(newIconPath);
+                    if (newHungerRestoration != null) food.HungerRestore = newHungerRestoration.Value;
+                    if (newStock != null) food.Stock = newStock.Value;
+                    if (newPrice != null) food.Price = newPrice.Value;
+
+                    AddItem(food);
+                }
+            }
+        }
+
+        public void CreateDrink(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newThirstRestoration = null, int? newStock = null, int? newPrice = null)
+        {
+            if (_database.drinks.TryGetValue(itemName, out Item? value))
+            {
+                if (value.GetType() == typeof(Drink))
+                {
+                    var drink = (Drink)value.Clone();
+                    drink.Id = Guid.NewGuid();
+                    if (newName != null) drink.Name = newName;
+                    if (newWeight != null) drink.Weight = newWeight.Value;
+                    if (newQuantity != null) drink.Quantity = newQuantity.Value;
+                    if (newIconPath != null) drink.Icon = Image.FromFile(newIconPath);
+                    if (newThirstRestoration != null) drink.ThirstRestore = newThirstRestoration.Value;
+                    if (newStock != null) drink.Stock = newStock.Value;
+                    if (newPrice != null) drink.Price = newPrice.Value;
+
+                    AddItem(drink);
+                }
+            }
+        }
+
+        public void CreateMedicine(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newHealthRestoration = null, int? newStock = null, int? newPrice = null)
+        {
+            if (_database.medicines.TryGetValue(itemName, out Item? value))
+            {
+                if (value.GetType() == typeof(Medicine))
+                {
+                    var med = (Medicine)value.Clone();
+                    med.Id = Guid.NewGuid();
+                    if (newName != null) med.Name = newName;
+                    if (newWeight != null) med.Weight = newWeight.Value;
+                    if (newQuantity != null) med.Quantity = newQuantity.Value;
+                    if (newIconPath != null) med.Icon = Image.FromFile(newIconPath);
+                    if (newHealthRestoration != null) med.HealthRestore = newHealthRestoration.Value;
+                    if (newStock != null) med.Stock = newStock.Value;
+                    if (newPrice != null) med.Price = newPrice.Value;
+
+                    AddItem(med);
+                }
+            }
+        }
+        #endregion Item Creation
     }
 }

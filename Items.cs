@@ -38,6 +38,11 @@ namespace Items
             Stock = stock;
             Price = price;
         }
+
+        public Item Clone()
+        {
+            return (Item)this.MemberwiseClone();
+        }
     }
 
     public class Weapon : Item

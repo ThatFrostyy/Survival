@@ -48,6 +48,7 @@
             // 
             // save
             // 
+            save.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             save.Enabled = false;
             save.Location = new Point(210, 194);
             save.Name = "save";

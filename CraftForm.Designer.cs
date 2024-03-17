@@ -37,9 +37,10 @@
             // recipeGrid
             // 
             recipeGrid.AllowUserToAddRows = false;
+            recipeGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             recipeGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             recipeGrid.Location = new Point(11, 24);
-            recipeGrid.Margin = new Padding(2, 2, 2, 2);
+            recipeGrid.Margin = new Padding(2);
             recipeGrid.Name = "recipeGrid";
             recipeGrid.ReadOnly = true;
             recipeGrid.RowHeadersWidth = 62;
@@ -60,8 +61,9 @@
             // 
             // craftButton
             // 
+            craftButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             craftButton.Location = new Point(296, 133);
-            craftButton.Margin = new Padding(2, 2, 2, 2);
+            craftButton.Margin = new Padding(2);
             craftButton.Name = "craftButton";
             craftButton.Size = new Size(108, 25);
             craftButton.TabIndex = 2;
@@ -76,7 +78,7 @@
             Controls.Add(consoleBox);
             Controls.Add(recipeGrid);
             Controls.Add(craftButton);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "CraftForm";
             Text = "Crafting";
             ((System.ComponentModel.ISupportInitialize)recipeGrid).EndInit();

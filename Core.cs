@@ -66,11 +66,11 @@ namespace Survival
 
                     switch (encounter)
                     {
-                        case <= 12:
+                        case <= 8:
                             _form.Output("You suddenly get attacked by an enemy! You enter combat.");
                             _character.inCombat = true;
                             break;
-                        case > 12 and <= 100:
+                        case > 8 and <= 100:
                             Explore(num);
                             break;
                     }
@@ -82,8 +82,7 @@ namespace Survival
                     switch (scavenge)
                     {
                         case <= 30:
-                            Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            _character.AddItem(rock);
+                            _character.CreateItem("Rock");
                             break;
                         default:
                             _form.Output("You fail to find any rocks.");
@@ -95,7 +94,7 @@ namespace Survival
                     _form.Output("Beach Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
-                    _form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command.Action);
                     break;
             }
             _form.UpdateStats();
@@ -130,11 +129,11 @@ namespace Survival
 
                     switch (encounter)
                     {
-                        case <= 15:
+                        case <= 12:
                             _form.Output("You suddenly get attacked by an enemy! You enter combat.");
                             _character.inCombat = true;
                             break;
-                        case > 15 and <= 100:
+                        case > 12 and <= 100:
                             Explore(num);
                             break;
                     }
@@ -145,20 +144,16 @@ namespace Survival
                     switch (scavenge)
                     {
                         case <= 30:
-                            Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            _character.AddItem(rock);
+                            _character.CreateItem("Rock");
                             break;
                         case > 30 and <= 60:
-                            Item branch = new("Branch", 1, 1, "Assets/Images/Icons/Branch.png");
-                            _character.AddItem(branch);
+                            _character.CreateItem("Branch");
                             break;
                         case > 60 and <= 75:
-                            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15);
-                            _character.AddItem(apple);
+                            _character.CreateFood("Apple");
                             break;
                         case > 75 and <= 82:
-                            Food berry = new("Blue Berry", 0.3, 3, "Assets/Images/Icons/BlueBerry.png", 8);
-                            _character.AddItem(berry);
+                            _character.CreateFood("Blue Berry", newQuantity: 3);
                             break;
                         default:
                             _form.Output("You fail to find any items.");
@@ -173,7 +168,7 @@ namespace Survival
                     _form.Output("Forest Commands: equip, heal, eat, drink, explore, scavenge, rest, help");
                     break;
                 default:
-                    _form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command.Action);
                     break;
 
             }
@@ -209,11 +204,11 @@ namespace Survival
 
                     switch (encounter)
                     {
-                        case <= 12:
+                        case <= 8:
                             _form.Output("You suddenly get attacked by an enemy! You enter combat.");
                             _character.inCombat = true;
                             break;
-                        case > 12 and <= 100:
+                        case > 8 and <= 100:
                             Explore(num);
                             break;
                     }
@@ -224,8 +219,7 @@ namespace Survival
                     switch (scavenge)
                     {
                         case <= 30:
-                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            _character.AddItem(item);
+                            _character.CreateItem("Rock");
                             break;
                         default:
                             _form.Output("You fail to find any rocks.");
@@ -237,7 +231,7 @@ namespace Survival
                     _form.Output("Plains Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
-                    _form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command.Action);
                     break;
             }
             _form.UpdateStats();
@@ -272,11 +266,11 @@ namespace Survival
 
                     switch (encounter)
                     {
-                        case <= 12:
+                        case <= 8:
                             _form.Output("You suddenly get attacked by an enemy! You enter combat.");
                             _character.inCombat = true;
                             break;
-                        case > 12 and <= 100:
+                        case > 8 and <= 100:
                             Explore(num);
                             break;
                     }
@@ -287,8 +281,7 @@ namespace Survival
                     switch (scavenge)
                     {
                         case <= 50:
-                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            _character.AddItem(item);
+                            _character.CreateItem("Rock");
                             break;
                         default:
                             _form.Output("You fail to find any rocks.");
@@ -300,7 +293,7 @@ namespace Survival
                     _form.Output("Hills Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
-                    _form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command.Action);
                     break;
             }
             _form.UpdateStats();
@@ -335,11 +328,11 @@ namespace Survival
 
                     switch (encounter)
                     {
-                        case <= 15:
+                        case <= 8:
                             _form.Output("You suddenly get attacked by an enemy! You enter combat.");
                             _character.inCombat = true;
                             break;
-                        case > 15 and <= 100:
+                        case > 8 and <= 100:
                             Explore(num);
                             break;
                     }
@@ -350,8 +343,7 @@ namespace Survival
                     switch (scavenge)
                     {
                         case <= 75:
-                            Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            _character.AddItem(item);
+                            _character.CreateItem("Rock");
                             break;
                         default:
                             _form.Output("You fail to find any rocks.");
@@ -363,7 +355,7 @@ namespace Survival
                     _form.Output("Mountains Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
-                    _form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command.Action);
                     break;
             }
             _form.UpdateStats();
@@ -398,11 +390,11 @@ namespace Survival
 
                     switch (encounter)
                     {
-                        case <= 15:
+                        case <= 12:
                             _form.Output("You suddenly get attacked by an enemy! You enter combat.");
                             _character.inCombat = true;
                             break;
-                        case > 15 and <= 100:
+                        case > 12 and <= 100:
                             Explore(num);
                             break;
                     }
@@ -415,11 +407,11 @@ namespace Survival
                     break;
                 case "scavenge":
                     var scavenge = _rand.Next(0, 101);
+                    var money = _rand.Next(0, 11);
                     switch (scavenge)
                     {
                         case <= 10:
-                            Item item = new("Tender", 0.1, _rand.Next(0, 11), "Assets/Images/Icons/Money.png");
-                            _character.AddItem(item);
+                            _character.CreateItem("Tender", newQuantity: money, newPrice: money);
                             break;
                         default:
                             _form.Output("You fail to find any items.");
@@ -431,7 +423,7 @@ namespace Survival
                     _form.Output("Village Commands: equip, heal, eat, drink, explore, scavenge, shop, help");
                     break;
                 default:
-                    _form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command.Action);
                     break;
             }
             _form.UpdateStats();
@@ -468,7 +460,7 @@ namespace Survival
                     _form.Output("Combat Commands: fight, heal, retreat, help");
                     break;
                 default:
-                    _form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command.Action);
                     break;
             }
             _form.UpdateStats();
@@ -497,7 +489,7 @@ namespace Survival
                     _form.Output("Shop Commands: buy, sell, leave, help");
                     break;
                 default:
-                    _form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command.Action);
                     break;
             }
             _form.UpdateStats();
@@ -620,7 +612,7 @@ namespace Survival
 
                 if (enemy.Health <= 0)
                 {
-                    continue;
+                    break;
                 }
 
                 var enemyAttack = enemy.Damage - _character.armorValue;

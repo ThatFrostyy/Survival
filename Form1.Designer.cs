@@ -48,9 +48,9 @@
             quitToolStripMenuItem = new ToolStripMenuItem();
             menusToolStripMenuItem = new ToolStripMenuItem();
             craftToolStripMenuItem1 = new ToolStripMenuItem();
+            optionsToolStripMenuItem1 = new ToolStripMenuItem();
             consoleBox = new TextBox();
             inventoryGrid = new DataGridView();
-            optionsToolStripMenuItem1 = new ToolStripMenuItem();
             statsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)shopGrid).BeginInit();
             menuStrip1.SuspendLayout();
@@ -70,7 +70,7 @@
             // 
             // statsPanel
             // 
-            statsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            statsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             statsPanel.BorderStyle = BorderStyle.FixedSingle;
             statsPanel.Controls.Add(shopGrid);
             statsPanel.Controls.Add(level);
@@ -91,7 +91,7 @@
             // shopGrid
             // 
             shopGrid.AllowUserToAddRows = false;
-            shopGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            shopGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             shopGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             shopGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             shopGrid.Location = new Point(-2, -1);
@@ -116,6 +116,7 @@
             // 
             // craftButton
             // 
+            craftButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             craftButton.Location = new Point(116, 216);
             craftButton.Margin = new Padding(2);
             craftButton.Name = "craftButton";
@@ -223,7 +224,7 @@
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(140, 22);
+            saveToolStripMenuItem.Size = new Size(180, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
@@ -231,7 +232,7 @@
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             loadToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
-            loadToolStripMenuItem.Size = new Size(140, 22);
+            loadToolStripMenuItem.Size = new Size(180, 22);
             loadToolStripMenuItem.Text = "Load";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
             // 
@@ -239,7 +240,7 @@
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             quitToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
-            quitToolStripMenuItem.Size = new Size(140, 22);
+            quitToolStripMenuItem.Size = new Size(180, 22);
             quitToolStripMenuItem.Text = "Quit";
             quitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
             // 
@@ -254,9 +255,17 @@
             // 
             craftToolStripMenuItem1.Name = "craftToolStripMenuItem1";
             craftToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.M;
-            craftToolStripMenuItem1.Size = new Size(180, 22);
+            craftToolStripMenuItem1.Size = new Size(145, 22);
             craftToolStripMenuItem1.Text = "Craft";
             craftToolStripMenuItem1.Click += craftToolStripMenuItem1_Click;
+            // 
+            // optionsToolStripMenuItem1
+            // 
+            optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
+            optionsToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.O;
+            optionsToolStripMenuItem1.Size = new Size(61, 20);
+            optionsToolStripMenuItem1.Text = "Options";
+            optionsToolStripMenuItem1.Click += optionsToolStripMenuItem1_Click;
             // 
             // consoleBox
             // 
@@ -273,7 +282,7 @@
             // inventoryGrid
             // 
             inventoryGrid.AllowUserToAddRows = false;
-            inventoryGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            inventoryGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             inventoryGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             inventoryGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             inventoryGrid.Location = new Point(214, 40);
@@ -283,14 +292,6 @@
             inventoryGrid.RowHeadersWidth = 62;
             inventoryGrid.Size = new Size(295, 238);
             inventoryGrid.TabIndex = 4;
-            // 
-            // optionsToolStripMenuItem1
-            // 
-            optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            optionsToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.O;
-            optionsToolStripMenuItem1.Size = new Size(61, 20);
-            optionsToolStripMenuItem1.Text = "Options";
-            optionsToolStripMenuItem1.Click += optionsToolStripMenuItem1_Click;
             // 
             // Form1
             // 
