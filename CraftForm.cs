@@ -2,11 +2,19 @@
 {
     public partial class CraftForm : Form
     {
+        //private readonly Database _database;
+        //private readonly Character _character;
+        private readonly Craft _craftForm;
+
         public CraftForm()
         {
             InitializeComponent();
 
+            //_database = new Database();
+            //_character = new Character(this, _database);
+            _craftForm = new Craft(this);
 
+            _craftForm.OnCraftCreate(); 
         }
 
         /// <summary>
