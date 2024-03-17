@@ -2,5 +2,25 @@
 {
     public class Recipes
     {
+        // Recipes: 
+        // Campfire: 5 branches, 3 rocks
+        // Spear: 3 branches, 1 rope
+        // Box: 3 branches, 2 rope
+        // Makeshift backpack: 3 cloth, 1 tarp, 1 rope
+        // Tent: 3 tarp, 2 rope
+
+        public Guid Id { get; set; }
+        public int PlayerXP { get; set; }
+        public string Name { get; set; }
+        public Image Icon { get; set; }
+
+        // Constructor 
+        public Recipes(int playerXP, string name, string iconPath) 
+        { 
+            Id = Guid.NewGuid();
+            PlayerXP = playerXP;
+            Name = name; 
+            Icon = Image.FromFile(iconPath);
+        }
     }
 }
