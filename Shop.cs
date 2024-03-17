@@ -32,7 +32,7 @@ namespace Shop
         public Character Player { get; }
         public CharacterMethods PlayerMethods { get; }
 
-        public ShopMethods(ShopCore shop, Form1 form, Character player, CharacterMethods playerMethods) // Modify this
+        public ShopMethods(ShopCore shop, Form1 form, Character player, CharacterMethods playerMethods)
         {
             Shop = shop;
             Form = form;

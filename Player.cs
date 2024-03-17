@@ -65,13 +65,12 @@ namespace Player
         public void OnPlayerCreate()
         {
             /*
-            Weapon test = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
+            Weapon test = new("Shotgun", 0.1, 10, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
             AddItem(test);
             Item item = new("Tender", 0.1, 200, "Assets/Images/Icons/Money.png");
             AddItem(item);
             Medicine a = new("Bandage", 0.1, 200, "Assets/Images/Icons/Bandage.png", 30);
-            AddItem(a);
-            */
+            AddItem(a);*/
         }
 
         /// <summary>

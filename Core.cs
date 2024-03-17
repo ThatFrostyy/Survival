@@ -489,6 +489,7 @@ namespace Core
         }
 
         // Improve the shop selling method
+        // Currently the Buy and Sell methods don't work because PlayerMethods is always null in ShopMethods
         public void ShopCommands(Command command)
         {
             switch (command.Action)
