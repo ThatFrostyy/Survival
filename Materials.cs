@@ -7,6 +7,6 @@
         public Materials(int playerLevel, string name, string iconPath) 
             : base(playerLevel, name, iconPath)
         { 
-        }
+        }								   
     }
 }

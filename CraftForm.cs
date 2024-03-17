@@ -10,11 +10,10 @@
         {
             InitializeComponent();
 
-            //_database = new Database();
-            //_character = new Character(this, _database);
-
             _craftForm = new Craft(this);
+
             _craftForm.OnCraftCreate();
+			_craftForm.DisplayCraftingRecipes();				
         }
 
         #region GUI
