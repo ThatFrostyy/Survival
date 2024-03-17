@@ -4,7 +4,7 @@
     {
         //private readonly Database _database;
         //private readonly Character _character;
-        private readonly Craft _craftForm;
+        public readonly Craft _craftForm;
 
         public CraftForm()
         {
@@ -12,11 +12,12 @@
 
             //_database = new Database();
             //_character = new Character(this, _database);
-            _craftForm = new Craft(this);
 
-            _craftForm.OnCraftCreate(); 
+            _craftForm = new Craft(this);
+            _craftForm.OnCraftCreate();
         }
 
+        #region GUI
         /// <summary>
         /// Output something to the console
         /// </summary>
@@ -24,5 +25,6 @@
         {
             consoleBox.AppendText(output + Environment.NewLine);
         }
+        #endregion GUI
     }
 }

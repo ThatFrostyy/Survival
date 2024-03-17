@@ -15,6 +15,11 @@ namespace Settings
                 var json = File.ReadAllText("Data/settings.json");
                 var settings = JsonConvert.DeserializeObject<dynamic>(json);
 
+                if (settings == null)
+                {
+                    return;
+                }
+
                 autoHeal.Checked = settings.AutoHeal;
                 healPoint.Text = settings.HealPoint;
             }
@@ -25,6 +30,7 @@ namespace Settings
             save.Enabled = false;
         }
 
+        #region Buttons
         private void autoHeal_CheckedChanged(object sender, EventArgs e)
         {
             healPoint.Visible = autoHeal.Checked;
@@ -58,11 +64,14 @@ namespace Settings
 
             save.Enabled = false;
         }
+        #endregion Buttons
 
+        #region Options Methods
         private void SettingChanged()
         {
             save.Enabled = true;
         }
+        #endregion Options Methods
 
         private void Options_FormClosing(object sender, FormClosingEventArgs e)
         {

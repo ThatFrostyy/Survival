@@ -10,15 +10,15 @@
         // Tent: 3 tarp, 2 rope
 
         public Guid Id { get; set; }
-        public int PlayerXP { get; set; }
+        public int PlayerLevel { get; set; }
         public string Name { get; set; }
         public Image Icon { get; set; }
 
         // Constructor 
-        public Recipes(int playerXP, string name, string iconPath) 
+        public Recipes(int playerLevel, string name, string iconPath) 
         { 
             Id = Guid.NewGuid();
-            PlayerXP = playerXP;
+            PlayerLevel = playerLevel;
             Name = name; 
             Icon = Image.FromFile(iconPath);
         }
