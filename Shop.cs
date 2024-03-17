@@ -14,45 +14,142 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 using Items;
-using Player;
-using Survival;
-namespace Shop
+namespace Survival
 {
-    public class ShopCore
+    public class Shop
     {
+        private readonly Random _rand = new();
+        private readonly Form1 _form;
+        private readonly Character _character;
+
+        #region Shop Variables
+        // Shop inventory
         public List<Item> items = [];
-    }
+        #endregion Shop Variables
 
-    public class ShopMethods
-    {
-        // I don't know how any of this works, but it does
-        Random rand = new();
-        public ShopCore Shop { get; }
-        public Form1 Form { get; }
-        public Character Player { get; }
-        public CharacterMethods PlayerMethods { get; }
-
-        public ShopMethods(ShopCore shop, Form1 form, Character player, CharacterMethods playerMethods)
+        // Constructor
+        public Shop(Form1 form, Character character)
         {
-            Shop = shop;
-            Form = form;
-            Player = player;
-            PlayerMethods = playerMethods;
+            _form = form;
+            _character = character;
         }
 
+        #region Other
         /// <summary>
         /// Called on the game start, useful for adding items to the shop, testing, etc
         /// </summary>
         public void OnShopCreate()
         {
-            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: rand.Next(1, 11), price: 12);
-            Drink waterbottle = new("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: rand.Next(1,6), price: 20);
-            Medicine bandage = new("Bandage", 0.2, 1, "Assets/Images/Icons/Bandage.png", 30, stock: rand.Next(1, 6), price: 30);
-            Shop.items.Add(apple);
-            Shop.items.Add(waterbottle);
-            Shop.items.Add(bandage);
+            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: _rand.Next(1, 11), price: 12);
+            Drink waterbottle = new("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: _rand.Next(1, 6), price: 20);
+            Medicine bandage = new("Bandage", 0.2, 1, "Assets/Images/Icons/Bandage.png", 30, stock: _rand.Next(1, 6), price: 30);
+            items.Add(apple);
+            items.Add(waterbottle);
+            items.Add(bandage);
+        }
+        #endregion Other
+
+        #region Shop Methods
+        /// <summary>
+        /// Used to buy an item from the shop, find the item using the argument from the command class (command.Argument)
+        /// </summary>
+        public void Buy(Command command)
+        {
+            var itemName = command.Argument;
+            var itemToBuy = items.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
+
+            if (itemToBuy == null)
+            {
+                _form.Output($"Item {itemName} not found in the shop.");
+                return;
+
+            }
+
+            if (!_character.CanAddItem(itemToBuy))
+            {
+                _form.Output("You can't carry any more items!");
+                return;
+            }
+
+            if (itemToBuy.Stock < 1)
+            {
+                _form.Output($"Item {itemName} is out of stock.");
+                return;
+            }
+
+            var playerMoney = _character.inventory.FirstOrDefault(item => item.Name == "Tender");
+
+            if (playerMoney == null || playerMoney.Quantity < itemToBuy.Price)
+            {
+                _form.Output("You don't have enough money to buy this item.");
+                return;
+            }
+
+            playerMoney.Quantity -= itemToBuy.Price;
+            itemToBuy.Stock--;
+
+            var playerItem = _character.inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
+            if (playerItem != null)
+            {
+                playerItem.Quantity++;
+            }
+            else
+            {
+                _character.inventory.Add(itemToBuy);
+            }
+
+            _form.Output($"You bought a {itemName} for the price of {itemToBuy.Price}.");
+            _character.UpdateInventory();
         }
 
+        /// <summary>
+        /// Used to sell an item to the shop, find the item using the argument from the command class (command.Argument)
+        /// </summary>
+        public void Sell(Command command)
+        {
+            var itemName = command.Argument;
+            var itemToSell = _character.inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
+            var moneyGain = _rand.Next(11, 31);
+
+            Item money = new("Tender", 0.1, moneyGain, "Assets/Images/Icons/Money.png");
+
+            if (itemToSell == null)
+            {
+                _form.Output($"Item {itemName} not found in the inventory.");
+                return;
+            }
+
+            if (!_character.CanAddItem(money))
+            {
+                _form.Output("You can't carry any more items!");
+                return;
+            }
+
+
+            if (itemToSell.Quantity < 1)
+            {
+                _form.Output($"You don't have any {itemName}.");
+                return;
+            }
+
+            var playerMoney = _character.inventory.FirstOrDefault(item => item.Name == "Tender");
+            if (playerMoney != null)
+            {
+                playerMoney.Quantity += moneyGain;
+                _character.RemoveItem(itemToSell);
+            }
+            else
+            {
+                _character.AddItem(money);
+                _character.RemoveItem(itemToSell);
+            }
+
+            _form.Output($"You sold a {itemName} for {moneyGain} tender.");
+            _character.UpdateInventory();
+        }
+        #endregion Shop Methods
+
+        #region Shop GUI
         /// <summary>
         /// Called when the player buys an item, etc
         /// </summary>
@@ -60,7 +157,7 @@ namespace Shop
         {
             // Add columns 
             // They are always added trough code because they are not set in the designer
-            if (Form.shopGrid.Columns.Count == 0)
+            if (_form.shopGrid.Columns.Count == 0)
             {
                 var iconColumn = new DataGridViewImageColumn
                 {
@@ -68,15 +165,15 @@ namespace Shop
                     ImageLayout = DataGridViewImageCellLayout.Zoom
                 };
 
-                Form.shopGrid.Columns.Add(iconColumn);
-                Form.shopGrid.Columns.Add("Name", "Name");
-                Form.shopGrid.Columns.Add("Price", "Price");
-                Form.shopGrid.Columns.Add("Stock", "Stock");
+                _form.shopGrid.Columns.Add(iconColumn);
+                _form.shopGrid.Columns.Add("Name", "Name");
+                _form.shopGrid.Columns.Add("Price", "Price");
+                _form.shopGrid.Columns.Add("Stock", "Stock");
             }
 
-            Form.shopGrid.Rows.Clear();
+            _form.shopGrid.Rows.Clear();
 
-            foreach (var item in Shop.items)
+            foreach (var item in items)
             {
                 if (item == null)
                 {
@@ -84,7 +181,7 @@ namespace Shop
                 }
 
                 // Check if there's already a row for this item
-                var existingRow = Form.shopGrid.Rows
+                var existingRow = _form.shopGrid.Rows
                     .OfType<DataGridViewRow>()
                     .FirstOrDefault(r => r.Cells["Name"].Value.ToString() == item.Name);
 
@@ -94,8 +191,8 @@ namespace Shop
                 }
                 else
                 {
-                    var index = Form.shopGrid.Rows.Add();
-                    var row = Form.shopGrid.Rows[index];
+                    var index = _form.shopGrid.Rows.Add();
+                    var row = _form.shopGrid.Rows[index];
 
                     row.Cells["Icon"].Value = new Bitmap(item.Icon);
                     row.Cells["Name"].Value = item.Name;
@@ -104,99 +201,14 @@ namespace Shop
                 }
             }
 
-            if (Player.inShop == false)
+            if (_character.inShop == false)
             {
-                Form.Output("You enter the village shop.");
+                _form.Output("You enter the village shop.");
             }
 
-            Form.shopGrid.CellMouseEnter += ShopGrid_CellMouseEnter;
+            _form.shopGrid.CellMouseEnter += ShopGrid_CellMouseEnter;
         }
 
-        /// <summary>
-        /// Used to buy an item from the shop, find the item using the argument from the command class (command.Argument)
-        /// </summary>
-        public void Buy(Command command)
-        {
-            var itemName = command.Argument;
-            var itemToBuy = Shop.items.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
-
-            if (itemToBuy == null)
-            {
-                Form.Output($"Item {itemName} not found in the shop.");
-                return;
-
-            }
-
-            if (itemToBuy.Stock < 1)
-            {
-                Form.Output($"Item {itemName} is out of stock.");
-                return;
-            }
-
-            var playerMoney = Player.inventory.FirstOrDefault(item => item.Name == "Tender");
-
-            if (playerMoney == null || playerMoney.Quantity < itemToBuy.Price)
-            {
-                Form.Output("You don't have enough money to buy this item.");
-                return;
-            }
-
-            playerMoney.Quantity -= itemToBuy.Price;
-            itemToBuy.Stock--;
-
-            var playerItem = Player.inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
-            if (playerItem != null)
-            {
-                playerItem.Quantity++;
-            }
-            else
-            {
-                Player.inventory.Add(itemToBuy);
-            }
-
-            Form.Output($"You bought a {itemName} for the price of {itemToBuy.Price}.");
-            PlayerMethods.UpdateInventory();
-        }
-
-        /// <summary>
-        /// Used to sell an item to the shop, find the item using the argument from the command class (command.Argument)
-        /// </summary>
-        public void Sell(Command command)
-        {
-            var itemName = command.Argument;
-            var itemToSell = Player.inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase));
-            var moneyGain = rand.Next(11, 31);
-
-            if (itemToSell == null)
-            {
-                Form.Output($"Item {itemName} not found in the inventory.");
-                return;
-            }
-
-            if (itemToSell.Quantity < 1)
-            {
-                Form.Output($"You don't have any {itemName}.");
-                return;
-            }
-
-            var playerMoney = Player.inventory.FirstOrDefault(item => item.Name == "Tender");
-            if (playerMoney != null)
-            {
-                playerMoney.Quantity += moneyGain;
-                PlayerMethods.RemoveItem(itemToSell);
-            }
-            else
-            {
-                Item item = new("Tender", 0.1, moneyGain, "Assets/Images/Icons/Money.png");
-                PlayerMethods.AddItem(item);
-                PlayerMethods.RemoveItem(itemToSell);
-            }
-
-            Form.Output($"You sold a {itemName} for {moneyGain} tender.");
-            PlayerMethods.UpdateInventory();
-        }
-
-        // Shop item tooltip
         public void ShopGrid_CellMouseEnter(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -204,8 +216,8 @@ namespace Shop
                 return;
             }
 
-            var row = Form.shopGrid.Rows[e.RowIndex];
-            var item = Shop.items.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
+            var row = _form.shopGrid.Rows[e.RowIndex];
+            var item = items.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
             var tooltip = string.Empty;
 
             switch (item)
@@ -229,5 +241,6 @@ namespace Shop
                 cell.ToolTipText = tooltip;
             }
         }
+        #endregion Shop GUI
     }
 }

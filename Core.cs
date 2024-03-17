@@ -13,40 +13,30 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-
 using Items;
 using Enemies;
-using Player;
-using Survival;
-using Shop;
-using Utilities;
-
-namespace Core
+using Settings;
+namespace Survival
 {
     public class Game
     {
-        // I don't know how any of this works, but it does
-        readonly Random rand = new();
-        public Character Player { get; }
-        public CharacterMethods PlayerMethods { get; }
-        public ShopCore Shop { get; }
-        public ShopMethods ShopMethods { get; }
-        public Form1 Form { get; }
-        public Options Settings { get; }
-        public Tools Utilities { get; }
+        private readonly Random _rand = new();
+        private readonly Form1 _form;
+        private readonly Character _character;
+        private readonly Shop _shop;
+        private readonly Tools _tools;
+        private readonly Options _options;
 
-        public Game(ShopCore shop, Character player, Form1 form, Options settings, Tools utilities)
+        public Game(Form1 form, Character character, Shop shop, Tools tools, Options options)
         {
-            Shop = shop;
-            ShopMethods = new ShopMethods(shop, form, player, PlayerMethods);
-            Player = player;
-            PlayerMethods = new CharacterMethods(player, form);
-            Form = form;
-            Settings = settings;
-            Utilities = utilities;
+            _form = form;
+            _character = character;
+            _shop = shop;
+            _tools = tools;
+            _options = options;
         }
 
-        // Commands
+        #region Location Commands
         public void BeachCommands(Command command)
         {
             switch (command.Action)
@@ -54,61 +44,61 @@ namespace Core
                 case "equip":
                     if (command.Argument != null)
                     {
-                        PlayerMethods.EquipItem(command.Argument);
+                        _character.EquipItem(command.Argument);
                     }
                     else
                     {
-                        Form.Output("Please specify an item to equip.");
+                        _form.Output("Please specify an item to equip.");
                     }
                     break;
                 case "heal":
-                    PlayerMethods.Heal();
+                    _character.Heal();
                     break;
                 case "eat":
-                    PlayerMethods.EatFood();
+                    _character.EatFood();
                     break;
                 case "drink":
-                    PlayerMethods.DrinkWater();
+                    _character.DrinkWater();
                     break;
                 case "explore":
-                    var num = rand.Next(0, 101);
-                    var encounter = rand.Next(0, 101);
+                    var num = _rand.Next(0, 101);
+                    var encounter = _rand.Next(0, 101);
 
                     switch (encounter)
                     {
                         case <= 12:
-                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            Player.inCombat = true;
+                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            _character.inCombat = true;
                             break;
                         case > 12 and <= 100:
                             Explore(num);
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 101);
+                    var scavenge = _rand.Next(0, 101);
 
                     switch (scavenge)
                     {
                         case <= 30:
                             Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            PlayerMethods.AddItem(rock);
+                            _character.AddItem(rock);
                             break;
                         default:
-                            Form.Output("You fail to find any rocks.");
+                            _form.Output("You fail to find any rocks.");
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Beach Commands: equip, heal, eat, drink, explore, scavenge, help");
+                    _form.Output("Beach Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
-                    Form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command);
                     break;
             }
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
 
         public void ForestCommands(Command command)
@@ -118,77 +108,76 @@ namespace Core
                 case "equip":
                     if (command.Argument != null)
                     {
-                        PlayerMethods.EquipItem(command.Argument);
+                        _character.EquipItem(command.Argument);
                     }
                     else
                     {
-                        Form.Output("Please specify an item to equip.");
+                        _form.Output("Please specify an item to equip.");
                     }
                     break;
                 case "heal":
-                    PlayerMethods.Heal();
+                    _character.Heal();
                     break;
                 case "eat":
-                    PlayerMethods.EatFood();
+                    _character.EatFood();
                     break;
                 case "drink":
-                    PlayerMethods.DrinkWater();
+                    _character.DrinkWater();
                     break;
                 case "explore":
-                    var num = rand.Next(0, 101);
-                    var encounter = rand.Next(0, 101);
+                    var num = _rand.Next(0, 101);
+                    var encounter = _rand.Next(0, 101);
 
                     switch (encounter)
                     {
                         case <= 15:
-                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            Player.inCombat = true;
+                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            _character.inCombat = true;
                             break;
                         case > 15 and <= 100:
                             Explore(num);
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 101);
-
+                    var scavenge = _rand.Next(0, 101);
                     switch (scavenge)
                     {
                         case <= 30:
                             Item rock = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            PlayerMethods.AddItem(rock);
+                            _character.AddItem(rock);
                             break;
                         case > 30 and <= 60:
                             Item branch = new("Branch", 1, 1, "Assets/Images/Icons/Branch.png");
-                            PlayerMethods.AddItem(branch);
+                            _character.AddItem(branch);
                             break;
                         case > 60 and <= 75:
                             Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15);
-                            PlayerMethods.AddItem(apple);
+                            _character.AddItem(apple);
                             break;
                         case > 75 and <= 82:
                             Food berry = new("Blue Berry", 0.3, 3, "Assets/Images/Icons/BlueBerry.png", 8);
-                            PlayerMethods.AddItem(berry);
+                            _character.AddItem(berry);
                             break;
                         default:
-                            Form.Output("You fail to find any items.");
+                            _form.Output("You fail to find any items.");
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "rest":
-                    PlayerMethods.Rest();
+                    _character.Rest();
                     break;
                 case "help":
-                    Form.Output("Forest Commands: equip, heal, eat, drink, explore, scavenge, rest, help");
+                    _form.Output("Forest Commands: equip, heal, eat, drink, explore, scavenge, rest, help");
                     break;
                 default:
-                    Form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command);
                     break;
 
             }
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
 
         public void PlainsCommands(Command command)
@@ -198,61 +187,60 @@ namespace Core
                 case "equip":
                     if (command.Argument != null)
                     {
-                        PlayerMethods.EquipItem(command.Argument);
+                        _character.EquipItem(command.Argument);
                     }
                     else
                     {
-                        Form.Output("Please specify an item to equip.");
+                        _form.Output("Please specify an item to equip.");
                     }
                     break;
                 case "heal":
-                    PlayerMethods.Heal();
+                    _character.Heal();
                     break;
                 case "eat":
-                    PlayerMethods.EatFood();
+                    _character.EatFood();
                     break;
                 case "drink":
-                    PlayerMethods.DrinkWater();
+                    _character.DrinkWater();
                     break;
                 case "explore":
-                    var num = rand.Next(0, 101);
-                    var encounter = rand.Next(0, 101);
+                    var num = _rand.Next(0, 101);
+                    var encounter = _rand.Next(0, 101);
 
                     switch (encounter)
                     {
                         case <= 12:
-                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            Player.inCombat = true;
+                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            _character.inCombat = true;
                             break;
                         case > 12 and <= 100:
                             Explore(num);
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 101);
-
+                    var scavenge = _rand.Next(0, 101);
                     switch (scavenge)
                     {
                         case <= 30:
                             Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            PlayerMethods.AddItem(item);
+                            _character.AddItem(item);
                             break;
                         default:
-                            Form.Output("You fail to find any rocks.");
+                            _form.Output("You fail to find any rocks.");
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Plains Commands: equip, heal, eat, drink, explore, scavenge, help");
+                    _form.Output("Plains Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
-                    Form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command);
                     break;
             }
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
 
         public void HillsCommands(Command command)
@@ -262,61 +250,60 @@ namespace Core
                 case "equip":
                     if (command.Argument != null)
                     {
-                        PlayerMethods.EquipItem(command.Argument);
+                        _character.EquipItem(command.Argument);
                     }
                     else
                     {
-                        Form.Output("Please specify an item to equip.");
+                        _form.Output("Please specify an item to equip.");
                     }
                     break;
                 case "heal":
-                    PlayerMethods.Heal();
+                    _character.Heal();
                     break;
                 case "eat":
-                    PlayerMethods.EatFood();
+                    _character.EatFood();
                     break;
                 case "drink":
-                    PlayerMethods.DrinkWater();
+                    _character.DrinkWater();
                     break;
                 case "explore":
-                    var num = rand.Next(0, 101);
-                    var encounter = rand.Next(0, 101);
+                    var num = _rand.Next(0, 101);
+                    var encounter = _rand.Next(0, 101);
 
                     switch (encounter)
                     {
                         case <= 12:
-                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            Player.inCombat = true;
+                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            _character.inCombat = true;
                             break;
                         case > 12 and <= 100:
                             Explore(num);
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 101);
-
+                    var scavenge = _rand.Next(0, 101);
                     switch (scavenge)
                     {
                         case <= 50:
                             Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            PlayerMethods.AddItem(item);
+                            _character.AddItem(item);
                             break;
                         default:
-                            Form.Output("You fail to find any rocks.");
+                            _form.Output("You fail to find any rocks.");
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Hills Commands: equip, heal, eat, drink, explore, scavenge, help");
+                    _form.Output("Hills Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
-                    Form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command);
                     break;
             }
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
 
         public void MountainsCommands(Command command)
@@ -326,61 +313,60 @@ namespace Core
                 case "equip":
                     if (command.Argument != null)
                     {
-                        PlayerMethods.EquipItem(command.Argument);
+                        _character.EquipItem(command.Argument);
                     }
                     else
                     {
-                        Form.Output("Please specify an item to equip.");
+                        _form.Output("Please specify an item to equip.");
                     }
                     break;
                 case "heal":
-                    PlayerMethods.Heal();
+                    _character.Heal();
                     break;
                 case "eat":
-                    PlayerMethods.EatFood();
+                    _character.EatFood();
                     break;
                 case "drink":
-                    PlayerMethods.DrinkWater();
+                    _character.DrinkWater();
                     break;
                 case "explore":
-                    var num = rand.Next(0, 101);
-                    var encounter = rand.Next(0, 101);
+                    var num = _rand.Next(0, 101);
+                    var encounter = _rand.Next(0, 101);
 
                     switch (encounter)
                     {
                         case <= 15:
-                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            Player.inCombat = true;
+                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            _character.inCombat = true;
                             break;
                         case > 15 and <= 100:
                             Explore(num);
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 101);
-
+                    var scavenge = _rand.Next(0, 101);
                     switch (scavenge)
                     {
                         case <= 75:
                             Item item = new("Rock", 1, 1, "Assets/Images/Icons/Rock.png");
-                            PlayerMethods.AddItem(item);
+                            _character.AddItem(item);
                             break;
                         default:
-                            Form.Output("You fail to find any rocks.");
+                            _form.Output("You fail to find any rocks.");
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Mountains Commands: equip, heal, eat, drink, explore, scavenge, help");
+                    _form.Output("Mountains Commands: equip, heal, eat, drink, explore, scavenge, help");
                     break;
                 default:
-                    Form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command);
                     break;
             }
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
 
         public void VillageCommands(Command command)
@@ -390,190 +376,192 @@ namespace Core
                 case "equip":
                     if (command.Argument != null)
                     {
-                        PlayerMethods.EquipItem(command.Argument);
+                        _character.EquipItem(command.Argument);
                     }
                     else
                     {
-                        Form.Output("Please specify an item to equip.");
+                        _form.Output("Please specify an item to equip.");
                     }
                     break;
                 case "heal":
-                    PlayerMethods.Heal();
+                    _character.Heal();
                     break;
                 case "eat":
-                    PlayerMethods.EatFood();
+                    _character.EatFood();
                     break;
                 case "drink":
-                    PlayerMethods.DrinkWater();
+                    _character.DrinkWater();
                     break;
                 case "explore":
-                    var num = rand.Next(0, 101);
-                    var encounter = rand.Next(0, 101);
+                    var num = _rand.Next(0, 101);
+                    var encounter = _rand.Next(0, 101);
 
                     switch (encounter)
                     {
                         case <= 15:
-                            Form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            Player.inCombat = true;
+                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            _character.inCombat = true;
                             break;
                         case > 15 and <= 100:
                             Explore(num);
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "shop":
-                    Form.shopGrid.Visible = true;
-                    ShopMethods.UpdateShop();
-                    Player.inShop = true;
+                    _form.shopGrid.Visible = true;
+                    _shop.UpdateShop();
+                    _character.inShop = true;
                     break;
                 case "scavenge":
-                    var scavenge = rand.Next(0, 101);
-
+                    var scavenge = _rand.Next(0, 101);
                     switch (scavenge)
                     {
                         case <= 10:
-                            Item item = new("Tender", 0.1, rand.Next(0, 11), "Assets/Images/Icons/Money.png");
-                            PlayerMethods.AddItem(item);
+                            Item item = new("Tender", 0.1, _rand.Next(0, 11), "Assets/Images/Icons/Money.png");
+                            _character.AddItem(item);
                             break;
                         default:
-                            Form.Output("You fail to find any items.");
+                            _form.Output("You fail to find any items.");
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Village Commands: equip, heal, eat, drink, explore, scavenge, shop, help");
+                    _form.Output("Village Commands: equip, heal, eat, drink, explore, scavenge, shop, help");
                     break;
                 default:
-                    Form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command);
                     break;
             }
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
+        #endregion Location Commands
 
+        #region Specific Places
         public void CombatCommands(Command command)
         {
             switch (command.Action)
             {
                 case "heal":
-                    PlayerMethods.Heal();
+                    _character.Heal();
                     break;
                 case "fight":
                     Fight();
                     break;
                 case "retreat":
-                    var chance = rand.Next(0, 101);
-
+                    var chance = _rand.Next(0, 101);
                     switch (chance)
                     {
                         case <= 35:
-                            Player.inCombat = false;
-                            Form.Output("You successfully retreat out of combat.");
+                            _character.inCombat = false;
+                            _form.Output("You successfully retreat out of combat.");
                             break;
                         default:
-                            Form.Output("You fail to retreat and receive some damage.");
-                            PlayerMethods.FatigueDamage();
+                            _form.Output("You fail to retreat and receive some damage.");
+                            _character.FatigueDamage();
                             break;
                     }
-                    PlayerMethods.Fatigue();
+                    _character.Fatigue();
                     break;
                 case "help":
-                    Form.Output("Combat Commands: fight, heal, retreat, help");
+                    _form.Output("Combat Commands: fight, heal, retreat, help");
                     break;
                 default:
-                    Form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command);
                     break;
             }
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
 
         // Improve the shop selling method
-        // Currently the Buy and Sell methods don't work because PlayerMethods is always null in ShopMethods
+        // Currently the Buy and Sell methods don't work because _character is always null in ShopMethods
         public void ShopCommands(Command command)
         {
             switch (command.Action)
             {
                 case "buy":
-                    ShopMethods.Buy(command);
-                    ShopMethods.UpdateShop();
+                    _shop.Buy(command);
+                    _shop.UpdateShop();
                     break;
                 case "sell":
-                    ShopMethods.Sell(command);
+                    _shop.Sell(command);
                     break;
                 case "leave":
-                    Form.Output("You decide to leave the shop.");
-                    ShopMethods.UpdateShop();
-                    Form.shopGrid.Visible = false;
-                    Player.inShop = false;
+                    _form.Output("You decide to leave the shop.");
+                    _shop.UpdateShop();
+                    _form.shopGrid.Visible = false;
+                    _character.inShop = false;
                     break;
                 case "help":
-                    Form.Output("Shop Commands: buy, sell, leave, help");
+                    _form.Output("Shop Commands: buy, sell, leave, help");
                     break;
                 default:
-                    Form.Output("Unknown command: " + command);
+                    _form.Output("Unknown command: " + command);
                     break;
             }
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
+        #endregion
 
+        #region Game Methods
         public void Explore(int num)
         {
             switch (num)
-            {  
+            {
                 case <= 5:
-                    if (Player.location == "Village")
+                    if (_character.location == "Village")
                     {
-                        Form.Output("You decide to explore the village more.");
+                        _form.Output("You decide to explore the village more.");
                     }
                     else
                     {
-                        Form.Output("You stumble upon a village and encounter a few shops.");
-                        Player.location = "Village";
+                        _form.Output("You stumble upon a village and encounter a few shops.");
+                        _character.location = "Village";
                     }
                     break;
                 case > 10 and <= 45:
-                    if (Player.location == "Forest")
+                    if (_character.location == "Forest")
                     {
-                        Form.Output("You continue moving through the forest.");
+                        _form.Output("You continue moving through the forest.");
                     }
                     else
                     {
-                        Form.Output("You enter a forest.");
-                        Player.location = "Forest";
+                        _form.Output("You enter a forest.");
+                        _character.location = "Forest";
                     }
                     break;
                 case > 45 and <= 80:
-                    if (Player.location == "Plains")
+                    if (_character.location == "Plains")
                     {
-                        Form.Output("You continue moving through the plains.");
+                        _form.Output("You continue moving through the plains.");
                     }
                     else
                     {
-                        Form.Output("You enter a plains.");
-                        Player.location = "Plains";
+                        _form.Output("You enter a plains.");
+                        _character.location = "Plains";
                     }
                     break;
                 case > 80 and <= 90:
-                    if (Player.location == "Hills")
+                    if (_character.location == "Hills")
                     {
-                        Form.Output("You continue moving over the hills.");
+                        _form.Output("You continue moving over the hills.");
                     }
                     else
                     {
-                        Form.Output("You find yourself on a hill.");
-                        Player.location = "Hills";
+                        _form.Output("You find yourself on a hill.");
+                        _character.location = "Hills";
                     }
                     break;
                 case > 90 and <= 100:
-                    if (Player.location == "Mountains")
+                    if (_character.location == "Mountains")
                     {
-                        Form.Output("You continue navigating through the harsh mountains.");
+                        _form.Output("You continue navigating through the harsh mountains.");
                     }
                     else
                     {
-                        Form.Output("You enter a mountainous area.");
-                        Player.location = "Mountains";
+                        _form.Output("You enter a mountainous area.");
+                        _character.location = "Mountains";
                     }
                     break;
             }
@@ -583,32 +571,32 @@ namespace Core
         {
             var enemies = new List<Enemy>
             {
-                new("Peasant", 100, 0, rand.Next(0, 11), false),
-                new("Bandit", 100, 0, rand.Next(9, 21), false),
-                new("Forest Bandit", 100, rand.Next(9, 31), rand.Next(9, 21), false),
-                new("Wounded Raider", rand.Next(79, 101), rand.Next(11, 21), rand.Next(9, 21), false),
-                new("Raider", 100, rand.Next(31, 51), rand.Next(21, 31), false),
+                new("Peasant", 100, 0, _rand.Next(0, 11), false),
+                new("Bandit", 100, 0, _rand.Next(9, 21), false),
+                new("Forest Bandit", 100, _rand.Next(9, 31), _rand.Next(9, 21), false),
+                new("Wounded Raider", _rand.Next(79, 101), _rand.Next(11, 21), _rand.Next(9, 21), false),
+                new("Raider", 100, _rand.Next(31, 51), _rand.Next(21, 31), false),
             };
             List<int> weights = [30, 40, 20, 5, 5];
 
-            var enemy = Utilities.ChooseWeightedRandom(enemies, weights);
+            var enemy = _tools.ChooseWeightedRandom(enemies, weights);
 
-            while (Player.healthValue > 0 && enemy.Health > 0)
+            while (_character.healthValue > 0 && enemy.Health > 0)
             {
                 Weapon? equippedWeapon = null;
-                if (Player.inventory.Find(item => item.Id == Player.equippedItem) is Weapon weapon)
+                if (_character.inventory.Find(item => item.Id == _character.equippedItem) is Weapon weapon)
                 {
                     equippedWeapon = weapon;
                 }
 
-                var playerDamage = equippedWeapon != null ? equippedWeapon.Damage : Player.strengthValue;
+                var playerDamage = equippedWeapon != null ? equippedWeapon.Damage : _character.strengthValue;
 
-                if (equippedWeapon != null && rand.Next(100) < 50)
+                if (equippedWeapon != null && _rand.Next(100) < 50)
                 {
                     equippedWeapon.Durability -= 1;
                     if (equippedWeapon.Durability <= 0)
                     {
-                        Form.Output($"Your {equippedWeapon.Name} has broken!");
+                        _form.Output($"Your {equippedWeapon.Name} has broken!");
                         equippedWeapon = null;
                     }
                 }
@@ -616,16 +604,16 @@ namespace Core
                 var playerAttack = Math.Max(0, playerDamage - enemy.Armor);
                 enemy.Health -= playerAttack;
 
-                Form.Output($"You attacked the {enemy.Name} for {playerAttack} points, he has {enemy.Health} health and {enemy.Armor} armor points left.");
+                _form.Output($"You attacked the {enemy.Name} for {playerAttack} points, he has {enemy.Health} health and {enemy.Armor} armor points left.");
 
-                if (rand.Next(100) < 50 && enemy.Armor > 0)
+                if (_rand.Next(100) < 50 && enemy.Armor > 0)
                 {
                     enemy.Armor -= playerAttack;
                     if (enemy.Armor < 0)
                     {
                         enemy.Armor = 0;
                     }
-                    Form.Output($"You damage the {enemy.Name}'s armor for {playerAttack} points!");
+                    _form.Output($"You damage the {enemy.Name}'s armor for {playerAttack} points!");
                 }
 
                 await Task.Delay(2000);
@@ -635,34 +623,35 @@ namespace Core
                     continue;
                 }
 
-                var enemyAttack = enemy.Damage - Player.armorValue;
-                Player.healthValue -= enemyAttack;
-                Form.Output($"The {enemy.Name} attacked you for {enemyAttack} points, you have {Player.healthValue} health and {Player.armorValue} armor points left.");
+                var enemyAttack = enemy.Damage - _character.armorValue;
+                _character.healthValue -= enemyAttack;
+                _form.Output($"The {enemy.Name} attacked you for {enemyAttack} points, you have {_character.healthValue} health and {_character.armorValue} armor points left.");
 
 
-                var str = Settings.healPoint.Text;
+                var str = _options.healPoint.Text;
                 var num = int.Parse(str);
-                if (Player.healthValue < num && Settings.autoHeal.Checked)
+                if (_character.healthValue < num && _options.autoHeal.Checked)
                 {
-                    PlayerMethods.Heal();
+                    _character.Heal();
                 }
 
-                Form.UpdateStats();
+                _form.UpdateStats();
             }
 
-            if (Player.healthValue > 0)
+            if (_character.healthValue > 0)
             {
-                Form.Output($"You defeat the {enemy.Name}!");
-                PlayerMethods.AddXp();
-                Player.inCombat = false;
+                _form.Output($"You defeat the {enemy.Name}!");
+                _character.AddXp();
+                _character.inCombat = false;
             }
             else
             {
-                Form.Output($"You were defeated by the {enemy.Name}...");
-                Form.GameOver();
+                _form.Output($"You were defeated by the {enemy.Name}...");
+                _form.GameOver();
             }
 
-            Form.UpdateStats();
+            _form.UpdateStats();
         }
+        #endregion Game Methods
     }
 }

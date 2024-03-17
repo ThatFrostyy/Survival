@@ -13,80 +13,50 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-
-using Core;
-using Player;
-using Shop;
-using Utilities;
+using Settings;
 namespace Survival
 {
     public partial class Form1 : Form
     {
-        // I don't know how any of this works, but it does
-        public Character Player { get; set; } = new();
-        public CharacterMethods PlayerMethods { get; }
-        public ShopCore Shop { get; } = new();
-        public ShopMethods ShopMethods { get; }
-        public Game Game { get; }
-        public Options Settings = new();
-        public Tools Utilities = new();
+        private readonly Options _options;
+        private readonly Tools _tools;
+        private readonly Character _character;
+        private readonly Shop _shop;
+        private readonly Game _game;
 
         public Form1()
         {
             InitializeComponent();
+
+            _options = new Options();
+            _tools = new Tools();
+            _character = new Character(this);
+            _shop = new Shop(this, _character);
+            _game = new Game(this, _character, _shop, _tools, _options);
+
+            _character.OnPlayerCreate();
+            _shop.OnShopCreate();
+
             UpdateStats();
-
-            Game = new Game(Shop, Player, this, Settings, Utilities);
-            PlayerMethods = Game.PlayerMethods;
-            ShopMethods = Game.ShopMethods;
-
-            PlayerMethods.OnPlayerCreate();
-            ShopMethods.OnShopCreate();
         }
 
+        #region GUI
         /// <summary>
         /// Update the stats GUI
         /// </summary>
         public void UpdateStats()
         {
-            level.Text = "Level: " + Player.levelValue.ToString();
-            xp.Text = "XP: " + Player.xpValue.ToString();
+            level.Text = "Level: " + _character.levelValue.ToString();
+            xp.Text = "XP: " + _character.xpValue.ToString();
 
-            health.Text = "Health: " + Player.healthValue.ToString();
-            hunger.Text = "Hunger: " + Player.hungerValue.ToString();
-            thirst.Text = "Thirst: " + Player.thirstValue.ToString();
-            armor.Text = "Armor: " + Player.armorValue.ToString();
+            health.Text = "Health: " + _character.healthValue.ToString();
+            hunger.Text = "Hunger: " + _character.hungerValue.ToString();
+            thirst.Text = "Thirst: " + _character.thirstValue.ToString();
+            armor.Text = "Armor: " + _character.armorValue.ToString();
+            currentWeight.Text = "Current Weight: " + _character.currentWeightValue.ToString();
+            maxWeight.Text = "Max Weight: " + _character.maxWeightValue.ToString();
 
-            currentWeight.Text = "Current Weight: " + Player.currentWeightValue.ToString();
-            maxWeight.Text = "Max Weight: " + Player.maxWeightValue.ToString();
-            locationL.Text = "Location: " + Player.location;
-        }
-        /// <summary>
-        /// Resets the game
-        /// </summary>
-        public void GameOver()
-        {
-            consoleBox.Clear();
-            Output("Your journey comes to an end with a sudden death.");
-
-            Player.strengthValue = 15;
-            Player.levelValue = 1;
-            Player.xpValue = 0;
-
-            Player.healthValue = 100;
-            Player.hungerValue = 100;
-            Player.thirstValue = 100;
-            Player.armorValue = 0;
-
-            Player.currentWeightValue = 0;
-            Player.maxWeightValue = 30;
-            Player.location = "Beach";
-            Player.inCombat = false;
-            Player.equippedItem = Guid.Empty;
-
-            Player.inventory.Clear();
-            inventoryGrid.Rows.Clear();
-            inventoryGrid.Columns.Clear();
+            locationL.Text = "Location: " + _character.location;
         }
 
         /// <summary>
@@ -97,15 +67,45 @@ namespace Survival
             consoleBox.AppendText(output + Environment.NewLine);
             inputBox.Clear();
         }
+        #endregion
 
-        // Input
+        #region Game
+        /// <summary>
+        /// Resets the game
+        /// </summary>
+        public void GameOver()
+        {
+            consoleBox.Clear();
+            Output("Your journey comes to an end with a sudden death.");
+
+            _character.levelValue = 1;
+            _character.xpValue = 0;
+            _character.strengthValue = 15;
+
+            _character.healthValue = 100;
+            _character.hungerValue = 100;
+            _character.thirstValue = 100;
+            _character.armorValue = 0;
+            _character.currentWeightValue = 0;
+            _character.maxWeightValue = 30;
+
+            _character.location = "Beach";
+            _character.inCombat = false;
+            _character.inShop = false;
+
+            _character.equippedItem = Guid.Empty;
+
+            _character.inventory.Clear();
+            inventoryGrid.Rows.Clear();
+            inventoryGrid.Columns.Clear();
+        }
+
         public void InputBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter)
             {
                 return;
             }
-
             e.SuppressKeyPress = true;
 
             var input = inputBox.Text.ToLower();
@@ -113,40 +113,40 @@ namespace Survival
 
             try
             {
-                if (Player.inShop)
+                if (_character.inShop)
                 {
-                    Game.ShopCommands(command);
+                    _game.ShopCommands(command);
                 }
-                else if (!Player.inCombat)
+                else if (!_character.inCombat)
                 {
-                    switch (Player.location)
+                    switch (_character.location)
                     {
                         case "Beach":
-                            Game.BeachCommands(command);
+                            _game.BeachCommands(command);
                             break;
                         case "Forest":
-                            Game.ForestCommands(command);
+                            _game.ForestCommands(command);
                             break;
                         case "Plains":
-                            Game.PlainsCommands(command);
+                            _game.PlainsCommands(command);
                             break;
                         case "Hills":
-                            Game.HillsCommands(command);
+                            _game.HillsCommands(command);
                             break;
                         case "Mountains":
-                            Game.MountainsCommands(command);
+                            _game.MountainsCommands(command);
                             break;
                         case "Village":
-                            Game.VillageCommands(command);
+                            _game.VillageCommands(command);
                             break;
                         default:
-                            Output("Error");
+                            MessageBox.Show("There was an error while executing the command.");
                             break;
                     }
                 }
                 else
                 {
-                    Game.CombatCommands(command);
+                    _game.CombatCommands(command);
                 }
             }
             catch (Exception ex)
@@ -154,24 +154,9 @@ namespace Survival
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
+        #endregion
 
-        /// <summary>
-        /// Parse the input
-        /// </summary>
-        public Command ParseCommand(string input)
-        {
-            var commandParts = input.Split(' ');
-            var action = commandParts[0];
-            var argument = commandParts.Length > 1 ? string.Join(" ", commandParts.Skip(1)) : null;
-
-            return new Command
-            {
-                Action = action,
-                Argument = argument
-            };
-        }
-
-        // Buttons
+        #region Buttons
         private void QuitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -191,7 +176,7 @@ namespace Survival
 
         private void optionsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Settings.Show();
+            _options.Show();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -200,6 +185,24 @@ namespace Survival
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+        }
+
+        #endregion Buttons
+
+        /// <summary>
+        /// Parse the input
+        /// </summary>
+        public Command ParseCommand(string input)
+        {
+            var commandParts = input.Split(' ');
+            var action = commandParts[0];
+            var argument = commandParts.Length > 1 ? string.Join(" ", commandParts.Skip(1)) : null;
+
+            return new Command
+            {
+                Action = action,
+                Argument = argument
+            };
         }
     }
 

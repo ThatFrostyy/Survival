@@ -1,10 +1,9 @@
 ﻿using Crafting;
-
 namespace Survival
 {
     public class Craft
     {
-        // Instantiate child class to use mehtods and properties of parent class
+        // Instantiate child class to use methods and properties of parent class
         Ingredients materials = new Ingredients();
 
         // Display all recipes to be created when crafting

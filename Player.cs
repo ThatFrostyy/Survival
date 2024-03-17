@@ -13,98 +13,71 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-
-using Survival;
 using Items;
-namespace Player
+namespace Survival
 {
     public class Character
     {
+        private readonly Random _rand = new();
+        private readonly Form1 _form;
+
+        #region Item Lists and Dictionaries 
         // Keeps track of all the picked up items and their gui's 
         public Dictionary<DataGridViewRow, Item> itemDic = [];
-
         // Inventory
         public List<Item> inventory = [];
+        #endregion Item Lists and Dictionaries
 
-        // Stats
+        #region Skills 
+        // Skills and levels
         public int xpValue = 0;
         public int levelValue = 1;
         public int strengthValue = 15;
+        #endregion Skills
 
-        // General
+        #region Stats
+        // Stats
         public int healthValue = 100;
         public int hungerValue = 100;
         public int thirstValue = 100;
         public int armorValue = 0;
         public double currentWeightValue = 0;
         public int maxWeightValue = 30;
-        public string location = "Beach";
+        #endregion Stats
 
-        // Other
+        #region Locations
+        // Locations
+        public string location = "Beach";
         public bool inCombat = false;
         public bool inShop = false;
-        public Guid equippedItem = Guid.Empty;
-    }
+        #endregion Locations
 
-    public class CharacterMethods
-    {
-        // I don't know how any of this works, but it does
-        readonly Random rand = new();
-        public Character Player { get; }
-        public Form1 Form { get; }
+        #region Other
+        // Other
+        public Guid equippedItem;
+        #endregion Other
 
-        public CharacterMethods(Character player, Form1 form)
+        // Constructor
+        public Character(Form1 form)
         {
-            Player = player;
-            Form = form;
+            this._form = form;
         }
 
-        /// <summary>
-        /// Called on the game start, useful for adding items to the inventory, testing, etc
-        /// </summary>
-        public void OnPlayerCreate()
-        {
-            /*
-            Weapon test = new("Shotgun", 0.1, 10, "Assets/Images/Icons/Shotgun.png", 50, 100, false);
-            AddItem(test);
-            Item item = new("Tender", 0.1, 200, "Assets/Images/Icons/Money.png");
-            AddItem(item);
-            Medicine a = new("Bandage", 0.1, 200, "Assets/Images/Icons/Bandage.png", 30);
-            AddItem(a);*/
-        }
-
-        /// <summary>
-        /// Add xp to the player
-        /// </summary>
-        public void AddXp()
-        {
-            var add = rand.Next(1, 11);
-            Player.xpValue += add;
-
-            if (Player.xpValue >= 100)
-            {
-                Player.levelValue++;
-                Player.xpValue = 0;
-                Form.Output($"You have leveled up to level {Player.levelValue}!");
-            }
-
-            Form.Output($"You gained {add} xp!");
-        }
-
+        #region Item Methods
         /// <summary>
         /// Eat an eatable item
         /// </summary>
         public void EatFood()
         {
-            if (Player.inventory.FirstOrDefault(item => item is Food) is Food food)
+            if (inventory.FirstOrDefault(item => item is Food) is Food food)
             {
-                Player.hungerValue = Math.Min(Player.hungerValue + food.HungerRestore, 100);
-                Form.Output($"You eat a {food.Name}. Hunger: {Player.hungerValue}");
+                hungerValue = Math.Min(hungerValue + food.HungerRestore, 100);
+                _form.Output($"You eat a {food.Name}. Hunger: {hungerValue}");
                 RemoveItem(food);
             }
             else
             {
-                Form.Output("You don't have any food!");
+                _form.Output("You don't have any food!");
             }
         }
 
@@ -113,15 +86,15 @@ namespace Player
         /// </summary>
         public void DrinkWater()
         {
-            if (Player.inventory.FirstOrDefault(item => item is Drink) is Drink drink)
+            if (inventory.FirstOrDefault(item => item is Drink) is Drink drink)
             {
-                Player.thirstValue = Math.Min(Player.thirstValue + drink.ThirstRestore, 100);
-                Form.Output($"You drink a {drink.Name}. Thirst: {Player.thirstValue}");
+                thirstValue = Math.Min(thirstValue + drink.ThirstRestore, 100);
+                _form.Output($"You drink a {drink.Name}. Thirst: {thirstValue}");
                 RemoveItem(drink);
             }
             else
             {
-                Form.Output("You don't have any drinks!");
+                _form.Output("You don't have any drinks!");
             }
         }
 
@@ -130,52 +103,15 @@ namespace Player
         /// </summary>
         public void Heal()
         {
-            if (Player.inventory.FirstOrDefault(item => item is Medicine) is Medicine medicine)
+            if (inventory.FirstOrDefault(item => item is Medicine) is Medicine medicine)
             {
-                Player.healthValue = Math.Min(Player.healthValue + medicine.HealthRestore, 100);
-                Form.Output($"You use a {medicine.Name}. Health: {Player.healthValue}");
+                healthValue = Math.Min(healthValue + medicine.HealthRestore, 100);
+                _form.Output($"You use a {medicine.Name}. Health: {healthValue}");
                 RemoveItem(medicine);
             }
             else
             {
-                Form.Output("You don't have any medicine!");
-            }
-        }
-
-        /// <summary>
-        /// Rest (used to gain slight health)
-        /// </summary>
-        public void Rest()
-        {
-            Player.healthValue = Math.Min(Player.healthValue += rand.Next(31, 51), 100);
-            Player.thirstValue = Math.Max(0, Player.thirstValue - rand.Next(31, 51));
-            Player.hungerValue = Math.Max(0, Player.hungerValue - rand.Next(31, 51));
-            Form.Output("You decide to rest for a few minutes.");
-        }
-
-        /// <summary>
-        /// Decrease hunger and thirst
-        /// </summary>
-        public void Fatigue()
-        {
-            Player.thirstValue = Math.Max(0, Player.thirstValue - rand.Next(1, 10));
-            Player.hungerValue = Math.Max(0, Player.hungerValue - rand.Next(1, 10));
-
-            if (Player.hungerValue <= 0 || Player.thirstValue <= 0)
-            {
-                FatigueDamage();
-            }
-        }
-        /// <summary>
-        /// Applies damage if hunger and or thirst are 0
-        /// </summary>
-        public void FatigueDamage()
-        {
-            Player.healthValue = Math.Max(0, Player.healthValue - rand.Next(6, 10));
-
-            if (Player.healthValue <= 0)
-            {
-                Form.GameOver();
+                _form.Output("You don't have any medicine!");
             }
         }
 
@@ -184,7 +120,7 @@ namespace Player
         /// </summary>
         public bool CanAddItem(Item item)
         {
-            return Player.currentWeightValue + item.Weight <= Player.maxWeightValue;
+            return currentWeightValue + item.Weight <= maxWeightValue;
         }
 
         /// <summary>
@@ -194,24 +130,24 @@ namespace Player
         {
             if (!CanAddItem(item))
             {
-                Form.Output("You can't carry any more items!");
+                _form.Output("You can't carry any more items!");
                 return;
             }
 
-            var existingItem = Player.inventory.FirstOrDefault(i => i.Name == item.Name);
+            var existingItem = inventory.FirstOrDefault(i => i.Name == item.Name);
 
             if (existingItem != null && (item is not Weapon || (item is Weapon && existingItem.Id == item.Id)))
             {
                 existingItem.Quantity++;
-                Form.Output($"You find and pick up another {item.Name}! You now have: {existingItem.Quantity}");
+                _form.Output($"You find and pick up another {item.Name}! You now have: {existingItem.Quantity}");
             }
             else
             {
-                Player.inventory.Add(item);
-                Form.Output($"You find and pick up a {item.Name}! There was: {item.Quantity}");
+                inventory.Add(item);
+                _form.Output($"You find and pick up a {item.Name}! There was: {item.Quantity}");
             }
 
-            Player.currentWeightValue += item.Weight * item.Quantity;
+            currentWeightValue += item.Weight * item.Quantity;
             UpdateInventory();
         }
 
@@ -227,13 +163,142 @@ namespace Player
         }
 
         /// <summary>
+        /// Remove an item
+        /// </summary>
+        public void RemoveItem(Item item)
+        {
+            var existingItem = inventory.FirstOrDefault(i => i.Name == item.Name);
+
+            if (existingItem == null)
+            {
+                return;
+            }
+
+            if (equippedItem != Guid.Empty && equippedItem == item.Id)
+            {
+                equippedItem = Guid.Empty;
+            }
+
+            if (existingItem.Quantity > 1)
+            {
+                existingItem.Quantity--;
+            }
+            else
+            {
+                inventory.Remove(existingItem);
+            }
+            UpdateInventory();
+        }
+
+        /// <summary>
+        /// Equip a Weapon type item
+        /// </summary>
+        // Should be modified to accept clothing too in the future
+        public void EquipItem(string itemName)
+        {
+            var itemNameUpper = char.ToUpper(itemName[0]) + itemName.Substring(1);
+            var item = inventory
+                .OfType<Weapon>()
+                .Where(w => w.Name == itemNameUpper)
+                .OrderByDescending(w => w.Durability)
+                .FirstOrDefault();
+
+            if (equippedItem != Guid.Empty)
+            {
+                var currentlyEquippedWeapon = inventory
+                    .OfType<Weapon>()
+                    .FirstOrDefault(w => w.Id == equippedItem);
+                if (currentlyEquippedWeapon != null)
+                {
+                    currentlyEquippedWeapon.Icon = Image.FromFile($"Assets/Images/Icons/{currentlyEquippedWeapon.Name}.png");
+                }
+            }
+
+            if (item != null && item.Id == equippedItem)
+            {
+                _form.Output("You already have this item equipped.");
+            }
+            else if (item != null)
+            {
+                equippedItem = item.Id;
+                item.Icon = Image.FromFile($"Assets/Images/Icons/Equipped/{item.Name}Equipped.png");
+                _form.Output($"You have equipped a {item.Name}.");
+            }
+            else
+            {
+                _form.Output($"You do not have a {itemName} in your inventory.");
+            }
+            UpdateInventory();
+        }
+        #endregion Item Methods
+
+        #region Player Methods
+        /// <summary>
+        /// Add random value xp to the player (1-10)
+        /// </summary>
+        public void AddXp()
+        {
+            var add = _rand.Next(1, 11);
+            xpValue += add;
+
+            if (xpValue >= 100)
+            {
+                levelValue++;
+                xpValue = 0;
+                _form.Output($"You have leveled up to level {levelValue}!");
+            }
+
+            _form.Output($"You gained {add} xp!");
+        }
+
+        /// <summary>
+        /// Decrease hunger and thirst
+        /// </summary>
+        public void Fatigue()
+        {
+            thirstValue = Math.Max(0, thirstValue - _rand.Next(1, 10));
+            hungerValue = Math.Max(0, hungerValue - _rand.Next(1, 10));
+
+            if (hungerValue <= 0 || thirstValue <= 0)
+            {
+                FatigueDamage();
+            }
+        }
+
+        /// <summary>
+        /// Applies damage if hunger and or thirst are 0
+        /// </summary>
+        public void FatigueDamage()
+        {
+            healthValue = Math.Max(0, healthValue - _rand.Next(6, 10));
+
+            if (healthValue <= 0)
+            {
+                _form.GameOver();
+            }
+        }
+
+        /// <summary>
+        /// Rest (used to gain slight health)
+        /// </summary>
+        public void Rest()
+        {
+            healthValue = Math.Min(healthValue += _rand.Next(31, 51), 100);
+            thirstValue = Math.Max(0, thirstValue - _rand.Next(31, 51));
+            hungerValue = Math.Max(0, hungerValue - _rand.Next(31, 51));
+            _form.Output("You decide to rest for a few minutes.");
+        }
+        #endregion Player Methods
+
+        #region Inventory
+        /// <summary>
         /// Refresh the inventory GUI
         /// </summary>
         public void UpdateInventory()
         {
             // Add columns 
             // They are always added trough code because they are not set in the designer
-            if (Form.inventoryGrid.Columns.Count == 0)
+            if (_form.inventoryGrid.Columns.Count == 0)
             {
                 var iconColumn = new DataGridViewImageColumn
                 {
@@ -241,15 +306,15 @@ namespace Player
                     ImageLayout = DataGridViewImageCellLayout.Zoom
                 };
 
-                Form.inventoryGrid.Columns.Add(iconColumn);
-                Form.inventoryGrid.Columns.Add("Name", "Name");
-                Form.inventoryGrid.Columns.Add("Weight", "Weight");
-                Form.inventoryGrid.Columns.Add("Quantity", "Quantity");
+                _form.inventoryGrid.Columns.Add(iconColumn);
+                _form.inventoryGrid.Columns.Add("Name", "Name");
+                _form.inventoryGrid.Columns.Add("Weight", "Weight");
+                _form.inventoryGrid.Columns.Add("Quantity", "Quantity");
             }
 
-            Form.inventoryGrid.Rows.Clear();
+            _form.inventoryGrid.Rows.Clear();
 
-            foreach (var item in Player.inventory)
+            foreach (var item in inventory)
             {
                 if (item == null)
                 {
@@ -257,7 +322,7 @@ namespace Player
                 }
 
                 // Check if there's already a row for this item
-                var existingRow = Form.inventoryGrid.Rows
+                var existingRow = _form.inventoryGrid.Rows
                     .OfType<DataGridViewRow>()
                     .FirstOrDefault(r => r.Cells["Name"].Value.ToString() == item.Name && (item is not Weapon));
 
@@ -267,20 +332,19 @@ namespace Player
                 }
                 else
                 {
-                    var index = Form.inventoryGrid.Rows.Add();
-                    var row = Form.inventoryGrid.Rows[index];
+                    var index = _form.inventoryGrid.Rows.Add();
+                    var row = _form.inventoryGrid.Rows[index];
 
                     row.Cells["Icon"].Value = new Bitmap(item.Icon);
                     row.Cells["Name"].Value = item.Name;
                     row.Cells["Weight"].Value = item.Weight;
                     row.Cells["Quantity"].Value = item.Quantity;
-                    Player.itemDic[row] = item;
+                    itemDic[row] = item;
                 }
             }
-            Form.inventoryGrid.CellMouseEnter += InventoryGrid_CellMouseEnter;
+            _form.inventoryGrid.CellMouseEnter += InventoryGrid_CellMouseEnter;
         }
 
-        // Weapon tooltip
         public void InventoryGrid_CellMouseEnter(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -288,8 +352,8 @@ namespace Player
                 return;
             }
 
-            var row = Form.inventoryGrid.Rows[e.RowIndex];
-            var item = Player.itemDic[row];
+            var row = _form.inventoryGrid.Rows[e.RowIndex];
+            var item = itemDic[row];
 
             if (item is not Weapon weapon)
             {
@@ -303,75 +367,22 @@ namespace Player
             var tooltip = $"Damage: {weapon.Damage}\nDurability: {weapon.Durability}\nMelee: {weapon.Melee}\nID: {weapon.Id}";
             row.Cells[0].ToolTipText = tooltip;
         }
+        #endregion Inventory
 
+        #region Other
         /// <summary>
-        /// Remove an item when its consumed.
+        /// Called on the game start, useful for adding items to the inventory, testing, etc
         /// </summary>
-        public void RemoveItem(Item item)
+        public void OnPlayerCreate()
         {
-            var existingItem = Player.inventory.FirstOrDefault(i => i.Name == item.Name);
-
-            if (existingItem == null)
-            {
-                return;
-            }
-
-            if (Player.equippedItem != Guid.Empty && Player.equippedItem == item.Id)
-            {
-                Player.equippedItem = Guid.Empty;
-            }
-
-            if (existingItem.Quantity > 1)
-            {
-                existingItem.Quantity--;
-            }
-            else
-            {
-                Player.inventory.Remove(existingItem);
-            }
-
-            UpdateInventory();
+            /*
+            location = "Village";
+            Item rock = new("Rock", 0, 3, "Assets/Images/Icons/Rock.png");
+            Item money = new("Tender", 0, 50, "Assets/Images/Icons/Rock.png");
+            AddItem(rock);
+            AddItem(money);
+            */
         }
-
-        /// <summary>
-        /// Equip a Weapon type item
-        /// </summary>
-        // Should be modified to accept clothing too in the future
-        public void EquipItem(string itemName)
-        {
-            var itemNameUpper = char.ToUpper(itemName[0]) + itemName.Substring(1);
-            var item = Player.inventory
-                .OfType<Weapon>()
-                .Where(w => w.Name == itemNameUpper)
-                .OrderByDescending(w => w.Durability)
-                .FirstOrDefault();
-
-            if (Player.equippedItem != Guid.Empty)
-            {
-                var currentlyEquippedWeapon = Player.inventory
-                    .OfType<Weapon>()
-                    .FirstOrDefault(w => w.Id == Player.equippedItem);
-                if (currentlyEquippedWeapon != null)
-                {
-                    currentlyEquippedWeapon.Icon = Image.FromFile($"Assets/Images/Icons/{currentlyEquippedWeapon.Name}.png");
-                }
-            }
-
-            if (item != null && item.Id == Player.equippedItem)
-            {
-                Form.Output("You already have this item equipped.");
-            }
-            else if (item != null)
-            {
-                Player.equippedItem = item.Id;
-                item.Icon = Image.FromFile($"Assets/Images/Icons/Equipped/{item.Name}Equipped.png");
-                Form.Output($"You have equipped a {item.Name}.");
-            }
-            else
-            {
-                Form.Output($"You do not have a {itemName} in your inventory.");
-            }
-            UpdateInventory();
-        }
+        #endregion Other
     }
 }

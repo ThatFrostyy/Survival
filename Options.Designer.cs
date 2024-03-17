@@ -1,4 +1,4 @@
-﻿namespace Survival
+﻿namespace Settings
 {
     partial class Options
     {

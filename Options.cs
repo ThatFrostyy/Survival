@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-namespace Survival
+namespace Settings
 {
     public partial class Options : Form
     {
