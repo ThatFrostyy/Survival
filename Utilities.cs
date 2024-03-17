@@ -17,7 +17,7 @@ namespace Survival
 {
     public class Tools
     {
-        Random rand = new();
+        private readonly Random rand = new();
 
         public T ChooseWeightedRandom<T>(List<T> list, List<int> weights)
         {
