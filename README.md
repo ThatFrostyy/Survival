@@ -2,14 +2,13 @@
 ## About
 **If you want to help contribute immediately please read the bottom of the read me!**
 
+Welcome to **Survival**! a unique blend of your favorite gaming elements, all rolled into one.
 
-Welcome to **Survival**, a unique series of survival texts that bring together many of gaming's favorites into one unique experience.
+You’re put into a world where staying alive is your primary goal. You’ll need to gather resources, confront enemies, and navigate unpredictable scenarios. But what sets **Survival** apart is its emphasis on community.
 
-In this game you will find yourself in a world where survival is the ultimate goal. You need to collect resources, face formidable enemies and deal with unpredictable situations. But what makes **Survival** unique is its community-focused nature.
+This project is more than just a game - it’s about cooperation. We’ve designed **Survival** with our community at the forefront. Every participant is more than just a player, they’re a potential contributor. Got an idea for a new feature? Want to tweak an existing one? Spotted an error? We welcome all input and suggestions.
 
-This game isn't just about survival, it's also about cooperation and learning. We created this game with the community in mind. This means that every player is not just a player, but also has the ability to contribute. Have ideas for new features? Do you want to replace the existing one? Or maybe you see an error? We welcome all contributions and suggestions.
-
-But that's not all. Surviving in society is also a learning process. The game was developed in C#, one of the world's most popular programming languages. Whether you're an experienced developer or someone just starting to learn, contributing to the community is a great way to improve your coding skills.
+Developed in C#, one of the most widely used programming languages in the world, **Survival** offers a unique opportunity to test and improve your coding skills.
 ## Screenshots
 | | |
 |:-------------------------:|:-------------------------:|
