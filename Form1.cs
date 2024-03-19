@@ -33,8 +33,8 @@ namespace Survival
             _tools = new Tools();
             _database = new Database();
             _character = new Character(this, _database);
-            _shop = new Shop(this, _character);
-            _game = new Game(this, _character, _shop, _tools, _options);
+            _shop = new Shop(this, _character, _database);
+            _game = new Game(this, _character, _database, _shop, _tools, _options);
 
             _character.OnPlayerCreate();
             _shop.OnShopCreate();
@@ -100,6 +100,8 @@ namespace Survival
             _character.inventory.Clear();
             inventoryGrid.Rows.Clear();
             inventoryGrid.Columns.Clear();
+            _character.OnPlayerCreate();
+            _shop.OnShopCreate();
         }
 
         public void InputBox_KeyDown(object sender, KeyEventArgs e)
@@ -205,6 +207,11 @@ namespace Survival
                 Action = action,
                 Argument = argument
             };
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

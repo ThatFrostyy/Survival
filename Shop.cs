@@ -21,6 +21,7 @@ namespace Survival
         private readonly Random _rand = new();
         private readonly Form1 _form;
         private readonly Character _character;
+        private readonly Database _database;
 
         #region Shop Variables
         // Shop inventory
@@ -28,10 +29,11 @@ namespace Survival
         #endregion Shop Variables
 
         // Constructor
-        public Shop(Form1 form, Character character)
+        public Shop(Form1 form, Character character, Database databse)
         {
             _form = form;
             _character = character;
+            _database = databse;
         }
 
         #region Other
@@ -40,14 +42,7 @@ namespace Survival
         /// </summary>
         public void OnShopCreate()
         {
-            Food apple = new("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: _rand.Next(1, 11), price: 15);
-            Drink waterbottle = new("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: _rand.Next(1, 6), price: 20);
-            Medicine bandage = new("Bandage", 0.2, 1, "Assets/Images/Icons/Bandage.png", 30, stock: _rand.Next(1, 6), price: 30);
-            Weapon shotgun = new("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false, 1, 600);
-            items.Add(apple);
-            items.Add(waterbottle);
-            items.Add(bandage);
-            items.Add(shotgun);
+            items.AddRange(_database.shopItems);
         }
         #endregion Other
 

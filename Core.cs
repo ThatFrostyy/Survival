@@ -23,14 +23,17 @@ namespace Survival
         private readonly Random _rand = new();
         private readonly Form1 _form;
         private readonly Character _character;
+        private readonly Database _database;
         private readonly Shop _shop;
         private readonly Tools _tools;
         private readonly Options _options;
 
-        public Game(Form1 form, Character character, Shop shop, Tools tools, Options options)
+        private Enemy _currentEnemy;
+        public Game(Form1 form, Character character, Database database, Shop shop, Tools tools, Options options)
         {
             _form = form;
             _character = character;
+            _database = database;
             _shop = shop;
             _tools = tools;
             _options = options;
@@ -67,7 +70,8 @@ namespace Survival
                     switch (encounter)
                     {
                         case <= 8:
-                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
+                            CreateEnemy();
+                            _form.Output($"You suddenly get attacked by a {_currentEnemy.Name} and enter combat.");
                             _character.inCombat = true;
                             break;
                         case > 8 and <= 100:
@@ -130,8 +134,8 @@ namespace Survival
                     switch (encounter)
                     {
                         case <= 12:
-                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            _character.inCombat = true;
+                            CreateEnemy();
+                            _form.Output($"You suddenly get attacked by a {_currentEnemy.Name} and enter combat."); _character.inCombat = true;
                             break;
                         case > 12 and <= 100:
                             Explore(num);
@@ -205,8 +209,8 @@ namespace Survival
                     switch (encounter)
                     {
                         case <= 8:
-                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            _character.inCombat = true;
+                            CreateEnemy();
+                            _form.Output($"You suddenly get attacked by a {_currentEnemy.Name} and enter combat."); _character.inCombat = true;
                             break;
                         case > 8 and <= 100:
                             Explore(num);
@@ -267,8 +271,8 @@ namespace Survival
                     switch (encounter)
                     {
                         case <= 8:
-                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            _character.inCombat = true;
+                            CreateEnemy();
+                            _form.Output($"You suddenly get attacked by a {_currentEnemy.Name} and enter combat."); _character.inCombat = true;
                             break;
                         case > 8 and <= 100:
                             Explore(num);
@@ -329,8 +333,8 @@ namespace Survival
                     switch (encounter)
                     {
                         case <= 8:
-                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            _character.inCombat = true;
+                            CreateEnemy();
+                            _form.Output($"You suddenly get attacked by a {_currentEnemy.Name} and enter combat."); _character.inCombat = true;
                             break;
                         case > 8 and <= 100:
                             Explore(num);
@@ -391,8 +395,8 @@ namespace Survival
                     switch (encounter)
                     {
                         case <= 12:
-                            _form.Output("You suddenly get attacked by an enemy! You enter combat.");
-                            _character.inCombat = true;
+                            CreateEnemy();
+                            _form.Output($"You suddenly get attacked by a {_currentEnemy.Name} and enter combat."); _character.inCombat = true;
                             break;
                         case > 12 and <= 100:
                             Explore(num);
@@ -559,21 +563,15 @@ namespace Survival
             }
         }
 
+        private void CreateEnemy()
+        {
+            var enemy = _tools.ChooseWeightedRandom(_database.enemies, _database.enemyWeights);
+            _currentEnemy = enemy;
+        }
+
         public async void Fight()
         {
-            var enemies = new List<Enemy>
-            {
-                new("Peasant", 100, 0, _rand.Next(0, 11), false),
-                new("Bandit", 100, 0, _rand.Next(9, 21), false),
-                new("Forest Bandit", 100, _rand.Next(9, 31), _rand.Next(9, 21), false),
-                new("Wounded Raider", _rand.Next(79, 101), _rand.Next(11, 21), _rand.Next(9, 21), false),
-                new("Raider", 100, _rand.Next(31, 51), _rand.Next(21, 31), false),
-            };
-            List<int> weights = [30, 40, 20, 5, 5];
-
-            var enemy = _tools.ChooseWeightedRandom(enemies, weights);
-
-            while (_character.healthValue > 0 && enemy.Health > 0)
+            while (_character.healthValue > 0 && _currentEnemy.Health > 0)
             {
                 Weapon? equippedWeapon = null;
                 if (_character.inventory.Find(item => item.Id == _character.equippedItem) is Weapon weapon)
@@ -593,31 +591,36 @@ namespace Survival
                     }
                 }
 
-                var playerAttack = Math.Max(0, playerDamage - enemy.Armor);
-                enemy.Health -= playerAttack;
-
-                _form.Output($"You attacked the {enemy.Name} for {playerAttack} points, he has {enemy.Health} health and {enemy.Armor} armor points left.");
-
-                if (_rand.Next(100) < 50 && enemy.Armor > 0)
+                if (equippedWeapon == null)
                 {
-                    enemy.Armor -= playerAttack;
-                    if (enemy.Armor < 0)
+                    playerDamage = _character.strengthValue;
+                }
+
+                var playerAttack = Math.Max(0, playerDamage - _currentEnemy.Armor);
+                _currentEnemy.Health -= playerAttack;
+
+                _form.Output($"You attacked the {_currentEnemy.Name} for {playerAttack} points, he has {_currentEnemy.Health} health and {_currentEnemy.Armor} armor points left.");
+
+                if (_rand.Next(100) < 50 && _currentEnemy.Armor > 0)
+                {
+                    _currentEnemy.Armor -= playerAttack;
+                    if (_currentEnemy.Armor < 0)
                     {
-                        enemy.Armor = 0;
+                        _currentEnemy.Armor = 0;
                     }
-                    _form.Output($"You damage the {enemy.Name}'s armor for {playerAttack} points!");
+                    _form.Output($"You damage the {_currentEnemy.Name}'s armor for {playerAttack} points!");
                 }
 
                 await Task.Delay(2000);
 
-                if (enemy.Health <= 0)
+                if (_currentEnemy.Health <= 0)
                 {
                     break;
                 }
 
-                var enemyAttack = enemy.Damage - _character.armorValue;
-                _character.healthValue -= enemyAttack;
-                _form.Output($"The {enemy.Name} attacked you for {enemyAttack} points, you have {_character.healthValue} health and {_character.armorValue} armor points left.");
+                var currentEnemyAttack = Math.Max(0, _currentEnemy.Damage - _character.armorValue);
+                _character.healthValue -= currentEnemyAttack;
+                _form.Output($"The {_currentEnemy.Name} attacked you for {currentEnemyAttack} points, you have {_character.healthValue} health and {_character.armorValue} armor points left.");
 
 
                 var str = _options.healPoint.Text;
@@ -632,13 +635,13 @@ namespace Survival
 
             if (_character.healthValue > 0)
             {
-                _form.Output($"You defeat the {enemy.Name}!");
+                _form.Output($"You defeat the {_currentEnemy.Name}!");
                 _character.AddXp();
                 _character.inCombat = false;
             }
             else
             {
-                _form.Output($"You were defeated by the {enemy.Name}...");
+                _form.Output($"You were defeated by the {_currentEnemy.Name}...");
                 _form.GameOver();
             }
 

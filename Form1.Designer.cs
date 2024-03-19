@@ -64,7 +64,7 @@
             inputBox.MaxLength = 1000;
             inputBox.Name = "inputBox";
             inputBox.PlaceholderText = "Enter 'help' for help..";
-            inputBox.Size = new Size(497, 23);
+            inputBox.Size = new Size(606, 23);
             inputBox.TabIndex = 0;
             inputBox.KeyDown += InputBox_KeyDown;
             // 
@@ -85,7 +85,7 @@
             statsPanel.Controls.Add(xp);
             statsPanel.Location = new Point(12, 40);
             statsPanel.Name = "statsPanel";
-            statsPanel.Size = new Size(196, 238);
+            statsPanel.Size = new Size(305, 238);
             statsPanel.TabIndex = 1;
             // 
             // shopGrid
@@ -100,7 +100,7 @@
             shopGrid.ReadOnly = true;
             shopGrid.RowHeadersVisible = false;
             shopGrid.RowHeadersWidth = 62;
-            shopGrid.Size = new Size(198, 143);
+            shopGrid.Size = new Size(307, 166);
             shopGrid.TabIndex = 5;
             shopGrid.Visible = false;
             // 
@@ -117,10 +117,10 @@
             // craftButton
             // 
             craftButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            craftButton.Location = new Point(116, 216);
+            craftButton.Location = new Point(236, 204);
             craftButton.Margin = new Padding(2);
             craftButton.Name = "craftButton";
-            craftButton.Size = new Size(78, 20);
+            craftButton.Size = new Size(65, 30);
             craftButton.TabIndex = 5;
             craftButton.Text = "Craft";
             craftButton.UseVisualStyleBackColor = true;
@@ -209,7 +209,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { gameToolStripMenuItem, menusToolStripMenuItem, optionsToolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(521, 24);
+            menuStrip1.Size = new Size(630, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -224,7 +224,7 @@
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(180, 22);
+            saveToolStripMenuItem.Size = new Size(140, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
@@ -232,7 +232,7 @@
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             loadToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
-            loadToolStripMenuItem.Size = new Size(180, 22);
+            loadToolStripMenuItem.Size = new Size(140, 22);
             loadToolStripMenuItem.Text = "Load";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
             // 
@@ -240,7 +240,7 @@
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             quitToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
-            quitToolStripMenuItem.Size = new Size(180, 22);
+            quitToolStripMenuItem.Size = new Size(140, 22);
             quitToolStripMenuItem.Text = "Quit";
             quitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
             // 
@@ -276,7 +276,7 @@
             consoleBox.Name = "consoleBox";
             consoleBox.ReadOnly = true;
             consoleBox.ScrollBars = ScrollBars.Vertical;
-            consoleBox.Size = new Size(497, 88);
+            consoleBox.Size = new Size(606, 88);
             consoleBox.TabIndex = 3;
             // 
             // inventoryGrid
@@ -285,7 +285,7 @@
             inventoryGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             inventoryGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             inventoryGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            inventoryGrid.Location = new Point(214, 40);
+            inventoryGrid.Location = new Point(323, 40);
             inventoryGrid.Name = "inventoryGrid";
             inventoryGrid.ReadOnly = true;
             inventoryGrid.RowHeadersVisible = false;
@@ -297,7 +297,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(521, 413);
+            ClientSize = new Size(630, 413);
             Controls.Add(inventoryGrid);
             Controls.Add(consoleBox);
             Controls.Add(statsPanel);

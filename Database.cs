@@ -1,10 +1,12 @@
-﻿using Items;
+﻿using Enemies;
+using Items;
 namespace Survival
 {
     public class Database
     {
-        // DO NOT EDIT THIS IF YOU ARE TRYING TO CHANGE THE ITEM IN THE SHOP
-        // TO DO THAT GO TO THE METHOD OnShopCreate in Shop.cs
+        private static readonly Random _rand = new();
+
+        // World Items
         public Dictionary<string, Item> items = new()
         {
             { "Tender", new Item("Tender", 0.1, 1, "Assets/Images/Icons/Money.png", price: 1) },
@@ -15,7 +17,6 @@ namespace Survival
         public Dictionary<string, Item> weapons = new()
         {
             { "Shotgun", new Weapon("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false, price: 600) },
-            // Melee is not implemented yet so this item won't do shit (for now)
             { "Spear", new Weapon("Spear", 2, 1, "Assets/Images/Icons/Spear.png", 30, 100, true, price: 100) },
         };
 
@@ -34,5 +35,26 @@ namespace Survival
         {
             { "Bandage", new Medicine("Bandage", 0.2, 1, "Assets/Images/Icons/Bandage.png", 30, price: 30) },
         };
+
+        // Shop
+        public List<Item> shopItems =
+        [
+            new Food("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: _rand.Next(1, 11), price: 15),
+            new Drink("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: _rand.Next(1, 6), price: 20),
+            new Medicine("Bandage", 0.2, 1, "Assets/Images/Icons/Bandage.png", 30, stock: _rand.Next(1, 6), price: 30),
+            new Weapon("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false, 1, 600)
+        ];
+
+        // Enemies
+        public List<Enemy> enemies =
+        [
+            new Enemy("Peasant", 100, 0, _rand.Next(0, 11), false),
+            new Enemy("Bandit", 100, 0, _rand.Next(9, 21), false),
+            new Enemy("Forest Bandit", 100, _rand.Next(9, 31), _rand.Next(9, 21), false),
+            new Enemy("Wasteland Raider", 100, _rand.Next(11, 21), _rand.Next(9, 21), false),
+            new Enemy("Raider", 130, _rand.Next(31, 51), _rand.Next(21, 31), false),
+        ];
+
+        public List<int> enemyWeights = [30, 40, 20, 5, 5];
     }
 }
