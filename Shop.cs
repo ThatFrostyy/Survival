@@ -29,11 +29,11 @@ namespace Survival
         #endregion Shop Variables
 
         // Constructor
-        public Shop(Form1 form, Character character, Database databse)
+        public Shop(Form1 form, Character character, Database database)
         {
             _form = form;
             _character = character;
-            _database = databse;
+            _database = database;
         }
 
         #region Other
