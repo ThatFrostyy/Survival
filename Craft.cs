@@ -8,8 +8,6 @@ namespace Survival
         private readonly CraftForm _craftForm;
         // I assume that the code bellow will be used in the future, so I won't delete it..
         //private readonly Character _character;
-        // Instantiate child class to use methods and properties of parent class
-        //Materials materials = new Materials();
 
         #region Lists
         // Crafting recipes 
@@ -87,7 +85,7 @@ namespace Survival
                     .OfType<DataGridViewRow>()
                     .FirstOrDefault(r => r.Cells["Name"].Value.ToString() == recipe.Name);
 
-                if (existingRow == null)
+                if (existingRow == null)																 
                 {
                     var index = _craftForm.recipeGrid.Rows.Add();
                     var row = _craftForm.recipeGrid.Rows[index];
