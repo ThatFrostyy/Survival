@@ -32,7 +32,7 @@ namespace Survival
             _options = new Options();
             _tools = new Tools();
             _database = new Database();
-            _character = new Character(this, _database);
+            _character = new Character(this, _database, _tools);
             _shop = new Shop(this, _character, _database);
             _game = new Game(this, _character, _database, _shop, _tools, _options);
 
@@ -207,11 +207,6 @@ namespace Survival
                 Action = action,
                 Argument = argument
             };
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
     }
 

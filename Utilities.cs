@@ -13,11 +13,14 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
+using Items;
+using System.Media;
 namespace Survival
 {
     public class Tools
     {
-        private readonly Random rand = new();
+        private readonly Random _rand = new();
 
         public T ChooseWeightedRandom<T>(List<T> list, List<int> weights)
         {
@@ -27,7 +30,7 @@ namespace Survival
             }
 
             var totalWeight = weights.Sum();
-            var choice = rand.Next(totalWeight);
+            var choice = _rand.Next(totalWeight);
             for (var i = 0; i < list.Count; i++)
             {
                 if (choice < weights[i])
@@ -38,6 +41,50 @@ namespace Survival
             }
 
             throw new InvalidOperationException("The weights must sum to a value greater than zero.");
+        }
+
+        public void WeaponShootSound(Item weapon)
+        {
+            if (weapon == null)
+            {
+                return;
+            }
+
+            switch (weapon.Name)
+            {
+                case "Shotgun":
+                    using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Weapons/Shotgun.wav"))
+                    {
+                        soundPlayer.Play();
+                    }
+                    break;
+                case "Spear":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void WeaponEquipSound(Item weapon)
+        {
+            if (weapon == null)
+            {
+                return;
+            }
+
+            switch (weapon.Name)
+            {
+                case "Shotgun":
+                    using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Weapons/ShotgunEquip.wav"))
+                    {
+                        soundPlayer.Play();
+                    }
+                    break;
+                case "Spear":
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

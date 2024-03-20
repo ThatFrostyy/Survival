@@ -55,13 +55,13 @@ namespace Survival
                     }
                     break;
                 case "heal":
-                    _character.Heal();
+                    _character.Heal(command);
                     break;
                 case "eat":
-                    _character.EatFood();
+                    _character.Eat(command);
                     break;
                 case "drink":
-                    _character.DrinkWater();
+                    _character.Drink(command);
                     break;
                 case "explore":
                     var num = _rand.Next(0, 101);
@@ -119,13 +119,13 @@ namespace Survival
                     }
                     break;
                 case "heal":
-                    _character.Heal();
+                    _character.Heal(command);
                     break;
                 case "eat":
-                    _character.EatFood();
+                    _character.Eat(command);
                     break;
                 case "drink":
-                    _character.DrinkWater();
+                    _character.Drink(command);
                     break;
                 case "explore":
                     var num = _rand.Next(0, 101);
@@ -194,13 +194,13 @@ namespace Survival
                     }
                     break;
                 case "heal":
-                    _character.Heal();
+                    _character.Heal(command);
                     break;
                 case "eat":
-                    _character.EatFood();
+                    _character.Eat(command);
                     break;
                 case "drink":
-                    _character.DrinkWater();
+                    _character.Drink(command);
                     break;
                 case "explore":
                     var num = _rand.Next(0, 101);
@@ -256,13 +256,13 @@ namespace Survival
                     }
                     break;
                 case "heal":
-                    _character.Heal();
+                    _character.Heal(command);
                     break;
                 case "eat":
-                    _character.EatFood();
+                    _character.Eat(command);
                     break;
                 case "drink":
-                    _character.DrinkWater();
+                    _character.Drink(command);
                     break;
                 case "explore":
                     var num = _rand.Next(0, 101);
@@ -318,13 +318,13 @@ namespace Survival
                     }
                     break;
                 case "heal":
-                    _character.Heal();
+                    _character.Heal(command);
                     break;
                 case "eat":
-                    _character.EatFood();
+                    _character.Eat(command);
                     break;
                 case "drink":
-                    _character.DrinkWater();
+                    _character.Drink(command);
                     break;
                 case "explore":
                     var num = _rand.Next(0, 101);
@@ -380,13 +380,13 @@ namespace Survival
                     }
                     break;
                 case "heal":
-                    _character.Heal();
+                    _character.Heal(command);
                     break;
                 case "eat":
-                    _character.EatFood();
+                    _character.Eat(command);
                     break;
                 case "drink":
-                    _character.DrinkWater();
+                    _character.Drink(command);
                     break;
                 case "explore":
                     var num = _rand.Next(0, 101);
@@ -440,7 +440,7 @@ namespace Survival
             switch (command.Action)
             {
                 case "heal":
-                    _character.Heal();
+                    _character.Heal(command);
                     break;
                 case "fight":
                     Fight();
@@ -598,6 +598,8 @@ namespace Survival
 
                 var playerAttack = Math.Max(0, playerDamage - _currentEnemy.Armor);
                 _currentEnemy.Health -= playerAttack;
+
+                _tools.WeaponShootSound(equippedWeapon);
 
                 _form.Output($"You attacked the {_currentEnemy.Name} for {playerAttack} points, he has {_currentEnemy.Health} health and {_currentEnemy.Armor} armor points left.");
 

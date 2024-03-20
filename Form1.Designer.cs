@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             inputBox = new TextBox();
             statsPanel = new Panel();
             shopGrid = new DataGridView();
@@ -224,7 +225,7 @@
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(140, 22);
+            saveToolStripMenuItem.Size = new Size(180, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
@@ -232,7 +233,7 @@
             // 
             loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             loadToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
-            loadToolStripMenuItem.Size = new Size(140, 22);
+            loadToolStripMenuItem.Size = new Size(180, 22);
             loadToolStripMenuItem.Text = "Load";
             loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
             // 
@@ -240,7 +241,7 @@
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
             quitToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
-            quitToolStripMenuItem.Size = new Size(140, 22);
+            quitToolStripMenuItem.Size = new Size(180, 22);
             quitToolStripMenuItem.Text = "Quit";
             quitToolStripMenuItem.Click += QuitToolStripMenuItem_Click;
             // 
@@ -253,9 +254,10 @@
             // 
             // craftToolStripMenuItem1
             // 
+            craftToolStripMenuItem1.Image = (Image)resources.GetObject("craftToolStripMenuItem1.Image");
             craftToolStripMenuItem1.Name = "craftToolStripMenuItem1";
             craftToolStripMenuItem1.ShortcutKeys = Keys.Control | Keys.M;
-            craftToolStripMenuItem1.Size = new Size(145, 22);
+            craftToolStripMenuItem1.Size = new Size(188, 30);
             craftToolStripMenuItem1.Text = "Craft";
             craftToolStripMenuItem1.Click += craftToolStripMenuItem1_Click;
             // 

@@ -14,6 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 using Items;
+using System.Media;
 namespace Survival
 {
     public class Character
@@ -21,6 +22,7 @@ namespace Survival
         private readonly Random _rand = new();
         private readonly Form1 _form;
         private readonly Database _database;
+        private readonly Tools _tools;
 
         #region Item Lists and Dictionaries 
         // Keeps track of all the picked up items and their gui's 
@@ -59,10 +61,11 @@ namespace Survival
         #endregion Other
 
         // Constructor
-        public Character(Form1 form, Database database)
+        public Character(Form1 form, Database database, Tools tools)
         {
             this._form = form;
             _database = database;
+            _tools = tools;
         }
 
         #region Other
@@ -71,7 +74,9 @@ namespace Survival
         /// </summary>
         public void OnPlayerCreate()
         {
-            CreateItem("Tender", newWeight: 0.1, newQuantity: 15);
+            CreateItem("Tender", newWeight: 0.1, newQuantity: 80);
+            CreateWeapon("Shotgun");
+            location = "Village";
         }
         #endregion Other
 
@@ -79,52 +84,94 @@ namespace Survival
         /// <summary>
         /// Eat an eatable item
         /// </summary>
-        public void EatFood()
+        public void Eat(Command command)
         {
-            if (inventory.FirstOrDefault(item => item is Food) is Food food)
+            var itemName = command.Argument;
+            var itemToEat = inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase) && item is Food);
+
+            if (itemToEat == null)
             {
-                hungerValue = Math.Min(hungerValue + food.HungerRestore, 100);
-                _form.Output($"You eat a {food.Name}. Hunger: {hungerValue}");
-                RemoveItem(food);
+                itemToEat = inventory.FirstOrDefault(item => item is Food);
+                if (itemToEat == null)
+                {
+                    _form.Output("You don't have any food to eat!");
+                    return;
+                }
             }
-            else
+
+            var food = itemToEat as Food;
+
+            hungerValue = Math.Min(hungerValue + food.HungerRestore, 100);
+            _form.Output($"You eat a {food.Name}. Hunger: {hungerValue}");
+
+            using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Food/Eat.wav"))
             {
-                _form.Output("You don't have any food!");
+                soundPlayer.Play();
             }
+
+            RemoveItem(food);
         }
 
         /// <summary>
         /// Drink a drink
         /// </summary>
-        public void DrinkWater()
+        public void Drink(Command? command = null)
         {
-            if (inventory.FirstOrDefault(item => item is Drink) is Drink drink)
+            var itemName = command.Argument;
+            var itemToDrink = inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase) && item is Drink);
+
+            if (itemToDrink == null)
             {
-                thirstValue = Math.Min(thirstValue + drink.ThirstRestore, 100);
-                _form.Output($"You drink a {drink.Name}. Thirst: {thirstValue}");
-                RemoveItem(drink);
+                itemToDrink = inventory.FirstOrDefault(item => item is Drink);
+                if (itemToDrink == null)
+                {
+                    _form.Output("You don't have any drinks to drink!");
+                    return;
+                }
             }
-            else
+
+            var drink = itemToDrink as Drink;
+
+            thirstValue = Math.Min(thirstValue + drink.ThirstRestore, 100);
+            _form.Output($"You drink a {drink.Name}. Thirst: {thirstValue}");
+
+            using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Food/Drink.wav"))
             {
-                _form.Output("You don't have any drinks!");
+                soundPlayer.Play();
             }
+
+            RemoveItem(drink);
         }
 
         /// <summary>
         /// Consume a medicine item
         /// </summary>
-        public void Heal()
+        public void Heal(Command? command = null)
         {
-            if (inventory.FirstOrDefault(item => item is Medicine) is Medicine medicine)
+            var itemName = command.Argument;
+            var itemToUse = inventory.FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.CurrentCultureIgnoreCase) && item is Medicine);
+
+            if (itemToUse == null)
             {
-                healthValue = Math.Min(healthValue + medicine.HealthRestore, 100);
-                _form.Output($"You use a {medicine.Name}. Health: {healthValue}");
-                RemoveItem(medicine);
+                itemToUse = inventory.FirstOrDefault(item => item is Medicine);
+                if (itemToUse == null)
+                {
+                    _form.Output("You don't have any healing items to use!");
+                    return;
+                }
             }
-            else
+
+            var medicine = itemToUse as Medicine;
+
+            healthValue = Math.Min(healthValue + medicine.HealthRestore, 100);
+            _form.Output($"You use a {medicine.Name}. Health: {healthValue}");
+
+            using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Misc/Heal.wav"))
             {
-                _form.Output("You don't have any medicine!");
+                soundPlayer.Play();
             }
+
+            RemoveItem(medicine);
         }
 
         /// <summary>
@@ -234,6 +281,8 @@ namespace Survival
             {
                 equippedItem = item.Id;
                 item.Icon = Image.FromFile($"Assets/Images/Icons/Equipped/{item.Name}Equipped.png");
+                _tools.WeaponEquipSound(item);
+
                 _form.Output($"You have equipped a {item.Name}.");
             }
             else
@@ -382,7 +431,7 @@ namespace Survival
         #endregion Inventory
 
         #region Item Creation
-        public void CreateItem(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newStock = null, int? newPrice = null)
+        public void CreateItem(string itemName, string? newName = null, double? newWeight = null, int? newQuantity = null, string? newIconPath = null, int? newStock = null, int? newPrice = null)
         {
             if (_database.items.TryGetValue(itemName, out Item? value))
             {
@@ -402,7 +451,7 @@ namespace Survival
             }
         }
 
-        public void CreateWeapon(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newDamage = null, int? newDurability = null, bool? newIsMelee = null, int? newStock = null, int? newPrice = null)
+        public void CreateWeapon(string itemName, string? newName = null, double? newWeight = null, int? newQuantity = null, string? newIconPath = null, int? newDamage = null, int? newDurability = null, bool? newIsMelee = null, int? newStock = null, int? newPrice = null)
         {
             if (_database.weapons.TryGetValue(itemName, out Item? value))
             {
@@ -425,7 +474,7 @@ namespace Survival
             }
         }
 
-        public void CreateFood(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newHungerRestoration = null, int? newStock = null, int? newPrice = null)
+        public void CreateFood(string itemName, string? newName = null, double? newWeight = null, int? newQuantity = null, string? newIconPath = null, int? newHungerRestoration = null, int? newStock = null, int? newPrice = null)
         {
             if (_database.foods.TryGetValue(itemName, out Item? value))
             {
@@ -446,7 +495,7 @@ namespace Survival
             }
         }
 
-        public void CreateDrink(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newThirstRestoration = null, int? newStock = null, int? newPrice = null)
+        public void CreateDrink(string itemName, string? newName = null, double? newWeight = null, int? newQuantity = null, string? newIconPath = null, int? newThirstRestoration = null, int? newStock = null, int? newPrice = null)
         {
             if (_database.drinks.TryGetValue(itemName, out Item? value))
             {
@@ -467,7 +516,7 @@ namespace Survival
             }
         }
 
-        public void CreateMedicine(string itemName, string newName = null, double? newWeight = null, int? newQuantity = null, string newIconPath = null, int? newHealthRestoration = null, int? newStock = null, int? newPrice = null)
+        public void CreateMedicine(string itemName, string? newName = null, double? newWeight = null, int? newQuantity = null, string? newIconPath = null, int? newHealthRestoration = null, int? newStock = null, int? newPrice = null)
         {
             if (_database.medicines.TryGetValue(itemName, out Item? value))
             {

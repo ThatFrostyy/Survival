@@ -10,25 +10,26 @@ namespace Survival
         public Dictionary<string, Item> items = new()
         {
             { "Tender", new Item("Tender", 0.1, 1, "Assets/Images/Icons/Money.png", price: 1) },
-            { "Branch", new Item("Branch", 1, 1, "Assets/Images/Icons/Branch.png", price: 0) },
-            { "Rock", new Item("Rock", 1, 1, "Assets/Images/Icons/Rock.png", price: 0) },
+            { "Branch", new Item("Branch", 0.5, 1, "Assets/Images/Icons/Branch.png", price: 0) },
+            { "Rock", new Item("Rock", 0.5, 1, "Assets/Images/Icons/Rock.png", price: 0) },
+            { "Hammer", new Item("Hammer", 0.8, 1, "Assets/Images/Icons/Hammer.png", price: 50) },
         };
 
         public Dictionary<string, Item> weapons = new()
         {
             { "Shotgun", new Weapon("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false, price: 600) },
-            { "Spear", new Weapon("Spear", 2, 1, "Assets/Images/Icons/Spear.png", 30, 100, true, price: 100) },
+            { "Spear", new Weapon("Spear", 1.7, 1, "Assets/Images/Icons/Spear.png", 30, 100, true, price: 100) },
         };
 
         public Dictionary<string, Item> foods = new()
         {
-            { "Apple", new Food("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, price: 15) },
+            { "Apple", new Food("Apple", 0.3, 1, "Assets/Images/Icons/Apple.png", 15, price: 15) },
             { "Blue Berry", new Food("Blue Berry", 0.1, 1, "Assets/Images/Icons/BlueBerry.png", 8, price: 2) },
         };
 
         public Dictionary<string, Item> drinks = new()
         {
-            { "Water Bottle", new Drink("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, price: 20) },
+            { "Water Bottle", new Drink("Water Bottle", 0.5, 1, "Assets/Images/Icons/WaterBottle.png", 30, price: 20) },
         };
 
         public Dictionary<string, Item> medicines = new()
@@ -39,8 +40,8 @@ namespace Survival
         // Shop
         public List<Item> shopItems =
         [
-            new Food("Apple", 1, 1, "Assets/Images/Icons/Apple.png", 15, stock: _rand.Next(1, 11), price: 15),
-            new Drink("Water Bottle", 1, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: _rand.Next(1, 6), price: 20),
+            new Food("Apple", 0.3, 1, "Assets/Images/Icons/Apple.png", 15, stock: _rand.Next(1, 11), price: 15),
+            new Drink("Water Bottle", 0.5, 1, "Assets/Images/Icons/WaterBottle.png", 30, stock: _rand.Next(1, 6), price: 20),
             new Medicine("Bandage", 0.2, 1, "Assets/Images/Icons/Bandage.png", 30, stock: _rand.Next(1, 6), price: 30),
             new Weapon("Shotgun", 3, 1, "Assets/Images/Icons/Shotgun.png", 50, 100, false, 1, 600)
         ];
