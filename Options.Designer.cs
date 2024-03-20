@@ -33,6 +33,7 @@
             save = new Button();
             healPoint = new TextBox();
             toolTip = new ToolTip(components);
+            audioBox = new CheckBox();
             SuspendLayout();
             // 
             // autoHeal
@@ -70,11 +71,23 @@
             healPoint.Visible = false;
             healPoint.KeyPress += healPoint_KeyPress;
             // 
+            // audioBox
+            // 
+            audioBox.AutoSize = true;
+            audioBox.Location = new Point(12, 66);
+            audioBox.Name = "audioBox";
+            audioBox.Size = new Size(58, 19);
+            audioBox.TabIndex = 3;
+            audioBox.Text = "Audio";
+            audioBox.UseVisualStyleBackColor = true;
+            audioBox.CheckedChanged += audioBox_CheckedChanged;
+            // 
             // Options
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(297, 229);
+            Controls.Add(audioBox);
             Controls.Add(healPoint);
             Controls.Add(save);
             Controls.Add(autoHeal);
@@ -91,5 +104,6 @@
         public CheckBox autoHeal;
         public TextBox healPoint;
         private ToolTip toolTip;
+        public CheckBox audioBox;
     }
 }

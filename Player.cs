@@ -103,11 +103,7 @@ namespace Survival
 
             hungerValue = Math.Min(hungerValue + food.HungerRestore, 100);
             _form.Output($"You eat a {food.Name}. Hunger: {hungerValue}");
-
-            using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Food/Eat.wav"))
-            {
-                soundPlayer.Play();
-            }
+            _tools.PlaySound(@"./Assets/Sounds/Items/Food/Eat.wav");
 
             RemoveItem(food);
         }
@@ -134,11 +130,7 @@ namespace Survival
 
             thirstValue = Math.Min(thirstValue + drink.ThirstRestore, 100);
             _form.Output($"You drink a {drink.Name}. Thirst: {thirstValue}");
-
-            using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Food/Drink.wav"))
-            {
-                soundPlayer.Play();
-            }
+            _tools.PlaySound(@"./Assets/Sounds/Items/Food/Drink.wav");
 
             RemoveItem(drink);
         }
@@ -165,11 +157,7 @@ namespace Survival
 
             healthValue = Math.Min(healthValue + medicine.HealthRestore, 100);
             _form.Output($"You use a {medicine.Name}. Health: {healthValue}");
-
-            using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Misc/Heal.wav"))
-            {
-                soundPlayer.Play();
-            }
+            _tools.PlaySound(@"./Assets/Sounds/Items/Misc/Heal.wav");
 
             RemoveItem(medicine);
         }

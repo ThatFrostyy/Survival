@@ -30,7 +30,7 @@ namespace Survival
             InitializeComponent();
 
             _options = new Options();
-            _tools = new Tools();
+            _tools = new Tools(_options);
             _database = new Database();
             _character = new Character(this, _database, _tools);
             _shop = new Shop(this, _character, _database);

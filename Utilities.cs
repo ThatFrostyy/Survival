@@ -16,11 +16,19 @@
 
 using Items;
 using System.Media;
+using Settings;
+
 namespace Survival
 {
     public class Tools
     {
         private readonly Random _rand = new();
+        private readonly Options _options;
+
+        public Tools(Options options)
+        {
+            _options = options;
+        }
 
         public T ChooseWeightedRandom<T>(List<T> list, List<int> weights)
         {
@@ -37,10 +45,26 @@ namespace Survival
                 {
                     return list[i];
                 }
+
                 choice -= weights[i];
             }
 
             throw new InvalidOperationException("The weights must sum to a value greater than zero.");
+        }
+
+        #region Sound
+
+        public void PlaySound(string location)
+        {
+            if (!_options.audioBox.Checked)
+            {
+                return;
+            }
+
+            using (var soundPlayer = new SoundPlayer(location))
+            {
+                soundPlayer.Play();
+            }
         }
 
         public void WeaponShootSound(Item weapon)
@@ -53,10 +77,7 @@ namespace Survival
             switch (weapon.Name)
             {
                 case "Shotgun":
-                    using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Weapons/Shotgun.wav"))
-                    {
-                        soundPlayer.Play();
-                    }
+                    PlaySound(@"./Assets/Sounds/Items/Weapons/Shotgun.wav");
                     break;
                 case "Spear":
                     break;
@@ -75,10 +96,7 @@ namespace Survival
             switch (weapon.Name)
             {
                 case "Shotgun":
-                    using (var soundPlayer = new SoundPlayer(@"./Assets/Sounds/Items/Weapons/ShotgunEquip.wav"))
-                    {
-                        soundPlayer.Play();
-                    }
+                    PlaySound(@"./Assets/Sounds/Items/Weapons/ShotgunEquip.wav");
                     break;
                 case "Spear":
                     break;
@@ -86,5 +104,6 @@ namespace Survival
                     break;
             }
         }
+        #endregion Sound
     }
 }

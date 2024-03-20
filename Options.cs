@@ -22,10 +22,12 @@ namespace Settings
 
                 autoHeal.Checked = settings.AutoHeal;
                 healPoint.Text = settings.HealPoint;
+                audioBox.Checked = settings.Audio;
             }
 
             toolTip.SetToolTip(this.autoHeal, "Enable or disable auto heal during combat");
             toolTip.SetToolTip(this.healPoint, "Triggers healing after your health drops bellow this value");
+            toolTip.SetToolTip(this.audioBox, "Whether audio will be enabled");
 
             save.Enabled = false;
         }
@@ -34,6 +36,11 @@ namespace Settings
         private void autoHeal_CheckedChanged(object sender, EventArgs e)
         {
             healPoint.Visible = autoHeal.Checked;
+            SettingChanged();
+        }
+
+        private void audioBox_CheckedChanged(object sender, EventArgs e)
+        {
             SettingChanged();
         }
 
@@ -51,7 +58,8 @@ namespace Settings
             var settings = new
             {
                 AutoHeal = autoHeal.Checked,
-                HealPoint = healPoint.Text
+                HealPoint = healPoint.Text,
+                Audio = audioBox.Checked
             };
 
             if (!Directory.Exists("Data"))
