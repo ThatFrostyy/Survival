@@ -14,7 +14,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 using Items;
-using System.Media;
 namespace Survival
 {
     public class Character
@@ -269,7 +268,7 @@ namespace Survival
             {
                 equippedItem = item.Id;
                 item.Icon = Image.FromFile($"Assets/Images/Icons/Equipped/{item.Name}Equipped.png");
-                _tools.WeaponEquipSound(item);
+                _tools.PlaySound(string.Empty, item, false, true);
 
                 _form.Output($"You have equipped a {item.Name}.");
             }

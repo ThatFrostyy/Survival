@@ -599,7 +599,7 @@ namespace Survival
                 var playerAttack = Math.Max(0, playerDamage - _currentEnemy.Armor);
                 _currentEnemy.Health -= playerAttack;
 
-                _tools.WeaponShootSound(equippedWeapon);
+                _tools.PlaySound(string.Empty, equippedWeapon, true);
 
                 _form.Output($"You attacked the {_currentEnemy.Name} for {playerAttack} points, he has {_currentEnemy.Health} health and {_currentEnemy.Armor} armor points left.");
 

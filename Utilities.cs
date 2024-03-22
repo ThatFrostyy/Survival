@@ -16,6 +16,7 @@
 
 using Items;
 using System.Media;
+using System.Reflection;
 using Settings;
 
 namespace Survival
@@ -53,55 +54,34 @@ namespace Survival
         }
 
         #region Sound
-
-        public void PlaySound(string location)
+        public void PlaySound(string location, Weapon weapon = null, bool shoot = false, bool equip = false)
         {
             if (!_options.audioBox.Checked)
             {
                 return;
             }
 
-            using (var soundPlayer = new SoundPlayer(location))
+            if (shoot && equip)
+            {
+                throw new ArgumentException("Parameters 'shoot' and 'equip' cannot both be true.");
+            }
+
+            var soundFile = location;
+            if (weapon != null)
+            {
+                if (shoot)
+                {
+                    soundFile = $@"./Assets/Sounds/Items/Weapons/{weapon.Name}.wav";
+                }
+                else if (equip)
+                {
+                    soundFile = $@"./Assets/Sounds/Items/Weapons/{weapon.Name}Equip.wav";
+                }
+            }
+
+            using (var soundPlayer = new SoundPlayer(soundFile))
             {
                 soundPlayer.Play();
-            }
-        }
-
-        public void WeaponShootSound(Item weapon)
-        {
-            if (weapon == null)
-            {
-                return;
-            }
-
-            switch (weapon.Name)
-            {
-                case "Shotgun":
-                    PlaySound(@"./Assets/Sounds/Items/Weapons/Shotgun.wav");
-                    break;
-                case "Spear":
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void WeaponEquipSound(Item weapon)
-        {
-            if (weapon == null)
-            {
-                return;
-            }
-
-            switch (weapon.Name)
-            {
-                case "Shotgun":
-                    PlaySound(@"./Assets/Sounds/Items/Weapons/ShotgunEquip.wav");
-                    break;
-                case "Spear":
-                    break;
-                default:
-                    break;
             }
         }
         #endregion Sound
