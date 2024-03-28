@@ -25,11 +25,11 @@ namespace Survival
         /// </summary>
         public void OnCraftCreate()
         {
-            Materials campfire = new(3, "Campfire", "Assets/Images/Icons/Campfire.png");
-            Materials spear = new(4, "Spear", "Assets/Images/Icons/Spear.png");
-            Materials bow = new(5, "Bow", "Assets/Images/Icons/Bow.png");
-            Materials backpack = new(6, "Makeshift Backpack", "Assets/Images/Icons/MakeshiftBackpack.png");
-            Materials tent = new(7, "Tent", "Assets/Images/Icons/Tent.png");
+            Materials campfire = new(3, "Campfire", "Assets/Images/Icons/Campfire.png", "5 Branches, 3 Rocks");
+            Materials spear = new(4, "Spear", "Assets/Images/Icons/Spear.png", "3 Branches, 1 Rope");
+            Materials bow = new(5, "Bow", "Assets/Images/Icons/Bow.png", "3 Branches, 2 Rope");
+            Materials backpack = new(6, "Makeshift Backpack", "Assets/Images/Icons/MakeshiftBackpack.png", "3 Cloth, 1 Tarp, 1 Rope");
+            Materials tent = new(7, "Tent", "Assets/Images/Icons/Tent.png", "3 Tarp, 2 Rope");
             recipes.Add(campfire);
             recipes.Add(spear);
             recipes.Add(bow);
