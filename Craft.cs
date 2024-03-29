@@ -6,17 +6,19 @@ namespace Survival
         // See Recipes.cs for all the recipes
 
         private readonly CraftForm _craftForm;
+        private readonly Database _database;
         // I assume that the code bellow will be used in the future, so I won't delete it..
         //private readonly Character _character;
 
         #region Lists
         // Crafting recipes 
         public List<Recipes> recipes = [];
-        #endregion
+        #endregion Lists
 
-        public Craft(CraftForm craft) 
+        public Craft(CraftForm craft, Database database) 
         {
-            _craftForm = craft; 
+            _craftForm = craft;
+            _database = database;
         }
 
         #region Other
@@ -25,16 +27,7 @@ namespace Survival
         /// </summary>
         public void OnCraftCreate()
         {
-            Materials campfire = new(3, "Campfire", "Assets/Images/Icons/Campfire.png", "5 Branches, 3 Rocks");
-            Materials spear = new(4, "Spear", "Assets/Images/Icons/Spear.png", "3 Branches, 1 Rope");
-            Materials bow = new(5, "Bow", "Assets/Images/Icons/Bow.png", "3 Branches, 2 Rope");
-            Materials backpack = new(6, "Makeshift Backpack", "Assets/Images/Icons/MakeshiftBackpack.png", "3 Cloth, 1 Tarp, 1 Rope");
-            Materials tent = new(7, "Tent", "Assets/Images/Icons/Tent.png", "3 Tarp, 2 Rope");
-            recipes.Add(campfire);
-            recipes.Add(spear);
-            recipes.Add(bow);
-            recipes.Add(backpack);
-            recipes.Add(tent);
+            recipes.AddRange(_database.recipes);
         }
         #endregion Other
 
@@ -44,6 +37,7 @@ namespace Survival
         /// </summary>
         public void Crafting()
         {
+            _craftForm.craftButton.Enabled = false; 
         }
 
 
