@@ -2,7 +2,7 @@
 {
     public partial class CraftForm : Form
     {
-        //private readonly Database _database;
+        private readonly Database _database;
         //private readonly Character _character;
         public readonly Craft _craft;
 
@@ -10,10 +10,11 @@
         {
             InitializeComponent();
 
-            _craft = new Craft(this);
+            _database = new Database();
+            _craft = new Craft(this, _database);
 
             _craft.OnCraftCreate();
-			_craft.DisplayCraftingRecipes();				
+            _craft.DisplayCraftingRecipes();
         }
 
         #region GUI
@@ -24,6 +25,14 @@
         {
             consoleBox.AppendText(output + Environment.NewLine);
         }
+
         #endregion GUI
+
+        #region Crafting
+        private void craftButton_Click(object sender, EventArgs e)
+        {
+            _craft.Crafting(); 
+        }
+        #endregion Crafting
     }
 }

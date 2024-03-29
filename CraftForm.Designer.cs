@@ -68,6 +68,7 @@
             craftButton.TabIndex = 2;
             craftButton.Text = "Begin Crafting";
             craftButton.UseVisualStyleBackColor = true;
+            craftButton.Click += craftButton_Click;
             // 
             // CraftForm
             // 
@@ -86,7 +87,7 @@
 
         #endregion
         private TextBox consoleBox;
-        private Button craftButton;
         public DataGridView recipeGrid;
+        public Button craftButton;
     }
 }

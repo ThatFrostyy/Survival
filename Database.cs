@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using Crafting;
+using Enemies;
 using Items;
 namespace Survival
 {
@@ -55,6 +56,16 @@ namespace Survival
             new Enemy("Wasteland Raider", 100, _rand.Next(11, 21), _rand.Next(9, 21), false),
             new Enemy("Raider", 130, _rand.Next(31, 51), _rand.Next(21, 31), false),
         ];
+
+        // Crafting Recipes
+        public List<Recipes> recipes =
+        [
+            new Materials(1, "Campfire", "Assets/Images/Icons/Campfire.png", "5 Branches, 3 Rocks"),
+            new Materials(1, "Spear", "Assets/Images/Icons/Spear.png", "3 Branches, 1 Rope"),
+            new Materials(1, "Bow", "Assets/Images/Icons/Bow.png", "3 Branches, 2 Rope"),
+            new Materials(1, "Makeshift Backpack", "Assets/Images/Icons/MakeshiftBackpack.png", "3 Cloth, 1 Tarp, 1 Rope"),
+            new Materials(1, "Tent", "Assets/Images/Icons/Tent.png", "3 Tarp, 2 Rope")
+        ]; 
 
         public List<int> enemyWeights = [30, 40, 20, 5, 5];
     }
