@@ -66,9 +66,9 @@ namespace Survival
                 };
 
                 _craftForm.recipeGrid.Columns.Add(iconColumn);
-                _craftForm.recipeGrid.Columns.Add("Player Level", "Player Level");
                 _craftForm.recipeGrid.Columns.Add("Name", "Name");
-                //_craftForm.recipeGrid.Columns.Add("Materials", "Materials");
+                _craftForm.recipeGrid.Columns.Add("Player Level", "Player Level");
+                _craftForm.recipeGrid.Columns.Add("Materials", "Materials");
             }
 
             _craftForm.recipeGrid.Rows.Clear();
@@ -91,8 +91,9 @@ namespace Survival
                     var row = _craftForm.recipeGrid.Rows[index];
 
                     row.Cells["Icon"].Value = new Bitmap(recipe.Icon);
-                    row.Cells["Player Level"].Value = recipe.PlayerLevel;
                     row.Cells["Name"].Value = recipe.Name;
+                    row.Cells["Player Level"].Value = recipe.PlayerLevel;
+                    row.Cells["Materials"].Value = recipe.PlayerInventory; 
                 }
             }
             _craftForm.recipeGrid.CellMouseEnter += RecipeGrid_CellMouseEnter;

@@ -4,16 +4,16 @@
     {
         //private readonly Database _database;
         //private readonly Character _character;
-        public readonly Craft _craftForm;
+        public readonly Craft _craft;
 
         public CraftForm()
         {
             InitializeComponent();
 
-            _craftForm = new Craft(this);
+            _craft = new Craft(this);
 
-            _craftForm.OnCraftCreate();
-			_craftForm.DisplayCraftingRecipes();				
+            _craft.OnCraftCreate();
+			_craft.DisplayCraftingRecipes();				
         }
 
         #region GUI
