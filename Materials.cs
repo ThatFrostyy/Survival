@@ -1,5 +1,4 @@
 ﻿using Survival;
-
 namespace Crafting
 {
     public class Materials : Recipes

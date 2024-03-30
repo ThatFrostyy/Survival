@@ -1,4 +1,5 @@
 ﻿using Crafting;
+using System.Diagnostics;
 namespace Survival
 {
     public class Craft
@@ -9,11 +10,6 @@ namespace Survival
         private readonly Database _database;
         // I assume that the code bellow will be used in the future, so I won't delete it..
         //private readonly Character _character;
-
-        #region Lists
-        // Crafting recipes 
-        public List<Recipes> recipes = [];
-        #endregion Lists
 
         public Craft(CraftForm craft, Database database) 
         {
@@ -27,7 +23,6 @@ namespace Survival
         /// </summary>
         public void OnCraftCreate()
         {
-            recipes.AddRange(_database.recipes);
         }
         #endregion Other
 
@@ -67,7 +62,7 @@ namespace Survival
 
             _craftForm.recipeGrid.Rows.Clear();
 
-            foreach (var recipe in recipes)
+            foreach (var recipe in _database.recipes)
             {
                 if (recipe == null)
                 {
@@ -92,7 +87,6 @@ namespace Survival
             }
             _craftForm.recipeGrid.CellMouseEnter += RecipeGrid_CellMouseEnter;
         }
-
         public void RecipeGrid_CellMouseEnter(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -101,13 +95,25 @@ namespace Survival
             }
 
             var row = _craftForm.recipeGrid.Rows[e.RowIndex];
-            var recipe = recipes.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
+            var recipe = _database.recipes.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
             var tooltip = string.Empty;
 
-            switch (recipe)
+            switch (recipe.Name)
             {
-                case Materials campfire:
-                    tooltip = "Time: 3 minutes";
+                case "Campfire":
+                    tooltip = "Time: 1m 30s";
+                    break;
+                case "Spear":
+                    tooltip = "Time: 1m";
+                    break;
+                case "Bow":
+                    tooltip = "Time: 1m";
+                    break;
+                case "Makeshift Backpack":
+                    tooltip = "Time: 1m 30s";
+                    break;
+                case "Tent":
+                    tooltip = "Time: 2m";
                     break;
                 default:
                     tooltip = "Unknown item";

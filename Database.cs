@@ -56,6 +56,7 @@ namespace Survival
             new Enemy("Wasteland Raider", 100, _rand.Next(11, 21), _rand.Next(9, 21), false),
             new Enemy("Raider", 130, _rand.Next(31, 51), _rand.Next(21, 31), false),
         ];
+        public List<int> enemyWeights = [30, 40, 20, 5, 5];
 
         // Crafting Recipes
         public List<Recipes> recipes =
@@ -67,6 +68,5 @@ namespace Survival
             new Materials(1, "Tent", "Assets/Images/Icons/Tent.png", "3 Tarp, 2 Rope")
         ]; 
 
-        public List<int> enemyWeights = [30, 40, 20, 5, 5];
     }
 }
