@@ -1,6 +1,4 @@
-﻿using Crafting;
-using System.Diagnostics;
-namespace Survival
+﻿namespace Survival
 {
     public class Craft
     {
@@ -8,13 +6,14 @@ namespace Survival
 
         private readonly CraftForm _craftForm;
         private readonly Database _database;
-        // I assume that the code bellow will be used in the future, so I won't delete it..
+        private readonly Tools _tools;
         //private readonly Character _character;
 
-        public Craft(CraftForm craft, Database database) 
+        public Craft(CraftForm craft, Database database, Tools tools)
         {
             _craftForm = craft;
             _database = database;
+            _tools = tools;
         }
 
         #region Other

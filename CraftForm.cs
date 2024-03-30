@@ -5,13 +5,16 @@
         private readonly Database _database;
         //private readonly Character _character;
         public readonly Craft _craft;
+        public readonly Tools _tools;
 
-        public CraftForm()
+        public CraftForm(Tools tools)
         {
             InitializeComponent();
 
+            _tools = tools;
+
             _database = new Database();
-            _craft = new Craft(this, _database);
+            _craft = new Craft(this, _database, _tools);
 
             _craft.OnCraftCreate();
             _craft.DisplayCraftingRecipes();

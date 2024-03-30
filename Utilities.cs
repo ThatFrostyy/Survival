@@ -51,6 +51,19 @@ namespace Survival
             throw new InvalidOperationException("The weights must sum to a value greater than zero.");
         }
 
+        public Image ResizeImage(Image img, int width, int height)
+        {
+            var resizedImage = new Bitmap(width, height);
+            using (var graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.DrawImage(img, 0, 0, width, height);
+            }
+            return resizedImage;
+        }
+
         #region Sound
         public void PlaySound(string location, Weapon weapon = null, bool shoot = false, bool equip = false)
         {
