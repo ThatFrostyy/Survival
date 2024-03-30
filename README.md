@@ -16,7 +16,8 @@ Developed in C#, one of the most widely used programming languages in the world,
 |![Alt text](https://cdn.discordapp.com/attachments/1206772849226940496/1213889012394360883/image.png?ex=65f71d3d&is=65e4a83d&hm=7df4845d897f758a25fc31411a0d31fc3f8e4e6a21a2ba35925eb3e2a9a1e3e3&)|![Alt text](https://cdn.discordapp.com/attachments/1206772849226940496/1213889013165858876/image.png?ex=65f71d3d&is=65e4a83d&hm=a8badf8eee4c9fedf788ab0a4c75539c25ad7f069789033267b019c4fba44b82&)|
 # Assets
 ## Images
-**Icons**: I don't own any of the item icons, they are all from [Project Zomboid](https://store.steampowered.com/app/108600/Project_Zomboid)
+**Icons**: I don't own any of the icons, they are all from [Project Zomboid](https://store.steampowered.com/app/108600/Project_Zomboid)
+**Sounds**: I don't own any of the sounds, they are all from [Project Zomboid](https://store.steampowered.com/app/108600/Project_Zomboid)
 # Contribution
 ## Project
 Before starting your contribution, please check the project's **backlog** and **issues**. This will give you an idea of what needs to be worked on or what needs help. Your contribution will be more effective if it aligns with the project's current needs.
