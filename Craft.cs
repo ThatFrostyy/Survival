@@ -8,7 +8,7 @@
         private readonly Database _database;
         private readonly Tools _tools;
         //private readonly Character _character;
-
+        
         public Craft(CraftForm craft, Database database, Tools tools)
         {
             _craftForm = craft;
@@ -31,7 +31,26 @@
         /// </summary>
         public void Crafting()
         {
-            _craftForm.craftButton.Enabled = false; 
+            // TODO: Build logic to select row to craft item
+            foreach(DataGridViewRow r in _craftForm.recipeGrid.SelectedRows)
+            {
+                if (_craftForm.recipeGrid.SelectedRows.Count > 0)
+                {
+                    /*
+                    if (r.Cells[0].Value.ToString().Equals())
+                    {
+
+                    }
+                    */
+                    _craftForm.craftButton.Enabled = false;
+                    _craftForm.Output(_craftForm.recipeGrid.Rows[r.Index].ToString());
+                    _craftForm.Output(r.Cells[r.Index].Value.ToString());
+                }
+                else
+                {
+                    _craftForm.Output("You have not selected a recipe!");
+                }
+            }
         }
 
 
@@ -97,7 +116,7 @@
             var recipe = _database.recipes.FirstOrDefault(i => i.Name == row.Cells["Name"].Value.ToString());
             var tooltip = string.Empty;
 
-            switch (recipe.Name)
+            switch (recipe?.Name)
             {
                 case "Campfire":
                     tooltip = "Time: 1m 30s";

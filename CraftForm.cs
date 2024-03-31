@@ -18,13 +18,15 @@
 
             _craft.OnCraftCreate();
             _craft.DisplayCraftingRecipes();
+
+            recipeGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
         #region GUI
         /// <summary>
         /// Output something to the console
         /// </summary>
-        public void Output(string output)
+        public void Output(string ?output)
         {
             consoleBox.AppendText(output + Environment.NewLine);
         }
