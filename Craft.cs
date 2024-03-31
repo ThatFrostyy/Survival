@@ -1,4 +1,7 @@
-﻿namespace Survival
+﻿using System.Timers;
+using Windows.Networking.Connectivity;
+
+namespace Survival
 {
     public class Craft
     {
@@ -8,7 +11,7 @@
         private readonly Database _database;
         private readonly Tools _tools;
         //private readonly Character _character;
-        
+
         public Craft(CraftForm craft, Database database, Tools tools)
         {
             _craftForm = craft;
@@ -32,19 +35,41 @@
         public void Crafting()
         {
             // TODO: Build logic to select row to craft item
+            // TODO: Implement timer when crafting item 
             foreach(DataGridViewRow r in _craftForm.recipeGrid.SelectedRows)
             {
                 if (_craftForm.recipeGrid.SelectedRows.Count > 0)
                 {
-                    /*
-                    if (r.Cells[0].Value.ToString().Equals())
+                    if (r.Cells[1].Value.ToString().Equals("Campfire"))
                     {
+                        _craftForm.craftButton.Enabled = false;
+                        _craftForm.Output(r.Cells[1].Value.ToString());
 
+                    }  
+                    else if (r.Cells[1].Value.ToString().Equals("Spear"))
+                    {
+                        _craftForm.craftButton.Enabled = false;
+                        _craftForm.Output(r.Cells[1].Value.ToString());
                     }
-                    */
-                    _craftForm.craftButton.Enabled = false;
-                    _craftForm.Output(_craftForm.recipeGrid.Rows[r.Index].ToString());
-                    _craftForm.Output(r.Cells[r.Index].Value.ToString());
+                    else if (r.Cells[1].Value.ToString().Equals("Bow"))
+                    {
+                        _craftForm.craftButton.Enabled = false;
+                        _craftForm.Output(r.Cells[1].Value.ToString());
+                    }
+                    else if (r.Cells[1].Value.ToString().Equals("Makeshift Backpack"))
+                    {
+                        _craftForm.craftButton.Enabled = false;
+                        _craftForm.Output(r.Cells[1].Value.ToString());
+                    }
+                    else if (r.Cells[1].Value.ToString().Equals("Tent"))
+                    {
+                        _craftForm.craftButton.Enabled = false;
+                        _craftForm.Output(r.Cells[1].Value.ToString());
+                    }
+                    else
+                    {
+                        _craftForm.Output("Item not being crafted");
+                    }
                 }
                 else
                 {
@@ -52,8 +77,6 @@
                 }
             }
         }
-
-
         #endregion Crafting Methods
 
         #region GUI
