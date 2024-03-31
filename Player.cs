@@ -73,9 +73,6 @@ namespace Survival
         /// </summary>
         public void OnPlayerCreate()
         {
-            CreateItem("Tender", newWeight: 0.1, newQuantity: 80);
-            CreateWeapon("Shotgun");
-            location = "Village";
         }
         #endregion Other
 
