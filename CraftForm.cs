@@ -7,6 +7,8 @@
         public readonly Craft _craft;
         public readonly Tools _tools;
 
+        private int _ticks; 
+
         public CraftForm(Tools tools)
         {
             InitializeComponent();
@@ -36,8 +38,14 @@
         #region Crafting
         private void craftButton_Click(object sender, EventArgs e)
         {
-            _craft.Crafting(); 
+            _craft.Crafting();
         }
         #endregion Crafting
+
+        private void craftTimer_Tick(object sender, EventArgs e)
+        {
+            _ticks++;
+            this.craftTextBox.Text =_ticks.ToString(); 
+        }
     }
 }
