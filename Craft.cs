@@ -45,6 +45,13 @@ namespace Survival
                         _craftForm.craftButton.Enabled = false;
                         _craftForm.Output(r.Cells[1].Value.ToString());
 
+                        _craftForm.craftTimer.Interval = 90000; 
+                        _craftForm.craftTimer.Start();
+                        if (_craftForm.craftTimer.Interval == 9000)
+                        {
+                            _craftForm.craftTimer.Stop();
+                            _craftForm.Output("Campfire acquired!"); 
+                        }
                     }  
                     else if (r.Cells[1].Value.ToString().Equals("Spear"))
                     {
@@ -77,6 +84,8 @@ namespace Survival
                 }
             }
         }
+
+
         #endregion Crafting Methods
 
         #region GUI
